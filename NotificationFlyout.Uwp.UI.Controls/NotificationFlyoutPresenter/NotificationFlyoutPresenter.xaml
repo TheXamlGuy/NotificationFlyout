@@ -2,7 +2,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <StaticResource x:Key="NotificationFlyoutPresenterBackground" ResourceKey="AcrylicBackgroundFillColorDefaultBrush" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="HighContrast">
+            <StaticResource x:Key="NotificationFlyoutPresenterBackground" ResourceKey="SystemControlPageBackgroundChromeMediumLowBrush" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+            <StaticResource x:Key="NotificationFlyoutPresenterBackground" ResourceKey="AcrylicBackgroundFillColorDefaultBrush" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
     <Style TargetType="controls:NotificationFlyoutPresenter">
+        <Setter Property="Background" Value="{StaticResource NotificationFlyoutPresenterBackground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NotificationFlyoutPresenter">
@@ -12,43 +24,41 @@
                                 <Flyout.FlyoutPresenterStyle>
                                     <Style TargetType="FlyoutPresenter">
                                         <Setter Property="BorderThickness" Value="0" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="FlyoutPresenter">
-                                                    <Border
-                                                        Background="{TemplateBinding Background}"
-                                                        BackgroundSizing="InnerBorderEdge"
-                                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                                        CornerRadius="{TemplateBinding CornerRadius}">
-                                                        <Border.Transitions>
-                                                            <TransitionCollection>
-                                                                <EntranceThemeTransition FromHorizontalOffset="200" FromVerticalOffset="0" />
-                                                            </TransitionCollection>
-                                                        </Border.Transitions>
-                                                        <ScrollViewer
-                                                            x:Name="ScrollViewer"
-                                                            AutomationProperties.AccessibilityView="Raw"
-                                                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                                            HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
-                                                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                                            VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
-                                                            ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
-                                                            <ContentPresenter
-                                                                Margin="{TemplateBinding Padding}"
-                                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                Content="{TemplateBinding Content}"
-                                                                ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                                ContentTransitions="{TemplateBinding ContentTransitions}" />
-                                                        </ScrollViewer>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="IsDefaultShadowEnabled" Value="False" />
+                                        <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Margin" Value="0" />
                                     </Style>
                                 </Flyout.FlyoutPresenterStyle>
-                                <ContentControl Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
+                                <Border
+                                    Padding="{TemplateBinding Padding}"
+                                    Background="{TemplateBinding Background}"
+                                    BackgroundSizing="OuterBorderEdge"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}">
+                                    <Border.Transitions>
+                                        <TransitionCollection>
+                                            <EntranceThemeTransition FromHorizontalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.FromHorizontalOffset, Mode=TwoWay}" FromVerticalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.FromVerticalOffset, Mode=TwoWay}" />
+                                        </TransitionCollection>
+                                    </Border.Transitions>
+                                    <ScrollViewer
+                                        x:Name="ScrollViewer"
+                                        AutomationProperties.AccessibilityView="Raw"
+                                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                        HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                        VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                        ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                                        <ContentPresenter
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            ContentTransitions="{TemplateBinding ContentTransitions}" />
+                                    </ScrollViewer>
+                                </Border>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
                     </Grid>
