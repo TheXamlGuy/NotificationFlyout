@@ -9,7 +9,7 @@ namespace NotificationFlyout.Uwp.UI.Controls
         public static readonly DependencyProperty TemplateSettingsProperty =
             DependencyProperty.Register(nameof(TemplateSettings),
                 typeof(NotificationFlyoutPresenterTemplateSettings), typeof(NotificationFlyoutPresenter),
-                new PropertyMetadata(0d));
+                new PropertyMetadata(null));
 
         private Grid _root;
         private NotificationFlyoutPresenterTemplateSettings _templateSettings;
