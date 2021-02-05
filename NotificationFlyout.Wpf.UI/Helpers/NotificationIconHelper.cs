@@ -1,5 +1,4 @@
-﻿using Microsoft.Windows.Sdk;
-using NotificationFlyout.Wpf.UI.Extensions;
+﻿using NotificationFlyout.Wpf.UI.Extensions;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -97,6 +96,9 @@ namespace NotificationFlyout.Wpf.UI.Helpers
             }
         }
 
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr DefWindowProcW(IntPtr handle, uint msg, IntPtr wParam, IntPtr lParam);
+
         [DllImport("shell32.dll", SetLastError = true)]
         private static extern int Shell_NotifyIcon(NotifyIconCommand notifyCommand, ref NotifyIconData notifyIconData);
 
@@ -133,7 +135,6 @@ namespace NotificationFlyout.Wpf.UI.Helpers
         }
 
         private void RemoveNotificationIcon() => WriteNotifyIconData(NotifyIconCommand.Delete, NotifyIconDataMember.Message);
-
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == CallbackMessage)
@@ -164,8 +165,8 @@ namespace NotificationFlyout.Wpf.UI.Helpers
                     IconInvoked?.Invoke(this, new NotificationIconInvokedEventArgs { MouseButton = mouseButton });
                 }
             }
- 
-            return (IntPtr)(int)PInvoke.DefWindowProc((HWND)hwnd, (uint)msg, (WPARAM)(UIntPtr)(uint)wParam, (LPARAM)lParam);
+
+            return DefWindowProcW(hwnd, (uint)msg, wParam, (lParam));
         }
 
         private void WriteNotifyIconData(NotifyIconCommand command, NotifyIconDataMember flags)

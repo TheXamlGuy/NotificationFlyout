@@ -80,6 +80,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private NotificationFlyoutPresenter GetNotificationFlyoutPresenter()
         {
+            if (_host == null) return null;
             return _host.GetUwpInternalObject() as NotificationFlyoutPresenter;
         }
 
@@ -154,6 +155,8 @@ namespace NotificationFlyout.Wpf.UI.Controls
         private void UpdateWindow()
         {
             var flyoutPresenter = GetNotificationFlyoutPresenter();
+            if (flyoutPresenter == null) return;
+
             var taskbarState = _taskbarHelper.GetCurrentState();
 
             var screen = Screen.FromHandle(this.GetHandle());

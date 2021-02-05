@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
@@ -20,6 +22,14 @@ namespace NotificationFlyout.Uwp.UI.Controls
 
             _templateSettings = new NotificationFlyoutPresenterTemplateSettings();
             SetValue(TemplateSettingsProperty, _templateSettings);
+
+            UISettings uiSettings = new UISettings();
+            uiSettings.ColorValuesChanged += UiSettings_ColorValuesChanged;
+        }
+
+        private void UiSettings_ColorValuesChanged(UISettings sender, object args)
+        {
+            MessageDialog d = new MessageDialog("", "");
         }
 
         public NotificationFlyoutPresenterTemplateSettings TemplateSettings

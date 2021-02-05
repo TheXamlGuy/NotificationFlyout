@@ -3,6 +3,6 @@
     public enum SystemTheme
     {
         Dark,
-        Light
+        Light,
     }
 }

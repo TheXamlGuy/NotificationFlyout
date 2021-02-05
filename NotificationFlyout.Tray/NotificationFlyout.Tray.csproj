@@ -7,6 +7,7 @@
     <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
     <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>NotificationFlyout.Tray.Program</StartupObject>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -72,10 +72,16 @@ namespace NotificationFlyout.Wpf.UI.Helpers
             return state;
         }
 
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern IntPtr DefWindowProcW(IntPtr handle, uint msg, IntPtr wParam, IntPtr lParam);
+
         private static IntPtr GetSystemTrayHandle()
         {
             return WindowHelper.GetHandle(ShellTrayHandleName);
         }
+
+        [DllImport("shell32.dll", SetLastError = true)]
+        private static extern IntPtr SHAppBarMessage(AppBarMessage dwMessage, ref AppBarData pData);
 
         private AppBarData GetAppBarData(IntPtr handle)
         {
@@ -85,20 +91,6 @@ namespace NotificationFlyout.Wpf.UI.Helpers
                 hWnd = handle
             };
         }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct AppBarData
-        {
-            public uint cbSize;
-            public IntPtr hWnd;
-            public uint uCallbackMessage;
-            public AppBarEdge uEdge;
-            public RECT rect;
-            public int lParam;
-        }
-
-        [DllImport("shell32.dll", SetLastError = true)]
-        private static extern IntPtr SHAppBarMessage(AppBarMessage dwMessage, ref AppBarData pData);
 
         private void GetAppBarPosition(ref AppBarData appBarData)
         {
@@ -112,7 +104,18 @@ namespace NotificationFlyout.Wpf.UI.Helpers
                 TaskbarChanged?.Invoke(this, EventArgs.Empty);
             }
 
-            return (IntPtr)(int)PInvoke.DefWindowProc((HWND)hwnd, (uint)msg, (WPARAM)(UIntPtr)(uint)wParam, (LPARAM)lParam);
+            return DefWindowProcW(hwnd, (uint)msg, wParam, (lParam));
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct AppBarData
+        {
+            public uint cbSize;
+            public IntPtr hWnd;
+            public uint uCallbackMessage;
+            public AppBarEdge uEdge;
+            public RECT rect;
+            public int lParam;
         }
     }
 }
