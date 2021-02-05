@@ -8,7 +8,46 @@
                 <ControlTemplate TargetType="controls:NotificationFlyoutPresenter">
                     <Grid x:Name="Root">
                         <FlyoutBase.AttachedFlyout>
-                            <Flyout ShouldConstrainToRootBounds="False">
+                            <Flyout AreOpenCloseAnimationsEnabled="False" ShouldConstrainToRootBounds="False">
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style TargetType="FlyoutPresenter">
+                                        <Setter Property="BorderThickness" Value="0" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="FlyoutPresenter">
+                                                    <Border
+                                                        Background="{TemplateBinding Background}"
+                                                        BackgroundSizing="InnerBorderEdge"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                                        CornerRadius="{TemplateBinding CornerRadius}">
+                                                        <Border.Transitions>
+                                                            <TransitionCollection>
+                                                                <EntranceThemeTransition FromHorizontalOffset="200" FromVerticalOffset="0" />
+                                                            </TransitionCollection>
+                                                        </Border.Transitions>
+                                                        <ScrollViewer
+                                                            x:Name="ScrollViewer"
+                                                            AutomationProperties.AccessibilityView="Raw"
+                                                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                                            HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                                            VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                                            ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                                                            <ContentPresenter
+                                                                Margin="{TemplateBinding Padding}"
+                                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                Content="{TemplateBinding Content}"
+                                                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                ContentTransitions="{TemplateBinding ContentTransitions}" />
+                                                        </ScrollViewer>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle>
                                 <ContentControl Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>

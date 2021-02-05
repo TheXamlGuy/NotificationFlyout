@@ -130,6 +130,9 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.11</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.6.0-prerelease.210113001</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="MyUserControl1.xaml">

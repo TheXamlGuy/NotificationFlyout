@@ -22,15 +22,8 @@ namespace NotificationFlyout.Uwp.UI.Controls
         public void ShowFlyout(FlyoutPlacementMode placementMode)
         {
             if (_root == null) return;
-            var flyout = FlyoutBase.GetAttachedFlyout(_root);            
-            flyout.ShowAt(_root, new FlyoutShowOptions { Placement = placementMode, ShowMode = FlyoutShowMode.Standard });
-        }
-
-        public void ShowFlyout()
-        {
-            if (_root == null) return;
             var flyout = FlyoutBase.GetAttachedFlyout(_root);
-            flyout.ShowAt(_root);
+            flyout.ShowAt(_root, new FlyoutShowOptions { Placement = placementMode, ShowMode = FlyoutShowMode.Standard });
         }
 
         protected override void OnApplyTemplate()

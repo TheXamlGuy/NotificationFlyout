@@ -51,33 +51,27 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         internal void ShowFlyout()
         {
-            var flyoutContentControl = GetNotificationFlyoutPresenter();
-            if (flyoutContentControl != null)
+            var notificationFlyoutPresenter = GetNotificationFlyoutPresenter();
+            if (notificationFlyoutPresenter != null)
             {
                 var taskbarState = _taskbarHelper.GetCurrentState();
-
-                var flyoutPlacement = FlyoutPlacementMode.Auto;
-                switch (taskbarState.Position)
+                var flyoutPlacement = taskbarState.Position switch
                 {
-                    case TaskbarPosition.Left:
-                        flyoutPlacement = FlyoutPlacementMode.Right;
-                        break;
-                    case TaskbarPosition.Top:
-                        flyoutPlacement = FlyoutPlacementMode.Bottom;
-                        break;
-                    case TaskbarPosition.Right:
-                        flyoutPlacement = FlyoutPlacementMode.Left;
-                        break;
-                    case TaskbarPosition.Bottom:
-                        flyoutPlacement = FlyoutPlacementMode.Top;
-                        break;
-                }
+                    TaskbarPosition.Left => FlyoutPlacementMode.Right,
+                    TaskbarPosition.Top => FlyoutPlacementMode.Bottom,
+                    TaskbarPosition.Right => FlyoutPlacementMode.Left,
+                    TaskbarPosition.Bottom => FlyoutPlacementMode.Top,
+                    _ => throw new ArgumentOutOfRangeException(),
+                };
 
-                UpdateWindow();
                 Activate();
-
-                flyoutContentControl.ShowFlyout(flyoutPlacement);
+                notificationFlyoutPresenter.ShowFlyout(flyoutPlacement);
             }
+        }
+
+        private void SetFlyoutPlacement(FlyoutPlacementMode placementMode)
+        {
+            var notificationFlyoutPresenter = GetNotificationFlyoutPresenter();
         }
 
         private static void OnFlyoutContentPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -171,6 +165,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             var windowHeight = DesiredSize.Height * this.DpiY();
 
             var taskbarRect = taskbarState.Rect;
+            var flyoutPlacement = FlyoutPlacementMode.Auto;
             switch (taskbarState.Position)
             {
                 case TaskbarPosition.Left:
