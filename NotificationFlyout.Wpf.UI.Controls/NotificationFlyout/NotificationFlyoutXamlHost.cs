@@ -122,8 +122,8 @@ namespace NotificationFlyout.Wpf.UI.Controls
             ResizeMode = ResizeMode.NoResize;
             AllowsTransparency = true;
             Background = new SolidColorBrush(Colors.Transparent);
-            Height = 0;
-            Width = 0;
+            Height = 5;
+            Width = 5;
         }
 
         private void PrepareNotificationIcon()
