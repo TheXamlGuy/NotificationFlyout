@@ -11,3 +11,4 @@ Todo:
 - [ ] Drop shadow
 - [ ] Round corners
 - [ ] Use current system accent if user chose to use accent color on background surfaces
+- [ ] Remove the gap between the taskbar and the flyout
