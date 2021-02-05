@@ -1,4 +1,4 @@
-A Notification Flyout that looks and feels exactly like the native Volume, Network, and Battery flyouts. Built with WPF and UWP using XamlIslands. 
+A Notification Flyout that looks and feels exactly like the native Volume, Network, and Battery flyouts. Built with WPF and UWP with XamlIslands using the UWP Flyout control for the displaying of the flyout content.
 
 Demo:
 ![alt text](https://github.com/TheXamlGuy/NotificationFlyout/blob/master/demo.gif)
