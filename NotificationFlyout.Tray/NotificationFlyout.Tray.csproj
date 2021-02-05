@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
+    <Platforms>AnyCPU;x64</Platforms>
+    <StartupObject>NotificationFlyout.Tray.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.XamlHost" Version="6.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NotificationFlyout.Sample\NotificationFlyout.Sample.csproj" />
+    <ProjectReference Include="..\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj" />
+    <ProjectReference Include="..\NotificationFlyout.Wpf.UI.Controls\NotificationFlyout.Wpf.UI.Controls.csproj" />
+    <ProjectReference Include="..\NotificationFlyout.XamlHost\NotificationFlyout.XamlHost.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icon.ico" />
+  </ItemGroup>
+  
+</Project>
