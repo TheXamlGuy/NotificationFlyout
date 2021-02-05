@@ -8,7 +8,7 @@
                 <ControlTemplate TargetType="controls:NotificationFlyoutPresenter">
                     <Grid x:Name="Root">
                         <FlyoutBase.AttachedFlyout>
-                            <Flyout ShouldConstrainToRootBounds="False" ShowMode="Standard">
+                            <Flyout ShouldConstrainToRootBounds="False">
                                 <ContentControl Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" />
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>

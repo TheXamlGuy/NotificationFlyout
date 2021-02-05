@@ -56,7 +56,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             {
                 var taskbarState = _taskbarHelper.GetCurrentState();
 
-                var flyoutPlacement = FlyoutPlacementMode.Bottom;
+                var flyoutPlacement = FlyoutPlacementMode.Auto;
                 switch (taskbarState.Position)
                 {
                     case TaskbarPosition.Left:
