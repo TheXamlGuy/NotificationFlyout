@@ -88,10 +88,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void OnTaskbarChanged(object sender, EventArgs args)
         {
-            var taskbarState = _taskbarHelper.GetCurrentState();
-            Left = taskbarState.Screen.WorkingArea.Left;
-            Top = taskbarState.Screen.WorkingArea.Top;
-
             UpdateWindow();
         }
 
@@ -102,9 +98,9 @@ namespace NotificationFlyout.Wpf.UI.Controls
             WindowStyle = WindowStyle.None;
             ResizeMode = ResizeMode.NoResize;
             AllowsTransparency = true;
-            Background = new SolidColorBrush(Colors.Transparent);
-            Height = 5;
-            Width = 5;
+            Background = new SolidColorBrush(Colors.Red);
+            Height = 0;
+            Width = 0;
         }
 
         private void PrepareNotificationIcon()
@@ -139,19 +135,14 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
             var taskbarState = _taskbarHelper.GetCurrentState();
 
-            var screen = Screen.FromHandle(this.GetHandle());
-            MaxHeight = screen.Bounds.Height / 2;
+            Left = taskbarState.Screen.WorkingArea.Left;
+            Top = taskbarState.Screen.WorkingArea.Top;
 
-            var windowWidth = DesiredSize.Width * this.DpiX();
-            var windowHeight = DesiredSize.Height * this.DpiY();
+            var windowWidth = 0 * this.DpiX();
+            var windowHeight = 0 * this.DpiY();
 
-            double top;
-            double left;
-            double height;
-            double width;
-            double verticalOffset = 0;
-            double horizontalOffset = 0;
-
+            double top, left, height, width;
+       
             var taskbarRect = taskbarState.Rect;
             switch (taskbarState.Position)
             {
@@ -160,35 +151,31 @@ namespace NotificationFlyout.Wpf.UI.Controls
                     left = taskbarRect.Right;
                     height = windowHeight;
                     width = windowWidth;
-                    horizontalOffset = -MaximumOffset;
                     break;
                 case TaskbarPosition.Top:
                     top = taskbarRect.Bottom;
                     left = FlowDirection == FlowDirection.RightToLeft ? taskbarRect.Left : taskbarRect.Right - windowWidth;
                     height = windowHeight;
                     width = windowWidth;
-                    verticalOffset = -MaximumOffset;
                     break;
                 case TaskbarPosition.Right:
                     top = taskbarRect.Bottom - windowHeight;
                     left = taskbarRect.Left - windowWidth;
                     height = windowHeight;
                     width = windowWidth;
-                    horizontalOffset = MaximumOffset;
                     break;
                 case TaskbarPosition.Bottom:
                     top = taskbarRect.Top - windowHeight;
                     left = FlowDirection == FlowDirection.RightToLeft ? taskbarRect.Left : taskbarRect.Right - windowWidth;
                     height = windowHeight;
                     width = windowWidth;
-                    verticalOffset = MaximumOffset;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
             this.SetWindowPosition(top, left, height, width);
-            flyoutHost.SetOffset(verticalOffset, horizontalOffset);
+            flyoutHost.SetFlyoutPlacement(taskbarState.Position.ToString());
         }
     }
 }

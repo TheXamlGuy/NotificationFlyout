@@ -7,20 +7,88 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NotificationFlyoutHost">
                     <Grid x:Name="Root">
+                        <Grid.Resources>
+                            <Style x:Key="DefaultFlyoutPresenterStyle" TargetType="FlyoutPresenter">
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="IsDefaultShadowEnabled" Value="False" />
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                            <Style
+                                x:Key="TopFlyoutPresenterStyle"
+                                BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
+                                TargetType="FlyoutPresenter">
+                                <Setter Property="Margin" Value="0,-5,0,0" />
+                            </Style>
+                            <Style
+                                x:Key="BottomFlyoutPresenterStyle"
+                                BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
+                                TargetType="FlyoutPresenter">
+                                <Setter Property="Margin" Value="0,5,0,0" />
+                            </Style>
+                            <Style
+                                x:Key="LeftFlyoutPresenterStyle"
+                                BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
+                                TargetType="FlyoutPresenter">
+                                <Setter Property="Margin" Value="-5,0,0,0" />
+                            </Style>
+                            <Style
+                                x:Key="RightFlyoutPresenterStyle"
+                                BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
+                                TargetType="FlyoutPresenter">
+                                <Setter Property="Margin" Value="5,0,0,0" />
+                            </Style>
+                        </Grid.Resources>
                         <FlyoutBase.AttachedFlyout>
-                            <Flyout AreOpenCloseAnimationsEnabled="False" ShouldConstrainToRootBounds="False">
-                                <Flyout.FlyoutPresenterStyle>
-                                    <Style TargetType="FlyoutPresenter">
-                                        <Setter Property="BorderThickness" Value="0" />
-                                        <Setter Property="Background" Value="Transparent" />
-                                        <Setter Property="IsDefaultShadowEnabled" Value="False" />
-                                        <Setter Property="Padding" Value="0" />
-                                        <Setter Property="Margin" Value="0" />
-                                    </Style>
-                                </Flyout.FlyoutPresenterStyle>
-                                <ContentControl Content="{TemplateBinding FlyoutPresenter}" />
+                            <Flyout
+                                x:Name="Flyout"
+                                AreOpenCloseAnimationsEnabled="False"
+                                FlyoutPresenterStyle="{StaticResource BottomFlyoutPresenterStyle}"
+                                ShouldConstrainToRootBounds="False">
+                                <ContentControl Content="{TemplateBinding FlyoutPresenter}">
+                                    <ContentControl.Transitions>
+                                        <TransitionCollection>
+                                            <EntranceThemeTransition
+                                                x:Name="EntranceThemeTransition"
+                                                FromHorizontalOffset="0"
+                                                FromVerticalOffset="0" />
+                                        </TransitionCollection>
+                                    </ContentControl.Transitions>
+                                </ContentControl>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="PlacementStates">
+                                <VisualState x:Name="Bottom">
+                                    <VisualState.Setters>
+                                        <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource BottomFlyoutPresenterStyle}" />
+                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="80" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Top">
+                                    <VisualState.Setters>
+                                        <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource TopFlyoutPresenterStyle}" />
+                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="-80" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Left">
+                                    <VisualState.Setters>
+                                        <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource LeftFlyoutPresenterStyle}" />
+                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="-80" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Right">
+                                    <VisualState.Setters>
+                                        <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource RightFlyoutPresenterStyle}" />
+                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="80" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

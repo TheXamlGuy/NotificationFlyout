@@ -11,32 +11,19 @@ namespace NotificationFlyout.Uwp.UI.Controls
                 typeof(NotificationFlyoutPresenter), typeof(NotificationFlyoutHost),
                 new PropertyMetadata(null));
 
-        public static readonly DependencyProperty TemplateSettingsProperty =
-            DependencyProperty.Register(nameof(TemplateSettings),
-                typeof(NotificationFlyoutHostTemplateSettings), typeof(NotificationFlyoutHost),
-                new PropertyMetadata(null));
-
-        private readonly NotificationFlyoutHostTemplateSettings _templateSettings;
+        private bool _isLoaded;
+        private string _placement;
         private Grid _root;
 
         public NotificationFlyoutHost()
         {
             DefaultStyleKey = typeof(NotificationFlyoutHost);
-
-            _templateSettings = new NotificationFlyoutHostTemplateSettings();
-            SetValue(TemplateSettingsProperty, _templateSettings);
         }
 
         public NotificationFlyoutPresenter FlyoutPresenter
         {
             get => (NotificationFlyoutPresenter)GetValue(FlyoutPresenterProperty);
             set => SetValue(FlyoutPresenterProperty, value);
-        }
-
-        public NotificationFlyoutHostTemplateSettings TemplateSettings
-        {
-            get => (NotificationFlyoutHostTemplateSettings)GetValue(TemplateSettingsProperty);
-            set => SetValue(TemplateSettingsProperty, value);
         }
 
         public void HideFlyout()
@@ -46,11 +33,14 @@ namespace NotificationFlyout.Uwp.UI.Controls
             flyout.Hide();
         }
 
-        public void SetOffset(double verticalOffset, double horizontalOffset)
+        public void SetFlyoutPlacement(string placement)
         {
-            if (_templateSettings == null) return;
-            _templateSettings.FromVerticalOffset = verticalOffset;
-            _templateSettings.FromHorizontalOffset = horizontalOffset;
+            if (!_isLoaded)
+            {
+                _placement = placement;
+            }
+
+            VisualStateManager.GoToState(this, placement, true);
         }
 
         public void ShowFlyout(FlyoutPlacementMode placementMode)
@@ -60,13 +50,15 @@ namespace NotificationFlyout.Uwp.UI.Controls
             flyout.ShowAt(_root, new FlyoutShowOptions
             {
                 Placement = placementMode,
-                ShowMode = FlyoutShowMode.Standard
-            });
+                ShowMode = FlyoutShowMode.Standard,
+            });       
         }
 
         protected override void OnApplyTemplate()
         {
             _root = GetTemplateChild("Root") as Grid;
+            _isLoaded = true;
+            SetFlyoutPlacement(_placement);
         }
     }
 }

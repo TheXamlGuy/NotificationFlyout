@@ -122,7 +122,6 @@
   <ItemGroup>
     <Compile Include="NotificationFlyoutHost\NotificationFlyoutHost.cs" />
     <Compile Include="NotificationFlyoutPresenter\NotificationFlyoutPresenter.cs" />
-    <Compile Include="NotificationFlyoutHost\NotificationFlyoutHostTemplateSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\NotificationFlyout.Uwp.UI.Controls.rd.xml" />
   </ItemGroup>

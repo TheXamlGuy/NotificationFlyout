@@ -14,11 +14,6 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
-                        <Border.Transitions>
-                            <TransitionCollection>
-                                <EntranceThemeTransition FromHorizontalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.FromHorizontalOffset, Mode=TwoWay}" FromVerticalOffset="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.FromVerticalOffset, Mode=TwoWay}" />
-                            </TransitionCollection>
-                        </Border.Transitions>
                         <ScrollViewer
                             x:Name="ScrollViewer"
                             AutomationProperties.AccessibilityView="Raw"

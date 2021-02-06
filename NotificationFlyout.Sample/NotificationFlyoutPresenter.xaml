@@ -2,8 +2,7 @@
     x:Class="NotificationFlyout.Sample.NotificationFlyoutPresenter"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls"
-    CornerRadius="4">
+    xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls">
     <Grid>
         <ListBox
             Width="300"
