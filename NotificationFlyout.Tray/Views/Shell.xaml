@@ -6,7 +6,5 @@
     <NotificationFlyout.Icon>
         <NotificationFlyoutIcon IconSource="/Assets/Icon.ico" />
     </NotificationFlyout.Icon>
-    <NotificationFlyout.FlyoutContent>
-        <sample:MyUserControl1 />
-    </NotificationFlyout.FlyoutContent>
+    <sample:MyUserControl1 />
 </NotificationFlyout>

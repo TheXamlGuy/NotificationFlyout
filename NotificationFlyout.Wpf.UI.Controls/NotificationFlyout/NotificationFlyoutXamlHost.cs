@@ -3,7 +3,6 @@ using NotificationFlyout.Uwp.UI.Controls;
 using NotificationFlyout.Wpf.UI.Extensions;
 using NotificationFlyout.Wpf.UI.Helpers;
 using System;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Media;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -12,11 +11,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 {
     internal class NotificationFlyoutXamlHost : Window
     {
-        internal static DependencyProperty FlyoutContentProperty =
-             DependencyProperty.Register(nameof(FlyoutContent),
-                 typeof(Windows.UI.Xaml.UIElement), typeof(NotificationFlyoutXamlHost),
-                 new PropertyMetadata(null, OnFlyoutContentPropertyChanged));
-
+        private const double MaximumOffset = 80;
         private WindowsXamlHost _host;
 
         private NotificationIconHelper _notificationIconHelper;
@@ -30,10 +25,13 @@ namespace NotificationFlyout.Wpf.UI.Controls
             Loaded += OnLoaded;
         }
 
-        public Windows.UI.Xaml.UIElement FlyoutContent
+        public void SetFlyoutContent(Windows.UI.Xaml.UIElement content)
         {
-            get => (Windows.UI.Xaml.UIElement)GetValue(FlyoutContentProperty);
-            set => SetValue(FlyoutContentProperty, value);
+            var flyoutPresenter = GetNotificationFlyoutPresenter();
+            if (flyoutPresenter != null)
+            {
+                flyoutPresenter.Content = content;
+            }
         }
 
         internal void HideFlyout()
@@ -49,9 +47,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
         {
             _notificationIconHelper.SetIcon(handle);
         }
-
-        private const double MaximumOffset = 80;
-
         internal void ShowFlyout()
         {
             var flyoutPresenter = GetNotificationFlyoutPresenter();
@@ -72,27 +67,11 @@ namespace NotificationFlyout.Wpf.UI.Controls
             }
         }
 
-        private static void OnFlyoutContentPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            var sender = dependencyObject as NotificationFlyoutXamlHost;
-            sender?.OnFlyoutContentPropertyChanged();
-        }
-
         private NotificationFlyoutPresenter GetNotificationFlyoutPresenter()
         {
             if (_host == null) return null;
             return _host.GetUwpInternalObject() as NotificationFlyoutPresenter;
         }
-
-        private void OnFlyoutContentPropertyChanged()
-        {
-            var flyoutPresenter = GetNotificationFlyoutPresenter();
-            if (flyoutPresenter != null)
-            {
-                flyoutPresenter.Content = FlyoutContent;
-            }
-        }
-
         private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
         {
             ShowFlyout();
