@@ -1,0 +1,29 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls">
+    <Style TargetType="controls:NotificationFlyoutHost">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:NotificationFlyoutHost">
+                    <Grid x:Name="Root">
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout AreOpenCloseAnimationsEnabled="False" ShouldConstrainToRootBounds="False">
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style TargetType="FlyoutPresenter">
+                                        <Setter Property="BorderThickness" Value="0" />
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="IsDefaultShadowEnabled" Value="False" />
+                                        <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Margin" Value="0" />
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle>
+                                <ContentControl Content="{TemplateBinding FlyoutPresenter}" />
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

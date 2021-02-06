@@ -2,16 +2,16 @@
 
 namespace NotificationFlyout.Uwp.UI.Controls
 {
-    public class NotificationFlyoutPresenterTemplateSettings : DependencyObject
+    public class NotificationFlyoutHostTemplateSettings : DependencyObject
     {
         public static readonly DependencyProperty FromHorizontalOffsetProperty =
             DependencyProperty.Register(nameof(FromHorizontalOffset),
-                typeof(double), typeof(NotificationFlyoutPresenterTemplateSettings),
+                typeof(double), typeof(NotificationFlyoutHostTemplateSettings),
                 new PropertyMetadata(0d));
 
         public static readonly DependencyProperty FromVerticalOffsetProperty =
             DependencyProperty.Register(nameof(FromVerticalOffset),
-                typeof(double), typeof(NotificationFlyoutPresenterTemplateSettings),
+                typeof(double), typeof(NotificationFlyoutHostTemplateSettings),
                 new PropertyMetadata(0d));
 
         public double FromHorizontalOffset

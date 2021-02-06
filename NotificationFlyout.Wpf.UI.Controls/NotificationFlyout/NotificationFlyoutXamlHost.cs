@@ -12,10 +12,9 @@ namespace NotificationFlyout.Wpf.UI.Controls
     internal class NotificationFlyoutXamlHost : Window
     {
         private const double MaximumOffset = 80;
-        private WindowsXamlHost _host;
-
         private NotificationIconHelper _notificationIconHelper;
         private TaskbarHelper _taskbarHelper;
+        private WindowsXamlHost _xamlHost;
 
         public NotificationFlyoutXamlHost()
         {
@@ -25,21 +24,21 @@ namespace NotificationFlyout.Wpf.UI.Controls
             Loaded += OnLoaded;
         }
 
-        public void SetFlyoutContent(Windows.UI.Xaml.UIElement content)
+        public void SetFlyoutPresenter(NotificationFlyoutPresenter flyoutPresenter)
         {
-            var flyoutPresenter = GetNotificationFlyoutPresenter();
-            if (flyoutPresenter != null)
+            var flyoutHost = GetFlyoutHost();
+            if (flyoutHost != null)
             {
-                flyoutPresenter.Content = content;
+                flyoutHost.FlyoutPresenter = flyoutPresenter;
             }
         }
 
         internal void HideFlyout()
         {
-            var flyoutContentControl = GetNotificationFlyoutPresenter();
-            if (flyoutContentControl != null)
+            var flyoutHost = GetFlyoutHost();
+            if (flyoutHost != null)
             {
-                flyoutContentControl.HideFlyout();
+                flyoutHost.HideFlyout();
             }
         }
 
@@ -47,10 +46,11 @@ namespace NotificationFlyout.Wpf.UI.Controls
         {
             _notificationIconHelper.SetIcon(handle);
         }
+
         internal void ShowFlyout()
         {
-            var flyoutPresenter = GetNotificationFlyoutPresenter();
-            if (flyoutPresenter != null)
+            var flyoutHost = GetFlyoutHost();
+            if (flyoutHost != null)
             {
                 var taskbarState = _taskbarHelper.GetCurrentState();
                 var flyoutPlacement = taskbarState.Position switch
@@ -63,15 +63,16 @@ namespace NotificationFlyout.Wpf.UI.Controls
                 };
 
                 Activate();
-                flyoutPresenter.ShowFlyout(flyoutPlacement);
+                flyoutHost.ShowFlyout(flyoutPlacement);
             }
         }
 
-        private NotificationFlyoutPresenter GetNotificationFlyoutPresenter()
+        private NotificationFlyoutHost GetFlyoutHost()
         {
-            if (_host == null) return null;
-            return _host.GetUwpInternalObject() as NotificationFlyoutPresenter;
+            if (_xamlHost == null) return null;
+            return _xamlHost.GetUwpInternalObject() as NotificationFlyoutHost;
         }
+
         private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
         {
             ShowFlyout();
@@ -120,21 +121,21 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void PrepareWindowsXamlHost()
         {
-            _host = new WindowsXamlHost
+            _xamlHost = new WindowsXamlHost
             {
-                InitialTypeName = typeof(NotificationFlyoutPresenter).FullName
+                InitialTypeName = typeof(NotificationFlyoutHost).FullName
             };
 
-            _host.Height = 0;
-            _host.Width = 0;
+            _xamlHost.Height = 0;
+            _xamlHost.Width = 0;
 
-            Content = _host;
+            Content = _xamlHost;
         }
 
         private void UpdateWindow()
         {
-            var flyoutPresenter = GetNotificationFlyoutPresenter();
-            if (flyoutPresenter == null) return;
+            var flyoutHost = GetFlyoutHost();
+            if (flyoutHost == null) return;
 
             var taskbarState = _taskbarHelper.GetCurrentState();
 
@@ -187,7 +188,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             }
 
             this.SetWindowPosition(top, left, height, width);
-            flyoutPresenter.SetOffset(verticalOffset, horizontalOffset);
+            flyoutHost.SetOffset(verticalOffset, horizontalOffset);
         }
     }
 }

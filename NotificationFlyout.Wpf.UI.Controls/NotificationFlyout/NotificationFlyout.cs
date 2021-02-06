@@ -1,26 +1,33 @@
-﻿using NotificationFlyout.Wpf.UI.Extensions;
+﻿using NotificationFlyout.Uwp.UI.Controls;
+using NotificationFlyout.Wpf.UI.Extensions;
 using NotificationFlyout.Wpf.UI.Helpers;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace NotificationFlyout.Wpf.UI.Controls
 {
-    [ContentProperty(nameof(Content))]
+    [ContentProperty(nameof(FlyoutPresenter))]
     public class NotificationFlyout : DependencyObject
     {
+        public static readonly DependencyProperty IconSourceProperty =
+         DependencyProperty.Register(nameof(IconSource),
+             typeof(ImageSource), typeof(NotificationFlyout),
+             new PropertyMetadata(null, OnIconPropertyChanged));
+
+        public static readonly DependencyProperty LightIconSourceProperty =
+          DependencyProperty.Register(nameof(LightIconSource),
+              typeof(ImageSource), typeof(NotificationFlyout),
+              new PropertyMetadata(null, OnIconPropertyChanged));
+
+        public static DependencyProperty FlyoutPresenterProperty =
+            DependencyProperty.Register(nameof(FlyoutPresenter),
+                 typeof(NotificationFlyoutPresenter), typeof(NotificationFlyout),
+                 new PropertyMetadata(null, OnFlyoutPresenterPropertyChanged));
+
         private const string ShellTrayHandleName = "Shell_TrayWnd";
 
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register(nameof(Icon),
-                typeof(NotificationFlyoutIcon), typeof(NotificationFlyout),
-                new PropertyMetadata(null, OnIconPropertyChanged));
-
-        public static DependencyProperty ContentProperty =
-            DependencyProperty.Register(nameof(Content),
-                 typeof(Windows.UI.Xaml.UIElement), typeof(NotificationFlyout),
-                 new PropertyMetadata(null, OnContentPropertyChanged));
-
-        private NotificationFlyoutXamlHost _xamlHost;
+        private readonly NotificationFlyoutXamlHost _xamlHost;
 
         public NotificationFlyout()
         {
@@ -28,16 +35,22 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _xamlHost.Show();
         }
 
-        public Windows.UI.Xaml.UIElement Content
+        public NotificationFlyoutPresenter FlyoutPresenter
         {
-            get => (Windows.UI.Xaml.UIElement)GetValue(ContentProperty);
-            set => SetValue(ContentProperty, value);
+            get => (NotificationFlyoutPresenter)GetValue(FlyoutPresenterProperty);
+            set => SetValue(FlyoutPresenterProperty, value);
         }
 
-        public NotificationFlyoutIcon Icon
+        public ImageSource IconSource
         {
-            get => (NotificationFlyoutIcon)GetValue(IconProperty);
-            set => SetValue(IconProperty, value);
+            get => (ImageSource)GetValue(IconSourceProperty);
+            set => SetValue(IconSourceProperty, value);
+        }
+
+        public ImageSource LightIconSource
+        {
+            get => (ImageSource)GetValue(LightIconSourceProperty);
+            set => SetValue(LightIconSourceProperty, value);
         }
 
         public void HideFlyout()
@@ -50,10 +63,10 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _xamlHost.ShowFlyout();
         }
 
-        private static void OnContentPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void OnFlyoutPresenterPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var sender = dependencyObject as NotificationFlyout;
-            sender?.OnContentPropertyChanged();
+            sender?.OnFlyoutPresenterPropertyChanged();
         }
 
         private static void OnIconPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
@@ -62,9 +75,9 @@ namespace NotificationFlyout.Wpf.UI.Controls
             sender?.OnIconPropertyChanged();
         }
 
-        private void OnContentPropertyChanged()
+        private void OnFlyoutPresenterPropertyChanged()
         {
-            _xamlHost.SetFlyoutContent(Content);
+            _xamlHost.SetFlyoutPresenter(FlyoutPresenter);
         }
 
         private void OnIconPropertyChanged()
@@ -74,7 +87,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
             var dpi = WindowHelper.GetDpi(shellTrayHandle);
 
-            var iconSource = SystemSettingsHelper.DefaultSystemTheme == SystemTheme.Dark ? Icon.IconSource : Icon.LightIconSource;
+            var iconSource = SystemSettingsHelper.DefaultSystemTheme == SystemTheme.Dark ? IconSource : LightIconSource;
             using var icon = iconSource.ConvertToIcon(dpi);
 
             _xamlHost.SetNotificationIcon(icon.Handle);

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace NotificationFlyout.Tray
+namespace NotificationFlyout.Sample.Wpf
 {
     public partial class App : Application
     {

@@ -6,8 +6,9 @@
     <UseWPF>true</UseWPF>
     <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
     <Platforms>AnyCPU;x64</Platforms>
-    <StartupObject>NotificationFlyout.Tray.Program</StartupObject>
+    <StartupObject>NotificationFlyout.Sample.Wpf.Program</StartupObject>
     <LangVersion>9.0</LangVersion>
+    <AssemblyName>NotificationFlyout.Sample.Wpf</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

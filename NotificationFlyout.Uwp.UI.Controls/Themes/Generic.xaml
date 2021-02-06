@@ -1,6 +1,6 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///NotificationFlyout.Uwp.UI.Controls/NotificationFlyoutHost/NotificationFlyoutHost.xaml" />
         <ResourceDictionary Source="ms-appx:///NotificationFlyout.Uwp.UI.Controls/NotificationFlyoutPresenter/NotificationFlyoutPresenter.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

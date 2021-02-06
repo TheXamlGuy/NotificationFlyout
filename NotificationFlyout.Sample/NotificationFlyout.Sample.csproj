@@ -120,8 +120,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="MyUserControl1.xaml.cs">
-      <DependentUpon>MyUserControl1.xaml</DependentUpon>
+    <Compile Include="NotificationFlyoutPresenter.xaml.cs">
+      <DependentUpon>NotificationFlyoutPresenter.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\NotificationFlyout.Sample.rd.xml" />
@@ -135,10 +135,16 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MyUserControl1.xaml">
+    <Page Include="NotificationFlyoutPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj">
+      <Project>{9987b132-e42c-401a-9ad5-e62529faca40}</Project>
+      <Name>NotificationFlyout.Uwp.UI.Controls</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

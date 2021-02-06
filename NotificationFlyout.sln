@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationFlyout.Foundati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationFlyout.XamlHost", "NotificationFlyout.XamlHost\NotificationFlyout.XamlHost.csproj", "{95D6E127-BC04-4591-ACFF-FB35BBB64884}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationFlyout.Tray", "NotificationFlyout.Tray\NotificationFlyout.Tray.csproj", "{B5B09576-6447-4146-B544-FB6000587D8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationFlyout.Sample.Wpf", "NotificationFlyout.Tray\NotificationFlyout.Sample.Wpf.csproj", "{B5B09576-6447-4146-B544-FB6000587D8B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationFlyout.Wpf.UI.Controls", "NotificationFlyout.Wpf.UI.Controls\NotificationFlyout.Wpf.UI.Controls.csproj", "{0A782234-DC9F-4C4A-8820-FC640B03D233}"
 EndProject
