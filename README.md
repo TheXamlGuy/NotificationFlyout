@@ -9,6 +9,6 @@ Todo:
 - [ ] Works across multiple monitors
 - [ ] Switch notification tray icon based on system theme
 - [ ] Drop shadow
-- [ ] Round corners
+- [x] Can restyle/retemplate the notifiction flyout via the NotificationFlyoutPresenter control
 - [ ] Use current system accent if user chose to use accent color on background surfaces
 - [ ] Remove the gap between the taskbar and the flyout
