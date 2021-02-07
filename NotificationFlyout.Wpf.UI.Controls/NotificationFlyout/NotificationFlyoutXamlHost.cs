@@ -11,10 +11,16 @@ namespace NotificationFlyout.Wpf.UI.Controls
 {
     internal class NotificationFlyoutXamlHost : Window
     {
-        private const double MaximumOffset = 80;
+        private const string ShellTrayHandleName = "Shell_TrayWnd";
+        private const double WindowSize = 5;
+
+        private ImageSource _defaultIconSource;
+        private ImageSource _lightIconSource;
         private NotificationIconHelper _notificationIconHelper;
+        private SystemPersonalisationHelper _systemPersonalisationHelper;
         private TaskbarHelper _taskbarHelper;
         private WindowsXamlHost _xamlHost;
+        private bool _isLoaded;
 
         public NotificationFlyoutXamlHost()
         {
@@ -42,9 +48,12 @@ namespace NotificationFlyout.Wpf.UI.Controls
             }
         }
 
-        internal void SetNotificationIcon(IntPtr handle)
+        internal void SetIcons(ImageSource defaultIconSource, ImageSource lightIconSource)
         {
-            _notificationIconHelper.SetIcon(handle);
+            _defaultIconSource = defaultIconSource;
+            _lightIconSource = lightIconSource;
+
+            UpdateIcon();
         }
 
         internal void ShowFlyout()
@@ -83,7 +92,16 @@ namespace NotificationFlyout.Wpf.UI.Controls
             PrepareNotificationIcon();
             PrepareTaskbar();
 
+            _isLoaded = true;
+
             UpdateWindow();
+            UpdateIcon();
+
+        }
+
+        private void OnSystemThemeChanged(object sender, EventArgs args)
+        {
+            UpdateIcon();
         }
 
         private void OnTaskbarChanged(object sender, EventArgs args)
@@ -99,14 +117,17 @@ namespace NotificationFlyout.Wpf.UI.Controls
             ResizeMode = ResizeMode.NoResize;
             AllowsTransparency = true;
             Background = new SolidColorBrush(Colors.Transparent);
-            Height = 5;
-            Width = 5;
+            Height = WindowSize;
+            Width = WindowSize;
         }
 
         private void PrepareNotificationIcon()
         {
             _notificationIconHelper = NotificationIconHelper.Create(this);
             _notificationIconHelper.IconInvoked += OnIconInvoked;
+
+            _systemPersonalisationHelper = SystemPersonalisationHelper.Create(this);
+            _systemPersonalisationHelper.ThemeChanged += OnSystemThemeChanged;
         }
 
         private void PrepareTaskbar()
@@ -128,8 +149,26 @@ namespace NotificationFlyout.Wpf.UI.Controls
             Content = _xamlHost;
         }
 
+        private void UpdateIcon()
+        {
+            if (!_isLoaded) return;
+
+            var shellTrayHandle = WindowHelper.GetHandle(ShellTrayHandleName);
+            if (shellTrayHandle == null) return;
+
+            var dpi = WindowHelper.GetDpi(shellTrayHandle);
+
+            var iconSource = _systemPersonalisationHelper.SystemTheme == SystemTheme.Dark ? _defaultIconSource : _lightIconSource;
+            if (iconSource == null) return;
+
+            using var icon = iconSource.ConvertToIcon(dpi);
+            _notificationIconHelper.SetIcon(icon.Handle);
+        }
+
         private void UpdateWindow()
         {
+            if (!_isLoaded) return;
+
             var flyoutHost = GetFlyoutHost();
             if (flyoutHost == null) return;
 
@@ -138,8 +177,8 @@ namespace NotificationFlyout.Wpf.UI.Controls
             Left = taskbarState.Screen.WorkingArea.Left;
             Top = taskbarState.Screen.WorkingArea.Top;
 
-            var windowWidth = 5 * this.DpiX();
-            var windowHeight = 5 * this.DpiY();
+            var windowWidth = WindowSize * this.DpiX();
+            var windowHeight = WindowSize * this.DpiY();
 
             double top, left, height, width;
        

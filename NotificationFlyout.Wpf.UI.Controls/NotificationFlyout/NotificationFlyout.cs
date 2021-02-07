@@ -1,6 +1,4 @@
 ﻿using NotificationFlyout.Uwp.UI.Controls;
-using NotificationFlyout.Wpf.UI.Extensions;
-using NotificationFlyout.Wpf.UI.Helpers;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -24,8 +22,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
             DependencyProperty.Register(nameof(FlyoutPresenter),
                  typeof(NotificationFlyoutPresenter), typeof(NotificationFlyout),
                  new PropertyMetadata(null, OnFlyoutPresenterPropertyChanged));
-
-        private const string ShellTrayHandleName = "Shell_TrayWnd";
 
         private readonly NotificationFlyoutXamlHost _xamlHost;
 
@@ -82,21 +78,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void OnIconPropertyChanged()
         {
-            SetIcon();
-        }
-
-        private void SetIcon()
-        {
-            var shellTrayHandle = WindowHelper.GetHandle(ShellTrayHandleName);
-            if (shellTrayHandle == null) return;
-
-            var dpi = WindowHelper.GetDpi(shellTrayHandle);
-
-            var iconSource = SystemSettingsHelper.DefaultSystemTheme == SystemTheme.Dark ? IconSource : LightIconSource;
-            if (iconSource == null) return;
-
-            using var icon = iconSource.ConvertToIcon(dpi);
-            _xamlHost.SetNotificationIcon(icon.Handle);
+            _xamlHost.SetIcons(IconSource, LightIconSource);
         }
     }
 }

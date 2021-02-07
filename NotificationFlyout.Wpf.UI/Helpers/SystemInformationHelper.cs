@@ -8,13 +8,10 @@ namespace NotificationFlyout.Wpf.UI.Helpers
     public static class SystemInformationHelper
     {
         private const int SM_CXSCREEN = 0;
-
         private const int SM_CYSCREEN = 1;
-
         private const int SPI_GETWORKAREA = 48;
 
         public static Rect VirtualScreen => GetVirtualScreen();
-
         public static Rect WorkingArea => GetWorkingArea();
 
         public static int GetCurrentDpi()

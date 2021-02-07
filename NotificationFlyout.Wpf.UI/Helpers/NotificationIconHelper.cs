@@ -12,9 +12,6 @@ namespace NotificationFlyout.Wpf.UI.Helpers
         private const int CallbackMessage = 0x400;
         private const uint IconVersion = 0x4;
 
-        private const int WM_LBUTTONUP = 0x0202;
-        private const int WM_MBUTTONUP = 0x0208;
-        private const int WM_RBUTTONUP = 0x0205;
         private readonly object _lock = new();
         private readonly IntPtr _windowHandle;
         private bool _isDisposed;
@@ -134,35 +131,28 @@ namespace NotificationFlyout.Wpf.UI.Helpers
             }
         }
 
+        private void InvokeIconInvoked(MouseButton mouseButton)
+        {
+            IconInvoked?.Invoke(this, new NotificationIconInvokedEventArgs { MouseButton = mouseButton });
+        }
+
         private void RemoveNotificationIcon() => WriteNotifyIconData(NotifyIconCommand.Delete, NotifyIconDataMember.Message);
+
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == CallbackMessage)
             {
-                var mouseButton = MouseButton.Left;
-                var isInvoked = false;
-
                 switch ((uint)lParam)
                 {
-                    case WM_LBUTTONUP:
-                        isInvoked = true;
-                        mouseButton = MouseButton.Left;
+                    case (uint)WndProcMessages.WM_LBUTTONUP:
+                        InvokeIconInvoked(MouseButton.Left);
                         break;
-
-                    case WM_MBUTTONUP:
-                        isInvoked = true;
-                        mouseButton = MouseButton.Middle;
+                    case (uint)WndProcMessages.WM_MBUTTONUP:
+                        InvokeIconInvoked(MouseButton.Middle);
                         break;
-
-                    case WM_RBUTTONUP:
-                        isInvoked = true;
-                        mouseButton = MouseButton.Right;
+                    case (uint)WndProcMessages.WM_RBUTTONUP:
+                        InvokeIconInvoked(MouseButton.Right);
                         break;
-                }
-
-                if (isInvoked)
-                {
-                    IconInvoked?.Invoke(this, new NotificationIconInvokedEventArgs { MouseButton = mouseButton });
                 }
             }
 

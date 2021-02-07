@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Icon-Light.ico" />
     <None Remove="Assets\Icon.ico" />
   </ItemGroup>
 
@@ -27,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Icon-Light.ico" />
     <Resource Include="Assets\Icon.ico" />
   </ItemGroup>
   

@@ -10,12 +10,9 @@ namespace NotificationFlyout.Wpf.UI.Helpers
     public class TaskbarHelper
     {
         private const string ShellTrayHandleName = "Shell_TrayWnd";
-
         private const int SPI_SETWORKAREA = 0x002F;
 
-        private const int WSETTINGCHANGE = 0x001A;
-
-        private static readonly uint WTASKBARCREATED = PInvoke.RegisterWindowMessage("TaskbarCreated");
+        private readonly uint WM_TASKBARCREATED = PInvoke.RegisterWindowMessage("TaskbarCreated");
 
         private TaskbarHelper(Window window)
         {
@@ -99,7 +96,7 @@ namespace NotificationFlyout.Wpf.UI.Helpers
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == WTASKBARCREATED || msg == WSETTINGCHANGE && (int)wParam == SPI_SETWORKAREA)
+            if (msg == WM_TASKBARCREATED || msg == (int)WndProcMessages.WM_SETTINGCHANGE && (int)wParam == SPI_SETWORKAREA)
             {
                 TaskbarChanged?.Invoke(this, EventArgs.Empty);
             }
