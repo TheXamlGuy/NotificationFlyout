@@ -98,9 +98,9 @@ namespace NotificationFlyout.Wpf.UI.Controls
             WindowStyle = WindowStyle.None;
             ResizeMode = ResizeMode.NoResize;
             AllowsTransparency = true;
-            Background = new SolidColorBrush(Colors.Red);
-            Height = 0;
-            Width = 0;
+            Background = new SolidColorBrush(Colors.Transparent);
+            Height = 5;
+            Width = 5;
         }
 
         private void PrepareNotificationIcon()
@@ -138,8 +138,8 @@ namespace NotificationFlyout.Wpf.UI.Controls
             Left = taskbarState.Screen.WorkingArea.Left;
             Top = taskbarState.Screen.WorkingArea.Top;
 
-            var windowWidth = 0 * this.DpiX();
-            var windowHeight = 0 * this.DpiY();
+            var windowWidth = 5 * this.DpiX();
+            var windowHeight = 5 * this.DpiY();
 
             double top, left, height, width;
        

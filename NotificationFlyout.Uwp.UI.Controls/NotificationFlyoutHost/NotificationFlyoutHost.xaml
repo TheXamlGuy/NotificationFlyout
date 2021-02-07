@@ -18,25 +18,25 @@
                                 x:Key="TopFlyoutPresenterStyle"
                                 BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
                                 TargetType="FlyoutPresenter">
-                                <Setter Property="Margin" Value="0,-5,0,0" />
+                                <Setter Property="Margin" Value="0,-7,0,0" />
                             </Style>
                             <Style
                                 x:Key="BottomFlyoutPresenterStyle"
                                 BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
                                 TargetType="FlyoutPresenter">
-                                <Setter Property="Margin" Value="0,5,0,0" />
+                                <Setter Property="Margin" Value="0,7,0,0" />
                             </Style>
                             <Style
                                 x:Key="LeftFlyoutPresenterStyle"
                                 BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
                                 TargetType="FlyoutPresenter">
-                                <Setter Property="Margin" Value="-5,0,0,0" />
+                                <Setter Property="Margin" Value="-7,0,0,0" />
                             </Style>
                             <Style
                                 x:Key="RightFlyoutPresenterStyle"
                                 BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
                                 TargetType="FlyoutPresenter">
-                                <Setter Property="Margin" Value="5,0,0,0" />
+                                <Setter Property="Margin" Value="7,0,0,0" />
                             </Style>
                         </Grid.Resources>
                         <FlyoutBase.AttachedFlyout>
