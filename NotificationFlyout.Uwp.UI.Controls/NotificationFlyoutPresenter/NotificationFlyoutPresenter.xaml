@@ -8,6 +8,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NotificationFlyoutPresenter">
                     <Border
+                        x:Name="Root"
                         Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
                         BackgroundSizing="OuterBorderEdge"

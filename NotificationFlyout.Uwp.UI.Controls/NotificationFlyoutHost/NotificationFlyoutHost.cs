@@ -1,6 +1,8 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Numerics;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 
 namespace NotificationFlyout.Uwp.UI.Controls
 {
@@ -57,6 +59,16 @@ namespace NotificationFlyout.Uwp.UI.Controls
         protected override void OnApplyTemplate()
         {
             _root = GetTemplateChild("Root") as Grid;
+
+            if (GetTemplateChild("ContentRoot") is Grid contentRoot)
+            {
+                contentRoot.Shadow = new ThemeShadow();
+
+                var currentTranslation = contentRoot.Translation;
+                var translation = new Vector3(currentTranslation.X, currentTranslation.Y, 16.0f);
+                contentRoot.Translation = translation;
+            }
+
             _isLoaded = true;
             SetFlyoutPlacement(_placement);
         }

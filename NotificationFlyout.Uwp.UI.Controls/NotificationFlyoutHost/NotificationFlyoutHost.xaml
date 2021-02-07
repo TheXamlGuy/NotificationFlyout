@@ -45,16 +45,17 @@
                                 AreOpenCloseAnimationsEnabled="False"
                                 FlyoutPresenterStyle="{StaticResource BottomFlyoutPresenterStyle}"
                                 ShouldConstrainToRootBounds="False">
-                                <ContentControl Content="{TemplateBinding FlyoutPresenter}">
-                                    <ContentControl.Transitions>
+                                <Grid x:Name="ContentRoot">
+                                    <Grid.Transitions>
                                         <TransitionCollection>
                                             <EntranceThemeTransition
                                                 x:Name="EntranceThemeTransition"
                                                 FromHorizontalOffset="0"
                                                 FromVerticalOffset="0" />
                                         </TransitionCollection>
-                                    </ContentControl.Transitions>
-                                </ContentControl>
+                                    </Grid.Transitions>
+                                    <ContentControl Content="{TemplateBinding FlyoutPresenter}" />
+                                </Grid>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
                         <VisualStateManager.VisualStateGroups>
