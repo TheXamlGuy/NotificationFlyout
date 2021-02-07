@@ -3,34 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls"
-    CornerRadius="8">
+    CornerRadius="4"
+    RequestedTheme="Default">
     <Grid
         Width="330"
         Height="360"
         Margin="23">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <TextBlock Text="Quick lauch" />
-        <GridView Grid.Row="1" HorizontalAlignment="Center">
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-            <Button
-                Width="94"
-                Margin="6,6,3,6"
-                Content="Test" />
-            <Button
-                Width="94"
-                Margin="3,6,3,6"
-                Content="Test" />
-            <Button
-                Width="94"
-                Margin="3,6,6,6"
-                Content="Test" />
-        </GridView>
+        <ToggleSwitch x:Name="test" Toggled="ToggleSwitch_Toggled" />
     </Grid>
 </controls:NotificationFlyoutPresenter>

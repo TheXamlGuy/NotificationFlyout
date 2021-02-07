@@ -82,14 +82,20 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void OnIconPropertyChanged()
         {
+            SetIcon();
+        }
+
+        private void SetIcon()
+        {
             var shellTrayHandle = WindowHelper.GetHandle(ShellTrayHandleName);
             if (shellTrayHandle == null) return;
 
             var dpi = WindowHelper.GetDpi(shellTrayHandle);
 
             var iconSource = SystemSettingsHelper.DefaultSystemTheme == SystemTheme.Dark ? IconSource : LightIconSource;
-            using var icon = iconSource.ConvertToIcon(dpi);
+            if (iconSource == null) return;
 
+            using var icon = iconSource.ConvertToIcon(dpi);
             _xamlHost.SetNotificationIcon(icon.Handle);
         }
     }

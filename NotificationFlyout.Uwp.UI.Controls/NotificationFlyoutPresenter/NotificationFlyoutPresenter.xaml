@@ -2,8 +2,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls">
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <StaticResource x:Key="NotificationFlyoutPresenterBackground" ResourceKey="SystemControlTransientBackgroundBrush" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="HighContrast">
+            <StaticResource x:Key="NotificationFlyoutPresenterBackground" ResourceKey="SystemControlPageBackgroundChromeMediumLowBrush" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+            <StaticResource x:Key="NotificationFlyoutPresenterBackground" ResourceKey="SystemControlTransientBackgroundBrush" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
     <Style TargetType="controls:NotificationFlyoutPresenter">
-        <Setter Property="Background" Value="{StaticResource SystemControlTransientBackgroundBrush}" />
+        <Setter Property="Background" Value="{ThemeResource SystemControlTransientBackgroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NotificationFlyoutPresenter">
