@@ -10,7 +10,7 @@ Todo:
 - [x] Adapt to taskbar placement
 - [x] Use entrance animation similar to those found in the native flyouts
 - [x] Works across multiple monitors
-- [ ] Switch notification tray icon based on system theme
+- [x] Switch notification tray icon based on system theme
 - [ ] Notification tray icon context menu
 - [x] Drop shadow
 - [x] Can restyle/retemplate the notifiction flyout via the NotificationFlyoutPresenter control
