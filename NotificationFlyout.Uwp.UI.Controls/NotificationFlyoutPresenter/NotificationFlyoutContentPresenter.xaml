@@ -25,6 +25,12 @@
             <SolidColorBrush x:Key="NotificationFlyoutPresenterBackgroundBrush" Color="Green" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
+    <AcrylicBrush
+        x:Key="NotificationFlyoutPresenterBackgroundAccentBrush"
+        BackgroundSource="HostBackdrop"
+        FallbackColor="{ThemeResource SystemAccentColorDark1}"
+        TintColor="{ThemeResource SystemAccentColorDark1}"
+        TintOpacity="0.8" />
     <Style TargetType="controls:NotificationFlyoutContentPresenter">
         <Setter Property="Background" Value="{ThemeResource NotificationFlyoutPresenterBackgroundBrush}" />
         <Setter Property="Template">
@@ -54,6 +60,16 @@
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                 ContentTransitions="{TemplateBinding ContentTransitions}" />
                         </ScrollViewer>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ThemeStates">
+                                <VisualState x:Name="DefaultTheme" />
+                                <VisualState x:Name="ColorPrevalenceTheme">
+                                    <VisualState.Setters>
+                                        <Setter Target="Root.Background" Value="{ThemeResource NotificationFlyoutPresenterBackgroundAccentBrush}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

@@ -8,6 +8,7 @@ namespace NotificationFlyout.Uwp.UI.Controls
     {
         private NotificationFlyoutContentPresenter _contentPresenter;
 
+        private bool _isColorPrevalence;
         private ElementTheme _systemTheme;
 
         public NotificationFlyoutPresenter()
@@ -15,11 +16,9 @@ namespace NotificationFlyout.Uwp.UI.Controls
             DefaultStyleKey = typeof(NotificationFlyoutPresenter);       
             RegisterPropertyChangedCallback(RequestedThemeProperty, RequestedThemePropertyChanged);
         }
-
-        public void SetBackground(string theme)
+        public void UpdateFlyoutTheme(string theme, bool isColorPrevalence)
         {
-            if (_contentPresenter == null) return;
-
+            _isColorPrevalence = isColorPrevalence;
             switch (theme)
             {
                 case "Dark":
@@ -30,18 +29,21 @@ namespace NotificationFlyout.Uwp.UI.Controls
                     break;
             }
 
-            if (RequestedTheme == ElementTheme.Default)
-            {
-                _contentPresenter.SetValue(RequestedThemeProperty, _systemTheme);
-            }
+            UpdateThemeVisualState();
         }
 
         protected override void OnApplyTemplate()
         {
             _contentPresenter = GetTemplateChild("ContentPresenter") as NotificationFlyoutContentPresenter;
+            Loaded += OnLoaded;
         }
 
-        private void RequestedThemePropertyChanged(DependencyObject sender, DependencyProperty dp)
+        private void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            UpdateThemeVisualState();
+        }
+
+        private void RequestedThemePropertyChanged(DependencyObject sender, DependencyProperty dependencyProperty)
         {
             if (RequestedTheme == ElementTheme.Default)
             {
@@ -51,6 +53,17 @@ namespace NotificationFlyout.Uwp.UI.Controls
             {
                 _contentPresenter.SetValue(RequestedThemeProperty, RequestedTheme);
             }
+        }
+
+        private void UpdateThemeVisualState()
+        {
+            if (_contentPresenter == null) return;
+            if (RequestedTheme == ElementTheme.Default)
+            {
+                _contentPresenter.SetValue(RequestedThemeProperty, _systemTheme);
+            }
+
+            VisualStateManager.GoToState(_contentPresenter, _isColorPrevalence ? "ColorPrevalenceTheme" : "DefaultTheme", true);
         }
     }
 }

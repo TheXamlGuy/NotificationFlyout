@@ -15,12 +15,12 @@ namespace NotificationFlyout.Wpf.UI.Controls
         private const double WindowSize = 5;
 
         private ImageSource _defaultIconSource;
+        private bool _isLoaded;
         private ImageSource _lightIconSource;
         private NotificationIconHelper _notificationIconHelper;
         private SystemPersonalisationHelper _systemPersonalisationHelper;
         private TaskbarHelper _taskbarHelper;
         private WindowsXamlHost _xamlHost;
-        private bool _isLoaded;
 
         public NotificationFlyoutXamlHost()
         {
@@ -36,6 +36,11 @@ namespace NotificationFlyout.Wpf.UI.Controls
             if (flyoutHost != null)
             {
                 flyoutHost.FlyoutPresenter = flyoutPresenter;
+
+                var theme = _systemPersonalisationHelper.Theme.ToString();
+                var isColorPrevalence = _systemPersonalisationHelper.IsColorPrevalence;
+
+                flyoutHost.FlyoutPresenter.UpdateFlyoutTheme(theme, isColorPrevalence);
             }
         }
 
@@ -104,6 +109,25 @@ namespace NotificationFlyout.Wpf.UI.Controls
             UpdateWindow();
         }
 
+        private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
+        {
+            NewMethod(args);
+
+            UpdateIcon();
+        }
+
+        private void NewMethod(SystemPersonalisationChangedEventArgs args)
+        {
+            var flyoutHost = GetFlyoutHost();
+            if (flyoutHost != null)
+            {
+                var theme = args.Theme.ToString();
+                var isColorPrevalence = args.IsColorPrevalence;
+
+                flyoutHost.FlyoutPresenter.UpdateFlyoutTheme(theme, isColorPrevalence);
+            }
+        }
+
         private void PrepareDefaultWindow()
         {
             ShowInTaskbar = false;
@@ -123,17 +147,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
             _systemPersonalisationHelper = SystemPersonalisationHelper.Create(this);
             _systemPersonalisationHelper.ThemeChanged += OnThemeChanged;
-        }
-
-        private void OnThemeChanged(object sender, ThemeChangedEventArgs args)
-        {
-            var flyoutHost = GetFlyoutHost();
-            if (flyoutHost != null)
-            {
-                flyoutHost.FlyoutPresenter.SetBackground(args.Theme.ToString());
-            }
-
-            UpdateIcon();
         }
 
         private void PrepareTaskbar()
@@ -164,7 +177,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
             var dpi = WindowHelper.GetDpi(shellTrayHandle);
 
-            var iconSource = _systemPersonalisationHelper.SystemTheme == SystemTheme.Dark ? _defaultIconSource : _lightIconSource;
+            var iconSource = _systemPersonalisationHelper.Theme == SystemTheme.Dark ? _defaultIconSource : _lightIconSource;
             if (iconSource == null) return;
 
             using var icon = iconSource.ConvertToIcon(dpi);

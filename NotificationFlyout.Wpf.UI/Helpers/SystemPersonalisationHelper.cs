@@ -1,4 +1,5 @@
-﻿using NotificationFlyout.Wpf.UI.Extensions;
+﻿using Microsoft.Win32;
+using NotificationFlyout.Wpf.UI.Extensions;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -10,22 +11,23 @@ namespace NotificationFlyout.Wpf.UI.Helpers
     public class SystemPersonalisationHelper
     {
         private readonly UISettings _settings = new();
-
+        private readonly string PersonalizeKey = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
         private SystemTheme _currentTheme;
-
+        private bool _isColorPrevalence;
 
         private SystemPersonalisationHelper(Window window)
         {
             var source = HwndSource.FromHwnd(window.GetHandle());
             source.AddHook(new HwndSourceHook(WndProc));
 
-            _settings.ColorValuesChanged += OnColorValuesChanged;
-            _currentTheme = GetSystemTheme();
+            _currentTheme = GetTheme();
+            _isColorPrevalence = GetIsColorPrevalence();
         }
 
-        public event EventHandler<ThemeChangedEventArgs> ThemeChanged;
+        public event EventHandler<SystemPersonalisationChangedEventArgs> ThemeChanged;
 
-        public SystemTheme SystemTheme => GetSystemTheme();
+        public bool IsColorPrevalence => GetIsColorPrevalence();
+        public SystemTheme Theme => GetTheme();
 
         public static SystemPersonalisationHelper Create(Window window)
         {
@@ -35,24 +37,30 @@ namespace NotificationFlyout.Wpf.UI.Helpers
         [DllImport("user32.dll", SetLastError = true)]
         private static extern IntPtr DefWindowProcW(IntPtr handle, uint msg, IntPtr wParam, IntPtr lParam);
 
-        private SystemTheme GetSystemTheme()
+        private bool GetIsColorPrevalence()
+        {
+            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64);
+            using var subKey = baseKey.OpenSubKey(PersonalizeKey);
+            return subKey.GetValue<int>("ColorPrevalence", 0) > 0;
+        }
+
+        private SystemTheme GetTheme()
         {
             var color = _settings.GetColorValue(UIColorType.Background).ToString();
             return color == "#FFFFFFFF" ? SystemTheme.Light : SystemTheme.Dark;
         }
 
-        private void OnColorValuesChanged(UISettings sender, object args)
-        {
-            RaiseThemeChangedEvent();
-        }
-
         private void RaiseThemeChangedEvent()
         {
-            var theme = GetSystemTheme();
-            if (theme != _currentTheme)
+            var theme = GetTheme();
+            var isColorPrevalence = GetIsColorPrevalence();
+
+            if (theme != _currentTheme || _isColorPrevalence != isColorPrevalence)
             {
-                ThemeChanged?.Invoke(this, new ThemeChangedEventArgs(theme));
                 _currentTheme = theme;
+                _isColorPrevalence = isColorPrevalence;
+
+                ThemeChanged?.Invoke(this, new SystemPersonalisationChangedEventArgs(theme, isColorPrevalence));
             }
         }
 

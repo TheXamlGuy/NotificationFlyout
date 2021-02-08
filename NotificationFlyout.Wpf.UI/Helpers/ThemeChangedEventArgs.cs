@@ -2,13 +2,17 @@
 
 namespace NotificationFlyout.Wpf.UI.Helpers
 {
-    public class ThemeChangedEventArgs : EventArgs
+    public class SystemPersonalisationChangedEventArgs : EventArgs
     {
-        internal ThemeChangedEventArgs(SystemTheme theme)
+        internal SystemPersonalisationChangedEventArgs(SystemTheme theme, bool isColorPrevalence)
         {
             Theme = theme;
+            IsColorPrevalence = isColorPrevalence;
         }
 
         public SystemTheme Theme { get; private set; }
+
+        public bool IsColorPrevalence { get; private set; }
+
     }
 }
