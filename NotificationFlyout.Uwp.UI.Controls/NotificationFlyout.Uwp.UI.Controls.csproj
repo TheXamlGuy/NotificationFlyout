@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="NotificationFlyoutHost\NotificationFlyoutHost.cs" />
+    <Compile Include="NotificationFlyoutPresenter\NotificationFlyoutContentPresenter.cs" />
     <Compile Include="NotificationFlyoutPresenter\NotificationFlyoutPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\NotificationFlyout.Uwp.UI.Controls.rd.xml" />
@@ -135,6 +136,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="NotificationFlyoutHost\NotificationFlyoutHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NotificationFlyoutPresenter\NotificationFlyoutContentPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,5 +166,8 @@
   <PropertyGroup>
     <EnableTypeInfoReflection>false</EnableTypeInfoReflection>
     <EnableXBindDiagnostics>false</EnableXBindDiagnostics>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 </Project>

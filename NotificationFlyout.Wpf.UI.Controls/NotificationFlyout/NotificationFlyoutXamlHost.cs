@@ -99,11 +99,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         }
 
-        private void OnSystemThemeChanged(object sender, EventArgs args)
-        {
-            UpdateIcon();
-        }
-
         private void OnTaskbarChanged(object sender, EventArgs args)
         {
             UpdateWindow();
@@ -127,7 +122,18 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _notificationIconHelper.IconInvoked += OnIconInvoked;
 
             _systemPersonalisationHelper = SystemPersonalisationHelper.Create(this);
-            _systemPersonalisationHelper.ThemeChanged += OnSystemThemeChanged;
+            _systemPersonalisationHelper.ThemeChanged += OnThemeChanged;
+        }
+
+        private void OnThemeChanged(object sender, ThemeChangedEventArgs args)
+        {
+            var flyoutHost = GetFlyoutHost();
+            if (flyoutHost != null)
+            {
+                flyoutHost.FlyoutPresenter.SetBackground(args.Theme.ToString());
+            }
+
+            UpdateIcon();
         }
 
         private void PrepareTaskbar()
