@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace NotificationFlyout.Uwp.UI.Controls
@@ -7,10 +8,32 @@ namespace NotificationFlyout.Uwp.UI.Controls
     {
         private NotificationFlyoutContentPresenter _contentPresenter;
 
+        private ElementTheme _systemTheme;
+
         public NotificationFlyoutPresenter()
         {
-            DefaultStyleKey = typeof(NotificationFlyoutPresenter);
-            ActualThemeChanged += OnActualThemeChanged;
+            DefaultStyleKey = typeof(NotificationFlyoutPresenter);       
+            RegisterPropertyChangedCallback(RequestedThemeProperty, RequestedThemePropertyChanged);
+        }
+
+        public void SetBackground(string theme)
+        {
+            if (_contentPresenter == null) return;
+
+            switch (theme)
+            {
+                case "Dark":
+                    _systemTheme = ElementTheme.Dark;
+                    break;
+                case "Light":
+                    _systemTheme = ElementTheme.Light;
+                    break;
+            }
+
+            if (RequestedTheme == ElementTheme.Default)
+            {
+                _contentPresenter.SetValue(RequestedThemeProperty, _systemTheme);
+            }
         }
 
         protected override void OnApplyTemplate()
@@ -18,30 +41,16 @@ namespace NotificationFlyout.Uwp.UI.Controls
             _contentPresenter = GetTemplateChild("ContentPresenter") as NotificationFlyoutContentPresenter;
         }
 
-        public void SetBackground(string theme)
+        private void RequestedThemePropertyChanged(DependencyObject sender, DependencyProperty dp)
         {
-            if (_contentPresenter == null) return;
             if (RequestedTheme == ElementTheme.Default)
             {
-                ActualThemeChanged -= OnActualThemeChanged;
-
-                switch (theme)
-                {
-                    case "Dark":
-                        _contentPresenter.SetValue(RequestedThemeProperty, ElementTheme.Dark);
-                        break;
-                    case "Light":
-                        _contentPresenter.SetValue(RequestedThemeProperty, ElementTheme.Light);
-                        break;
-                }
-
-                ActualThemeChanged += OnActualThemeChanged;
+                _contentPresenter.SetValue(RequestedThemeProperty, _systemTheme);
             }
-        }
-
-        private void OnActualThemeChanged(FrameworkElement sender, object args)
-        {
-            _contentPresenter.SetValue(RequestedThemeProperty, RequestedTheme);
+            else
+            {
+                _contentPresenter.SetValue(RequestedThemeProperty, RequestedTheme);
+            }
         }
     }
 }
