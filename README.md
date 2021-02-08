@@ -14,4 +14,4 @@ Todo:
 - [ ] Use current system accent if user chose to use accent color on background surfaces
 - [x] Remove the gap between the taskbar and the flyout
 
-Attributions to and inspiration for the taskbar api from the Ear Trumpet project! [Ear Trumpet project!](https://github.com/File-New-Project/EarTrumpet)
+Attributions to and inspiration for the taskbar api from the [Ear Trumpet project!](https://github.com/File-New-Project/EarTrumpet)
