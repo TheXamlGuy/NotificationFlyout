@@ -37,8 +37,8 @@ namespace NotificationFlyout.Wpf.UI.Helpers
 
         private SystemTheme GetSystemTheme()
         {
-            var uiTheme = _settings.GetColorValue(UIColorType.Background).ToString();
-            return uiTheme == "#FFFFFFFF" ? SystemTheme.Light : SystemTheme.Dark;
+            var color = _settings.GetColorValue(UIColorType.Background).ToString();
+            return color == "#FFFFFFFF" ? SystemTheme.Light : SystemTheme.Dark;
         }
 
         private void OnColorValuesChanged(UISettings sender, object args)
