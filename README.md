@@ -1,9 +1,10 @@
+# Notification Flyout #
 A Notification Flyout that looks and feels exactly like the native Volume, Network, and Battery flyouts. Built with WPF and UWP with XamlIslands using the UWP Flyout control for the displaying of the flyout content.
 
-Demo:  
+# Demo #
 [![](http://img.youtube.com/vi/8EoZ4pGWTkY/0.jpg)](http://www.youtube.com/watch?v=8EoZ4pGWTkY "Notification flyout demo")
 
-Todo:
+# Todo #
 - [x] Adapt to taskbar placement
 - [x] Use entrance animation similar to those found in the native flyouts
 - [x] Works across multiple monitors
@@ -14,4 +15,5 @@ Todo:
 - [ ] Use current system accent if user chose to use accent color on background surfaces
 - [x] Remove the gap between the taskbar and the flyout
 
-Attributions to and inspiration for the taskbar api from the [Ear Trumpet project!](https://github.com/File-New-Project/EarTrumpet)
+# Credits #
+Attributions to and inspiration for the taskbar API from the [Ear Trumpet project!](https://github.com/File-New-Project/EarTrumpet)
