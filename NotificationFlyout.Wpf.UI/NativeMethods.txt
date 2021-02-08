@@ -9,3 +9,5 @@ RegisterWindowMessage
 FindWindow
 SHAppBarMessage
 SetWindowPos
+GetWindowLong
+SetWindowLong

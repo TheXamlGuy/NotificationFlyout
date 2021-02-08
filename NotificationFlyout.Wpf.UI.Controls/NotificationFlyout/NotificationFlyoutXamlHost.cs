@@ -96,7 +96,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
             UpdateWindow();
             UpdateIcon();
-
+            this.Hidden();
         }
 
         private void OnTaskbarChanged(object sender, EventArgs args)
