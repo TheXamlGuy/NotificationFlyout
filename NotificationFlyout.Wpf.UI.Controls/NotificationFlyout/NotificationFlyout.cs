@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace NotificationFlyout.Wpf.UI.Controls
 {
-    [ContentProperty(nameof(FlyoutPresenter))]
+    [ContentProperty(nameof(Content))]
     public class NotificationFlyout : DependencyObject
     {
         public static readonly DependencyProperty IconSourceProperty =
@@ -18,9 +18,9 @@ namespace NotificationFlyout.Wpf.UI.Controls
               typeof(ImageSource), typeof(NotificationFlyout),
               new PropertyMetadata(null, OnIconPropertyChanged));
 
-        public static DependencyProperty FlyoutPresenterProperty =
-            DependencyProperty.Register(nameof(FlyoutPresenter),
-                 typeof(NotificationFlyoutPresenter), typeof(NotificationFlyout),
+        public static DependencyProperty ContentProperty =
+            DependencyProperty.Register(nameof(Content),
+                 typeof(Windows.UI.Xaml.UIElement), typeof(NotificationFlyout),
                  new PropertyMetadata(null, OnFlyoutPresenterPropertyChanged));
 
         private readonly NotificationFlyoutXamlHost _xamlHost;
@@ -31,10 +31,10 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _xamlHost.Show();
         }
 
-        public NotificationFlyoutPresenter FlyoutPresenter
+        public Windows.UI.Xaml.UIElement Content
         {
-            get => (NotificationFlyoutPresenter)GetValue(FlyoutPresenterProperty);
-            set => SetValue(FlyoutPresenterProperty, value);
+            get => (Windows.UI.Xaml.UIElement)GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
         }
 
         public ImageSource IconSource
@@ -73,7 +73,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void OnFlyoutPresenterPropertyChanged()
         {
-            _xamlHost.SetFlyoutPresenter(FlyoutPresenter);
+            _xamlHost.SetFlyoutContent(Content);
         }
 
         private void OnIconPropertyChanged()

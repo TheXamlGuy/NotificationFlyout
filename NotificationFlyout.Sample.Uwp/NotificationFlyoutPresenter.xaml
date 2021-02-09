@@ -1,4 +1,4 @@
-﻿<controls:NotificationFlyoutPresenter
+﻿<UserControl
     x:Class="NotificationFlyout.Sample.Uwp.NotificationFlyoutPresenter"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -21,4 +21,4 @@
         <ToggleButton Margin="0,0,0,8" />
         <CalendarView Margin="0,0,0,8" />
     </StackPanel>
-</controls:NotificationFlyoutPresenter>
+</UserControl>

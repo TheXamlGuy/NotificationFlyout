@@ -6,10 +6,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NotificationFlyoutPresenter">
-                    <controls:NotificationFlyoutContentPresenter
+                    <ContentPresenter
                         x:Name="ContentPresenter"
-                        Width="200"
-                        Height="200"
                         Content="{TemplateBinding Content}"
                         ContentTemplate="{TemplateBinding ContentTemplate}" />
                 </ControlTemplate>

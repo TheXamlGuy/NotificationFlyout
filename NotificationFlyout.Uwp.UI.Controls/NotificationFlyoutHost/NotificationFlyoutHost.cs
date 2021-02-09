@@ -8,9 +8,9 @@ namespace NotificationFlyout.Uwp.UI.Controls
 {
     public class NotificationFlyoutHost : Control
     {
-        public static readonly DependencyProperty FlyoutPresenterProperty =
-            DependencyProperty.Register(nameof(FlyoutPresenter),
-                typeof(NotificationFlyoutPresenter), typeof(NotificationFlyoutHost),
+        public static readonly DependencyProperty ContentProperty =
+            DependencyProperty.Register(nameof(Content),
+                typeof(UIElement), typeof(NotificationFlyoutHost),
                 new PropertyMetadata(null));
 
         private bool _isLoaded;
@@ -22,10 +22,10 @@ namespace NotificationFlyout.Uwp.UI.Controls
             DefaultStyleKey = typeof(NotificationFlyoutHost);
         }
 
-        public NotificationFlyoutPresenter FlyoutPresenter
+        public UIElement Content
         {
-            get => (NotificationFlyoutPresenter)GetValue(FlyoutPresenterProperty);
-            set => SetValue(FlyoutPresenterProperty, value);
+            get => (UIElement)GetValue(ContentProperty);
+            set => SetValue(ContentProperty, value);
         }
 
         public void HideFlyout()
@@ -59,7 +59,6 @@ namespace NotificationFlyout.Uwp.UI.Controls
         protected override void OnApplyTemplate()
         {
             _root = GetTemplateChild("Root") as Grid;
-
             if (GetTemplateChild("ContentRoot") is Grid contentRoot)
             {
                 contentRoot.Shadow = new ThemeShadow();

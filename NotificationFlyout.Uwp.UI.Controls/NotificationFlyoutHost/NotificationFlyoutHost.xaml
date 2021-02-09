@@ -54,7 +54,7 @@
                                                 FromVerticalOffset="0" />
                                         </TransitionCollection>
                                     </Grid.Transitions>
-                                    <ContentControl Content="{TemplateBinding FlyoutPresenter}" />
+                                    <controls:NotificationFlyoutContentPresenter Content="{TemplateBinding Content}" />
                                 </Grid>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>

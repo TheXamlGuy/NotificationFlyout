@@ -30,17 +30,12 @@ namespace NotificationFlyout.Wpf.UI.Controls
             Loaded += OnLoaded;
         }
 
-        public void SetFlyoutPresenter(NotificationFlyoutPresenter flyoutPresenter)
+        public void SetFlyoutContent(Windows.UI.Xaml.UIElement content)
         {
             var flyoutHost = GetFlyoutHost();
             if (flyoutHost != null)
             {
-                flyoutHost.FlyoutPresenter = flyoutPresenter;
-
-                var theme = _systemPersonalisationHelper.Theme.ToString();
-                var isColorPrevalence = _systemPersonalisationHelper.IsColorPrevalence;
-
-                flyoutHost.FlyoutPresenter.UpdateFlyoutTheme(theme, isColorPrevalence);
+                flyoutHost.Content = content;
             }
         }
 
@@ -111,20 +106,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
         {
-            NewMethod(args);
             UpdateIcon();
-        }
-
-        private void NewMethod(SystemPersonalisationChangedEventArgs args)
-        {
-            var flyoutHost = GetFlyoutHost();
-            if (flyoutHost != null)
-            {
-                var theme = args.Theme.ToString();
-                var isColorPrevalence = args.IsColorPrevalence;
-
-                flyoutHost.FlyoutPresenter.UpdateFlyoutTheme(theme, isColorPrevalence);
-            }
         }
 
         private void PrepareDefaultWindow()
