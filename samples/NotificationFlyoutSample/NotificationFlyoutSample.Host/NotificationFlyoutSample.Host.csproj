@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Platforms>x64</Platforms>
+    <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
+    <StartupObject>NotificationFlyoutSample.Host.Program</StartupObject>
+    <EnableTypeInfoReflection>false</EnableTypeInfoReflection>
+    <EnableXBindDiagnostics>false</EnableXBindDiagnostics>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Icon-Light.ico" />
+    <None Remove="Assets\Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.XamlHost" Version="6.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj" />
+    <ProjectReference Include="..\..\..\src\NotificationFlyout.Wpf.UI.Controls\NotificationFlyout.Wpf.UI.Controls.csproj" />
+    <ProjectReference Include="..\..\..\src\NotificationFlyout.Wpf.UI\NotificationFlyout.Wpf.UI.csproj" />
+    <ProjectReference Include="..\NotificationFlyoutSample\NotificationFlyoutSample.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icon-Light.ico" />
+    <Resource Include="Assets\Icon.ico" />
+  </ItemGroup>
+  
+</Project>
