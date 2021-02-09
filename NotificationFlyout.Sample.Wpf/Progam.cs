@@ -8,7 +8,7 @@ namespace NotificationFlyout.Sample.Wpf
         public static void Main()
         {
             using (new XamlHost.App())
-            {          
+            {
                 var app = new App();
                 new SampleNotificationFlyout();
                 app.Run();

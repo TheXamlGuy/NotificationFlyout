@@ -1,9 +1,0 @@
-<Project Sdk="MSBuild.Sdk.Extras/3.0.22">
-  <PropertyGroup>
-    <TargetFrameworks>uap10.0.19041</TargetFrameworks>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj" />
-  </ItemGroup>
-</Project>
