@@ -2,7 +2,7 @@
     x:Class="NotificationFlyout.Sample.Wpf.SampleNotificationFlyout"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:sample="clr-namespace:NotificationFlyout.Sample;assembly=NotificationFlyout.Sample"
+    xmlns:sample="clr-namespace:NotificationFlyout.Sample.Uwp;assembly=NotificationFlyout.Sample.Uwp"
     IconSource="/Assets/Icon.ico"
     LightIconSource="/Assets/Icon-Light.ico">
     <sample:NotificationFlyoutPresenter />

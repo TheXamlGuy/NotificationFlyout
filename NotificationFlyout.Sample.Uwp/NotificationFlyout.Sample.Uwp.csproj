@@ -1,0 +1,21 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+  <PropertyGroup>
+    <TargetFrameworks>uap10.0.19041</TargetFrameworks>
+    <Platforms>AnyCPU;x64</Platforms>
+    <EnableTypeInfoReflection>false</EnableTypeInfoReflection>
+    <EnableXBindDiagnostics>false</EnableXBindDiagnostics>
+    <LangVersion>9.0</LangVersion>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="NotificationFlyoutPresenter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>

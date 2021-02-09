@@ -112,7 +112,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
         private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
         {
             NewMethod(args);
-
             UpdateIcon();
         }
 

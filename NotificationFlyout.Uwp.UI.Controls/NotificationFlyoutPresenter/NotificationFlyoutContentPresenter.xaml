@@ -28,8 +28,8 @@
     <AcrylicBrush
         x:Key="NotificationFlyoutPresenterBackgroundAccentBrush"
         BackgroundSource="HostBackdrop"
-        FallbackColor="{ThemeResource SystemAccentColorDark1}"
-        TintColor="{ThemeResource SystemAccentColorDark1}"
+        FallbackColor="{StaticResource SystemAccentColorDark1}"
+        TintColor="{StaticResource SystemAccentColorDark1}"
         TintOpacity="0.8" />
     <Style TargetType="controls:NotificationFlyoutContentPresenter">
         <Setter Property="Background" Value="{ThemeResource NotificationFlyoutPresenterBackgroundBrush}" />

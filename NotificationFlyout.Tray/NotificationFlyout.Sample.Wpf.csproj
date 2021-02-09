@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NotificationFlyout.Sample\NotificationFlyout.Sample.csproj" />
+    <ProjectReference Include="..\NotificationFlyout.Sample.Uwp\NotificationFlyout.Sample.Uwp.csproj" />
     <ProjectReference Include="..\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj" />
     <ProjectReference Include="..\NotificationFlyout.Wpf.UI.Controls\NotificationFlyout.Wpf.UI.Controls.csproj" />
     <ProjectReference Include="..\NotificationFlyout.XamlHost\NotificationFlyout.XamlHost.csproj" />

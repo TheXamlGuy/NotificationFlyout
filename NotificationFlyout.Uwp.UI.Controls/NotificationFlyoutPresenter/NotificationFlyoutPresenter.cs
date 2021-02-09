@@ -1,4 +1,5 @@
-﻿using Windows.UI.Popups;
+﻿using System.Linq;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -16,6 +17,7 @@ namespace NotificationFlyout.Uwp.UI.Controls
             DefaultStyleKey = typeof(NotificationFlyoutPresenter);       
             RegisterPropertyChangedCallback(RequestedThemeProperty, RequestedThemePropertyChanged);
         }
+
         public void UpdateFlyoutTheme(string theme, bool isColorPrevalence)
         {
             _isColorPrevalence = isColorPrevalence;
@@ -34,7 +36,7 @@ namespace NotificationFlyout.Uwp.UI.Controls
 
         protected override void OnApplyTemplate()
         {
-            _contentPresenter = GetTemplateChild("ContentPresenter") as NotificationFlyoutContentPresenter;
+            var _contentPresenter = GetTemplateChild("ContentPresenter") as NotificationFlyoutContentPresenter;
             Loaded += OnLoaded;
         }
 
