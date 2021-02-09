@@ -21,7 +21,7 @@ namespace NotificationFlyout.Wpf.UI.Helpers
         {
             _windowHandle = window.GetHandle();
 
-            var source = HwndSource.FromHwnd(_windowHandle);
+            HwndSource source = HwndSource.FromHwnd(_windowHandle);
             source.AddHook(new HwndSourceHook(WndProc));
 
             CreateNotificationIcon();

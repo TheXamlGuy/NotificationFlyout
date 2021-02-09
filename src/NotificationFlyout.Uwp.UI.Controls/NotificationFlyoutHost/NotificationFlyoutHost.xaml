@@ -54,14 +54,10 @@
                                                 FromVerticalOffset="0" />
                                         </TransitionCollection>
                                     </Grid.Transitions>
-                                    <controls:NotificationFlyoutContentPresenter Content="{TemplateBinding Content}" />
+                                    <controls:NotificationFlyoutPresenter Content="{TemplateBinding Content}" />
                                 </Grid>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
-                        <Border
-                            Width="300"
-                            Height="400"
-                            Background="Blue" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="PlacementStates">
                                 <VisualState x:Name="Bottom">

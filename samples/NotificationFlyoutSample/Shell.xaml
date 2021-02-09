@@ -7,6 +7,11 @@
         Width="330"
         Height="500"
         Margin="24">
+        <ComboBox x:Name="Theme" SelectionChanged="Theme_SelectionChanged">
+            <ComboBoxItem Content="Default" />
+            <ComboBoxItem Content="Dark" />
+            <ComboBoxItem Content="Light" />
+        </ComboBox>
         <Button Margin="0,0,0,8" Content="Button" />
         <Slider Margin="0,0,0,8" />
         <TextBox Margin="0,0,0,8" />

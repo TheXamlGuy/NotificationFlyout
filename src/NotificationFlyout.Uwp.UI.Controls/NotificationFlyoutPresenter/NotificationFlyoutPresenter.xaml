@@ -31,11 +31,11 @@
         FallbackColor="{StaticResource SystemAccentColorDark1}"
         TintColor="{StaticResource SystemAccentColorDark1}"
         TintOpacity="0.8" />
-    <Style TargetType="controls:NotificationFlyoutContentPresenter">
+    <Style TargetType="controls:NotificationFlyoutPresenter">
         <Setter Property="Background" Value="{ThemeResource NotificationFlyoutPresenterBackgroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:NotificationFlyoutContentPresenter">
+                <ControlTemplate TargetType="controls:NotificationFlyoutPresenter">
                     <Border
                         x:Name="Root"
                         Padding="{TemplateBinding Padding}"
@@ -52,7 +52,8 @@
                             VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
                             VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
                             ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
-                            <ContentPresenter
+                            <ContentControl
+                                x:Name="ContentPresenter"
                                 Margin="{TemplateBinding Padding}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
