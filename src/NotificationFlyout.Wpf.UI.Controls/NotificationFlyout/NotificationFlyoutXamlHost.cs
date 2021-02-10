@@ -161,6 +161,8 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
             _xamlHost.Height = 0;
             _xamlHost.Width = 0;
+            _xamlHost.HorizontalAlignment = HorizontalAlignment.Stretch;
+            _xamlHost.VerticalAlignment = VerticalAlignment.Stretch;
 
             Content = _xamlHost;
         }

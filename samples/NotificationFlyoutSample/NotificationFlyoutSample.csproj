@@ -184,5 +184,6 @@
   <PropertyGroup>
     <EnableTypeInfoReflection>false</EnableTypeInfoReflection>
     <EnableXBindDiagnostics>false</EnableXBindDiagnostics>
+    <MSBuildWarningsAsMessages>CS8305</MSBuildWarningsAsMessages>
   </PropertyGroup>
 </Project>
