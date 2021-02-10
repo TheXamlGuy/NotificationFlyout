@@ -36,19 +36,17 @@ namespace NotificationFlyout.Wpf.UI.Controls
             {
                 _flyout.ContentChanged -= OnFlyoutContentChanged;
                 _flyout.IconSourceChanged -= OnFlyoutIconSourceChanged;
+                _flyout.RequestedThemeChanged -= OnFlyoutIconSourceChanged;
             }
 
             _flyout = flyout;
             _flyout.ContentChanged += OnFlyoutContentChanged;
             _flyout.IconSourceChanged += OnFlyoutIconSourceChanged;
+            _flyout.RequestedThemeChanged += OnFlyoutRequestedThemeChanged;
 
+            UpdateIcons();
             UpdateFlyoutContent();
-            UpdateIcons();
-        }
-
-        private void OnFlyoutIconSourceChanged(object sender, EventArgs args)
-        {
-            UpdateIcons();
+            UpdateRequestedTheme();
         }
 
         internal void HideFlyout()
@@ -89,6 +87,16 @@ namespace NotificationFlyout.Wpf.UI.Controls
         private void OnFlyoutContentChanged(object sender, EventArgs args)
         {
             UpdateFlyoutContent();
+        }
+
+        private void OnFlyoutIconSourceChanged(object sender, EventArgs args)
+        {
+            UpdateIcons();
+        }
+
+        private void OnFlyoutRequestedThemeChanged(object sender, EventArgs args)
+        {
+            UpdateRequestedTheme();
         }
 
         private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
@@ -192,6 +200,18 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _notificationIconHelper.SetIcon(icon.Handle);
         }
 
+        private void UpdateRequestedTheme()
+        {
+            if (_flyout == null) return;
+
+            var requestedTheme = _flyout.RequestedTheme;
+
+            var flyoutHost = GetFlyoutHost();
+            if (flyoutHost != null)
+            {
+                flyoutHost.RequestedTheme = requestedTheme;
+            }
+        }
         private void UpdateWindow()
         {
             if (!_isLoaded) return;
