@@ -15,5 +15,8 @@ A Notification Flyout that looks and feels exactly like the native Volume, Netwo
 - [ ] Use current system accent if user chose to use accent color on background surfaces
 - [x] Remove the gap between the taskbar and the flyout
 
+# Limitations and workarounds #
+All limitions found in this [article](https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/xaml-islands#limitations-and-workarounds) will affect how you build an app using this control. We have of course have added a work around for when the Windows theme is changed by the user 🎉!
+
 # Credits #
-Attributions to and inspiration for the taskbar API from the [Ear Trumpet project!](https://github.com/File-New-Project/EarTrumpet)
+Attributions to and inspiration for the ta)skbar API from the [Ear Trumpet project!](https://github.com/File-New-Project/EarTrumpet)
