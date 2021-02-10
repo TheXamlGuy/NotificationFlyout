@@ -6,6 +6,9 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     IconSource="/Assets/Icon.ico"
     LightIconSource="/Assets/Icon-Light.ico">
+    <controls:NotificationFlyout.ContextMenuItems>
+        <MenuFlyoutItem Text="Close" />
+    </controls:NotificationFlyout.ContextMenuItems>
     <StackPanel Margin="24">
         <ComboBox
             x:Name="Theme"

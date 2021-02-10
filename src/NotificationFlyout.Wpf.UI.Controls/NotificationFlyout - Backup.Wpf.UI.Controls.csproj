@@ -1,0 +1,25 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
+    <Platforms>AnyCPU;x64</Platforms>
+    <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Toolkit.Wpf.UI.XamlHost" Version="6.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj" />
+    <ProjectReference Include="..\NotificationFlyout.Uwp.UI\NotificationFlyout.Uwp.UI.csproj" />
+    <ProjectReference Include="..\NotificationFlyout.Wpf.UI\NotificationFlyout.Wpf.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.VCRTForwarders.140" Version="1.0.7" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
@@ -28,14 +32,30 @@ namespace NotificationFlyout.Uwp.UI.Controls
                  typeof(UIElement), typeof(NotificationFlyout),
                  new PropertyMetadata(null, OnContentPropertyChanged));
 
+        public static DependencyProperty ContextMenuItemsProperty =
+            DependencyProperty.Register(nameof(ContextMenuItems),
+                 typeof(IList<MenuFlyoutItemBase>), typeof(NotificationFlyout),
+                 new PropertyMetadata(null));
+
         internal event EventHandler ContentChanged;
-        internal event EventHandler RequestedThemeChanged;
         internal event EventHandler IconSourceChanged;
+        internal event EventHandler RequestedThemeChanged;
+
+        public NotificationFlyout()
+        {
+            ContextMenuItems = new ObservableCollection<MenuFlyoutItemBase>();
+        }
 
         public UIElement Content
         {
             get => (UIElement)GetValue(ContentProperty);
             set => SetValue(ContentProperty, value);
+        }
+
+        public IList<MenuFlyoutItemBase> ContextMenuItems
+        {
+            get => (IList<MenuFlyoutItemBase>)GetValue(ContextMenuItemsProperty);
+            set => SetValue(ContextMenuItemsProperty, value);
         }
 
         public ImageSource IconSource

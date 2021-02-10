@@ -6,7 +6,7 @@ using Windows.UI.Xaml.Media;
 
 namespace NotificationFlyout.Uwp.UI.Controls
 {
-    public class NotificationFlyoutHost : Control
+    internal class NotificationFlyoutHost : Control
     {
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register(nameof(Content),

@@ -88,6 +88,7 @@ namespace NotificationFlyout.Wpf.UI
 
             return monitorData;
         }
+
         private Rect GetWorkingArea()
         {
             if (!_multiMonitorSupport || _monitorHandle == (IntPtr)PRIMARY_MONITOR)

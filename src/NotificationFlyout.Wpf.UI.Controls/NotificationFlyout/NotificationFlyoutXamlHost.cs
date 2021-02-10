@@ -1,32 +1,29 @@
-﻿using Microsoft.Toolkit.Wpf.UI.XamlHost;
-using NotificationFlyout.Uwp.UI.Controls;
+﻿using NotificationFlyout.Uwp.UI.Controls;
 using NotificationFlyout.Wpf.UI.Extensions;
 using NotificationFlyout.Uwp.UI.Extensions;
 using NotificationFlyout.Wpf.UI.Helpers;
 using System;
 using System.Windows;
-using System.Windows.Media;
 using Windows.UI.Xaml.Controls.Primitives;
+using System.Windows.Input;
 
 namespace NotificationFlyout.Wpf.UI.Controls
 {
-    internal class NotificationFlyoutXamlHost : Window
+    internal class NotificationFlyoutXamlHostWindow : XamlHostWindow<NotificationFlyoutHost>
     {
         private const string ShellTrayHandleName = "Shell_TrayWnd";
-        private const double WindowSize = 5;
 
+        private ContextMenuXamlHost _contextMenuXamlHost;
         private Uwp.UI.Controls.NotificationFlyout _flyout;
+
         private bool _isLoaded;
+
         private NotificationIconHelper _notificationIconHelper;
         private SystemPersonalisationHelper _systemPersonalisationHelper;
         private TaskbarHelper _taskbarHelper;
-        private WindowsXamlHost _xamlHost;
 
-        public NotificationFlyoutXamlHost()
+        public NotificationFlyoutXamlHostWindow()
         {
-            PrepareDefaultWindow();
-            PrepareWindowsXamlHost();
-
             Loaded += OnLoaded;
         }
 
@@ -51,7 +48,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         internal void HideFlyout()
         {
-            var flyoutHost = GetFlyoutHost();
+            var flyoutHost = GetHostContent();
             if (flyoutHost != null)
             {
                 flyoutHost.HideFlyout();
@@ -60,7 +57,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         internal void ShowFlyout()
         {
-            var flyoutHost = GetFlyoutHost();
+            var flyoutHost = GetHostContent();
             if (flyoutHost != null)
             {
                 var taskbarState = _taskbarHelper.GetCurrentState();
@@ -78,10 +75,9 @@ namespace NotificationFlyout.Wpf.UI.Controls
             }
         }
 
-        private NotificationFlyoutHost GetFlyoutHost()
+        protected override void OnDeactivated(EventArgs args)
         {
-            if (_xamlHost == null) return null;
-            return _xamlHost.GetUwpInternalObject() as NotificationFlyoutHost;
+            HideFlyout();
         }
 
         private void OnFlyoutContentChanged(object sender, EventArgs args)
@@ -101,7 +97,15 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
         {
-            ShowFlyout();
+            if (args.MouseButton == MouseButton.Left)
+            {
+                ShowFlyout();
+            }
+
+            if (args.MouseButton == MouseButton.Right)
+            {
+                ShowContextMenuFlyout();
+            }
         }
 
         private void OnLoaded(object sender, RoutedEventArgs args)
@@ -112,7 +116,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _isLoaded = true;
 
             UpdateWindow();
-            this.Hidden();
         }
 
         private void OnTaskbarChanged(object sender, EventArgs args)
@@ -125,20 +128,11 @@ namespace NotificationFlyout.Wpf.UI.Controls
             UpdateIcons();
         }
 
-        private void PrepareDefaultWindow()
-        {
-            ShowInTaskbar = false;
-            ShowActivated = false;
-            WindowStyle = WindowStyle.None;
-            ResizeMode = ResizeMode.NoResize;
-            AllowsTransparency = true;
-            Background = new SolidColorBrush(Colors.Transparent);
-            Height = WindowSize;
-            Width = WindowSize;
-        }
-
         private void PrepareNotificationIcon()
         {
+            _contextMenuXamlHost = new ContextMenuXamlHost();
+            _contextMenuXamlHost.Show();
+
             _notificationIconHelper = NotificationIconHelper.Create(this);
             _notificationIconHelper.IconInvoked += OnIconInvoked;
 
@@ -151,20 +145,9 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _taskbarHelper = TaskbarHelper.Create(this);
             _taskbarHelper.TaskbarChanged += OnTaskbarChanged;
         }
-
-        private void PrepareWindowsXamlHost()
+        private void ShowContextMenuFlyout()
         {
-            _xamlHost = new WindowsXamlHost
-            {
-                InitialTypeName = typeof(NotificationFlyoutHost).FullName
-            };
-
-            _xamlHost.Height = 0;
-            _xamlHost.Width = 0;
-            _xamlHost.HorizontalAlignment = HorizontalAlignment.Stretch;
-            _xamlHost.VerticalAlignment = VerticalAlignment.Stretch;
-
-            Content = _xamlHost;
+            _contextMenuXamlHost.ShowContextMenuFlyout();
         }
 
         private void UpdateFlyoutContent()
@@ -174,7 +157,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             var content = _flyout.Content;
             if (content == null) return;
 
-            var flyoutHost = GetFlyoutHost();
+            var flyoutHost = GetHostContent();
             if (flyoutHost != null)
             {
                 flyoutHost.Content = content;
@@ -208,7 +191,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
             var requestedTheme = _flyout.RequestedTheme;
 
-            var flyoutHost = GetFlyoutHost();
+            var flyoutHost = GetHostContent();
             if (flyoutHost != null)
             {
                 flyoutHost.RequestedTheme = requestedTheme;
@@ -219,7 +202,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
         {
             if (!_isLoaded) return;
 
-            var flyoutHost = GetFlyoutHost();
+            var flyoutHost = GetHostContent();
             if (flyoutHost == null) return;
 
             var taskbarState = _taskbarHelper.GetCurrentState();
@@ -231,7 +214,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             var windowHeight = WindowSize * this.DpiY();
 
             double top, left, height, width;
-       
+
             var taskbarRect = taskbarState.Rect;
             switch (taskbarState.Position)
             {

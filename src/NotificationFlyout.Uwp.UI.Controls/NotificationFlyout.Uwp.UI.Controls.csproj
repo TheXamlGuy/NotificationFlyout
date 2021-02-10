@@ -8,6 +8,13 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="NotificationFlyout\ContextMenuFlyoutHost.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="NotificationFlyout\ContextMenuFlyoutHost.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NotificationFlyout\NotificationFlyoutHost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -11,11 +11,11 @@ namespace NotificationFlyout.Wpf.UI.Controls
                 typeof(Uwp.UI.Controls.NotificationFlyout), typeof(NotificationFlyoutApplication),
                 new PropertyMetadata(null, OnFlyoutPropertyChanged));
 
-        private readonly NotificationFlyoutXamlHost _xamlHost;
+        private readonly NotificationFlyoutXamlHostWindow _xamlHost;
 
         public NotificationFlyoutApplication()
         {
-            _xamlHost = new NotificationFlyoutXamlHost();
+            _xamlHost = new NotificationFlyoutXamlHostWindow();
             _xamlHost.Show();
         }
 

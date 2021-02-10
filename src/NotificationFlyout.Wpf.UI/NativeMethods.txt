@@ -1,13 +1,13 @@
 ﻿Shell_NotifyIcon
-GetDpiForWindow
-FindWindow
 GetSystemMetricsForDpi
 DefWindowProcW
 GetSystemMetrics
 MonitorFromWindow
 RegisterWindowMessage
-FindWindow
 SHAppBarMessage
 SetWindowPos
 GetWindowLong
 SetWindowLong
+GetDpiForWindow
+FindWindow
+GetPhysicalCursorPos
