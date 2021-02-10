@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Wpf.UI.XamlHost;
 using NotificationFlyout.Uwp.UI.Controls;
 using NotificationFlyout.Wpf.UI.Extensions;
+using NotificationFlyout.Uwp.UI.Extensions;
 using NotificationFlyout.Wpf.UI.Helpers;
 using System;
 using System.Windows;
@@ -14,9 +15,8 @@ namespace NotificationFlyout.Wpf.UI.Controls
         private const string ShellTrayHandleName = "Shell_TrayWnd";
         private const double WindowSize = 5;
 
-        private ImageSource _defaultIconSource;
+        private Uwp.UI.Controls.NotificationFlyout _flyout;
         private bool _isLoaded;
-        private ImageSource _lightIconSource;
         private NotificationIconHelper _notificationIconHelper;
         private SystemPersonalisationHelper _systemPersonalisationHelper;
         private TaskbarHelper _taskbarHelper;
@@ -30,13 +30,25 @@ namespace NotificationFlyout.Wpf.UI.Controls
             Loaded += OnLoaded;
         }
 
-        public void SetFlyoutContent(Windows.UI.Xaml.UIElement content)
+        public void SetFlyout(Uwp.UI.Controls.NotificationFlyout flyout)
         {
-            var flyoutHost = GetFlyoutHost();
-            if (flyoutHost != null)
+            if (_flyout != null)
             {
-                flyoutHost.Content = content;
+                _flyout.ContentChanged -= OnFlyoutContentChanged;
+                _flyout.IconSourceChanged -= OnFlyoutIconSourceChanged;
             }
+
+            _flyout = flyout;
+            _flyout.ContentChanged += OnFlyoutContentChanged;
+            _flyout.IconSourceChanged += OnFlyoutIconSourceChanged;
+
+            UpdateFlyoutContent();
+            UpdateIcons();
+        }
+
+        private void OnFlyoutIconSourceChanged(object sender, EventArgs args)
+        {
+            UpdateIcons();
         }
 
         internal void HideFlyout()
@@ -46,14 +58,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
             {
                 flyoutHost.HideFlyout();
             }
-        }
-
-        internal void SetIcons(ImageSource defaultIconSource, ImageSource lightIconSource)
-        {
-            _defaultIconSource = defaultIconSource;
-            _lightIconSource = lightIconSource;
-
-            UpdateIcon();
         }
 
         internal void ShowFlyout()
@@ -82,6 +86,11 @@ namespace NotificationFlyout.Wpf.UI.Controls
             return _xamlHost.GetUwpInternalObject() as NotificationFlyoutHost;
         }
 
+        private void OnFlyoutContentChanged(object sender, EventArgs args)
+        {
+            UpdateFlyoutContent();
+        }
+
         private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
         {
             ShowFlyout();
@@ -95,7 +104,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _isLoaded = true;
 
             UpdateWindow();
-            UpdateIcon();
             this.Hidden();
         }
 
@@ -106,7 +114,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
         {
-            UpdateIcon();
+            UpdateIcons();
         }
 
         private void PrepareDefaultWindow()
@@ -149,9 +157,28 @@ namespace NotificationFlyout.Wpf.UI.Controls
             Content = _xamlHost;
         }
 
-        private void UpdateIcon()
+        private void UpdateFlyoutContent()
+        {
+            if (_flyout == null) return;
+
+            var content = _flyout.Content;
+            if (content == null) return;
+
+            var flyoutHost = GetFlyoutHost();
+            if (flyoutHost != null)
+            {
+                flyoutHost.Content = content;
+            }
+        }
+
+        private void UpdateIcons()
         {
             if (!_isLoaded) return;
+
+            if (_flyout == null) return;
+
+            var _defaultIconSource = _flyout.IconSource;
+            var _lightIconSource = _flyout.LightIconSource;
 
             var shellTrayHandle = WindowHelper.GetHandle(ShellTrayHandleName);
             if (shellTrayHandle == null) return;

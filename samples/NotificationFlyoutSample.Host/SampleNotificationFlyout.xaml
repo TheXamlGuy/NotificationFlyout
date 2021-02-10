@@ -1,9 +1,0 @@
-﻿<NotificationFlyout
-    x:Class="NotificationFlyoutSample.Host.SampleNotificationFlyout"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:uwp="clr-namespace:NotificationFlyoutSample;assembly=NotificationFlyoutSample"
-    IconSource="/Assets/Icon.ico"
-    LightIconSource="/Assets/Icon-Light.ico">
-    <uwp:Shell />
-</NotificationFlyout>

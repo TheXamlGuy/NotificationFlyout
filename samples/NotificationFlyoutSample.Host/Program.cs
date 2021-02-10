@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NotificationFlyout.Wpf.UI.Controls;
+using System;
 
 namespace NotificationFlyoutSample.Host
 {
@@ -10,7 +11,10 @@ namespace NotificationFlyoutSample.Host
             using (new NotificationFlyoutSample.App())
             {
                 var app = new App();
-                new SampleNotificationFlyout();
+                new NotificationFlyoutApplication
+                { 
+                    Flyout = new Shell()
+                };
                 app.Run();
             }
         }
