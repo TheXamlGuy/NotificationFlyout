@@ -179,7 +179,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             }
         }
 
-        private void UpdateIcons()
+        private async void UpdateIcons()
         {
             if (!_isLoaded) return;
 
@@ -196,7 +196,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             var iconSource = _systemPersonalisationHelper.Theme == SystemTheme.Dark ? _defaultIconSource : _lightIconSource;
             if (iconSource == null) return;
 
-            using var icon = iconSource.ConvertToIcon(dpi);
+            using var icon = await iconSource.ConvertToIconAsync(dpi);
             _notificationIconHelper.SetIcon(icon.Handle);
         }
 
@@ -212,6 +212,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
                 flyoutHost.RequestedTheme = requestedTheme;
             }
         }
+
         private void UpdateWindow()
         {
             if (!_isLoaded) return;
