@@ -22,5 +22,11 @@
                     break;
             }
         }
+
+        private void MenuFlyoutItem_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var app = GetApplication();
+            app.Exit();
+        }
     }
 }
