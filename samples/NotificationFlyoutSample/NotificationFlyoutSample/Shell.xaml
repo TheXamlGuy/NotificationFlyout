@@ -7,7 +7,7 @@
     IconSource="/Assets/Icon.ico"
     LightIconSource="/Assets/Icon-Light.ico">
     <controls:NotificationFlyout.ContextMenuItems>
-        <MenuFlyoutItem Text="Close" />
+        <MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="Click me" />
     </controls:NotificationFlyout.ContextMenuItems>
     <StackPanel Margin="24">
         <ComboBox
