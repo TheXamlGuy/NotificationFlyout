@@ -56,9 +56,10 @@ namespace MyUWPApp
 7. Clean the UWP app project and then build it.
 
 ## Create a WPF project ##
-1. In Visual Studio 2019, create a new WPF App (.NET Core) project.
-2. In Solution Explorer, double-click the WPF project node to open the project file in the editor.
-3. Replace the contents of this file with the following xml.
+1. In Solution Explorer, right-click the solution node and select Add -> New Project.
+2. Add a new WPF App (.NET Core) project.
+3. In Solution Explorer, double-click the WPF project node to open the project file in the editor.
+4. Replace the contents of this file with the following xml.
 ```xml
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
@@ -70,9 +71,9 @@ namespace MyUWPApp
   </PropertyGroup>
 </Project>
 ```
-4. In Solution Explorer, right-click the Dependencies node under the WPF project and add a reference to your UWP app project.
-5. In the WPF app project, install the [Microsoft.Toolkit.Wpf.UI.XamlHost](https://www.nuget.org/packages/Microsoft.Toolkit.Wpf.UI.XamlHost) and [NotificationFlyout.Wpf.UI.Controls](https://www.nuget.org/packages/NotificationFlyout.Wpf.UI.Controls/) NuGet packages (latest stable version).
-6. Open the `App.xaml` file and replace the contents of this file with the following XAML. Replace `MyWPFApp` with the namespace of your WPF app project.
+5. In Solution Explorer, right-click the Dependencies node under the WPF project and add a reference to your UWP app project.
+6. In the WPF app project, install the [Microsoft.Toolkit.Wpf.UI.XamlHost](https://www.nuget.org/packages/Microsoft.Toolkit.Wpf.UI.XamlHost) and [NotificationFlyout.Wpf.UI.Controls](https://www.nuget.org/packages/NotificationFlyout.Wpf.UI.Controls/) NuGet packages (latest stable version).
+7. Open the `App.xaml` file and replace the contents of this file with the following XAML. Replace `MyWPFApp` with the namespace of your WPF app project.
 ```xaml
 <Application
     x:Class="MyWPFApp.App"
@@ -81,9 +82,9 @@ namespace MyUWPApp
     <Application.Resources />
 </Application>
 ```
-7. Delete the MainWindow.xaml file from the WPF app project.
-8. In your WPF project, right-click the project node, select Add -> New Item, and then select Class. Name the class Program and click Add.
-9. Replace the generated `Program` class with the following code and then save the file. Replace `MyUWPApp` with the namespace of your UWP app project, and replace `MyWPFApp` with the namespace of your WPF app project.
+8. Delete the MainWindow.xaml file from the WPF app project.
+9. In your WPF project, right-click the project node, select Add -> New Item, and then select Class. Name the class Program and click Add.
+10. Replace the generated `Program` class with the following code and then save the file. Replace `MyUWPApp` with the namespace of your UWP app project, and replace `MyWPFApp` with the namespace of your WPF app project.
 ```c#
 using NotificationFlyout.Wpf.UI.Controls;
 using System;
@@ -108,10 +109,10 @@ namespace MyWPFApp
     }
 }
 ```
-10. Right-click the project node and choose Properties.
-11. On the Application tab of the properties, click the Startup object drop-down and choose the fully qualified name of the `Program` class you added in the previous step.
-12. Clean the WPF app project and then build it.
-13. Run the WPF app.
+11. Right-click the project node and choose Properties.
+12. On the Application tab of the properties, click the Startup object drop-down and choose the fully qualified name of the `Program` class you added in the previous step.
+13. Clean the WPF app project and then build it.
+14. Run the WPF app.
 
 # Limitations and workarounds #
 All limitions found in this [article](https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/xaml-islands#limitations-and-workarounds) will affect how you build an app using this control. We have of course have added a work around for when the Windows theme is changed by the user 🎉!
