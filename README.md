@@ -9,7 +9,7 @@ A Notification Flyout that looks and feels exactly like the native Volume, Netwo
 - [x] Use entrance animation similar to those found in the native flyouts
 - [x] Works across multiple monitors
 - [x] Switch notification tray icon based on system theme
-- [ ] Notification tray icon context menu
+- [x] Notification tray icon context menu
 - [x] Drop shadow
 - [x] Can restyle/retemplate the notifiction flyout via the NotificationFlyoutPresenter control
 - [ ] Use current system accent if user chose to use accent color on background surfaces
