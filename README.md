@@ -5,7 +5,7 @@ A Notification Flyout that looks and feels exactly like the native Volume, Netwo
 [![](http://img.youtube.com/vi/8EoZ4pGWTkY/0.jpg)](http://www.youtube.com/watch?v=8EoZ4pGWTkY "Notification flyout demo")
 
 # Getting started #
-The majority of this guide refers to the [Host a custom WinRT XAML control in a WPF app using XAML Islands](https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/host-custom-control-with-xaml-islands) article. 
+Some parts of this guide refers to the [Host a custom WinRT XAML control in a WPF app using XAML Islands](https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/host-custom-control-with-xaml-islands) article. If in doubt, refer to the article, or post an issue on this repro.
 
 ## Create a UWP project ##
 1. In Visual Studio 2019, create a new UWP app project project. Make sure the target version and minimum version are both set to Windows 10, version 1903 (Build 18362) or a later release.
