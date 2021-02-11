@@ -31,5 +31,11 @@ namespace NotificationFlyoutSample
             MessageDialog d = new MessageDialog("Hello from context menu!");
             d.ShowAsync();
         }
+
+        private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            var app = GetApplication();
+            app.Exit();
+        }
     }
 }

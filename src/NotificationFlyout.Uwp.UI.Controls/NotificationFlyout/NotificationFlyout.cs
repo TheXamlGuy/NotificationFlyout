@@ -28,8 +28,10 @@ namespace NotificationFlyout.Uwp.UI.Controls
                 typeof(ElementTheme), typeof(NotificationFlyout),
                 new PropertyMetadata(ElementTheme.Default, OnRequestedThemePropertyChanged));
 
+        public static INotificationFlyoutApplication _applicationInstance;
+
         public static DependencyProperty ContentProperty =
-            DependencyProperty.Register(nameof(Content),
+                    DependencyProperty.Register(nameof(Content),
                  typeof(UIElement), typeof(NotificationFlyout),
                  new PropertyMetadata(null, OnContentPropertyChanged));
 
@@ -37,7 +39,6 @@ namespace NotificationFlyout.Uwp.UI.Controls
             DependencyProperty.Register(nameof(ContextMenuItems),
                  typeof(IList<MenuFlyoutItemBase>), typeof(NotificationFlyout),
                  new PropertyMetadata(null));
-
         public NotificationFlyout()
         {
             ContextMenuItems = new ObservableCollection<MenuFlyoutItemBase>();
@@ -45,8 +46,11 @@ namespace NotificationFlyout.Uwp.UI.Controls
         }
 
         internal event EventHandler ContentChanged;
+
         internal event EventHandler IconSourceChanged;
+
         internal event EventHandler<NotificationFlyoutMenuItemsChangedEventArgs> MenuItemsChanged;
+
         internal event EventHandler RequestedThemeChanged;
 
         public UIElement Content
@@ -77,6 +81,16 @@ namespace NotificationFlyout.Uwp.UI.Controls
         {
             get => (ElementTheme)GetValue(RequestedThemeProperty);
             set => SetValue(RequestedThemeProperty, value);
+        }
+
+        public static INotificationFlyoutApplication GetApplication()
+        {
+            return _applicationInstance;
+        }
+
+        internal static void SetApplication(INotificationFlyoutApplication application)
+        {
+            _applicationInstance = application;
         }
 
         private static void OnContentPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)

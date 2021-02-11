@@ -136,6 +136,11 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _taskbarHelper.TaskbarChanged += OnTaskbarChanged;
         }
 
+        protected override void OnClosed(EventArgs args)
+        {
+            _notificationIconHelper.Dispose();
+        }
+
         private void UpdateFlyoutContent()
         {
             if (_flyout == null) return;

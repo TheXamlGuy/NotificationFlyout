@@ -169,6 +169,10 @@
       <Project>{95f851e4-87a5-4bb7-953e-c0fe3b306f0e}</Project>
       <Name>NotificationFlyout.Uwp.UI.Controls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\src\NotificationFlyout.Uwp.UI\NotificationFlyout.Uwp.UI.csproj">
+      <Project>{ade190a2-f751-4836-b8f4-bf56694a4b3f}</Project>
+      <Name>NotificationFlyout.Uwp.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

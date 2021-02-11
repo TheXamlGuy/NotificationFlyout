@@ -8,6 +8,7 @@
     LightIconSource="/Assets/Icon-Light.ico">
     <controls:NotificationFlyout.ContextMenuItems>
         <MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="Click me" />
+        <MenuFlyoutItem Click="MenuFlyoutItem_Click_1" Text="Exit" />
     </controls:NotificationFlyout.ContextMenuItems>
     <StackPanel Margin="24">
         <ComboBox
