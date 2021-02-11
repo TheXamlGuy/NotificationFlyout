@@ -1,4 +1,5 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
+  
   <PropertyGroup>
     <TargetFrameworks>uap10.0.19041</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
@@ -6,10 +7,11 @@
     <EnableXBindDiagnostics>false</EnableXBindDiagnostics>
     <LangVersion>9.0</LangVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Remove="NotificationFlyout\ContextMenuFlyoutHost.xaml" />
-  </ItemGroup>
+    <Company>TheXamlGuy</Company>
+    <Authors>TheXamlGuy</Authors>
+    <Product>NotificationFlyout</Product>
+    <Version>1.0.0</Version>  </PropertyGroup>
+  
   <ItemGroup>
     <Page Include="NotificationFlyout\ContextMenuFlyoutHost.xaml">
       <SubType>Designer</SubType>

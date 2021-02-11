@@ -6,6 +6,10 @@
     <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
     <Platforms>AnyCPU;x64</Platforms>
     <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
+    <Company>TheXamlGuy</Company>
+    <Authors>TheXamlGuy</Authors>
+    <Product>NotificationFlyout</Product>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
