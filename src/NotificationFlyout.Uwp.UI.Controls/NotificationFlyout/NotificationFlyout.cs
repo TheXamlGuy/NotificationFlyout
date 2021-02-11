@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
@@ -37,14 +38,16 @@ namespace NotificationFlyout.Uwp.UI.Controls
                  typeof(IList<MenuFlyoutItemBase>), typeof(NotificationFlyout),
                  new PropertyMetadata(null));
 
-        internal event EventHandler ContentChanged;
-        internal event EventHandler IconSourceChanged;
-        internal event EventHandler RequestedThemeChanged;
-
         public NotificationFlyout()
         {
             ContextMenuItems = new ObservableCollection<MenuFlyoutItemBase>();
+            (ContextMenuItems as INotifyCollectionChanged).CollectionChanged += OnContextMenuItemsChanged;
         }
+
+        internal event EventHandler ContentChanged;
+        internal event EventHandler IconSourceChanged;
+        internal event EventHandler<NotificationFlyoutMenuItemsChangedEventArgs> MenuItemsChanged;
+        internal event EventHandler RequestedThemeChanged;
 
         public UIElement Content
         {
@@ -99,6 +102,14 @@ namespace NotificationFlyout.Uwp.UI.Controls
             ContentChanged?.Invoke(this, EventArgs.Empty);
         }
 
+        private void OnContextMenuItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            var addedItems = args.NewItems.Cast<MenuFlyoutItemBase>().ToList();
+            var removedItems = args.NewItems.Cast<MenuFlyoutItemBase>().ToList();
+
+            MenuItemsChanged?.Invoke(this, new NotificationFlyoutMenuItemsChangedEventArgs(addedItems, removedItems));
+        }
+
         private void OnIconPropertyChanged()
         {
             IconSourceChanged?.Invoke(this, EventArgs.Empty);
@@ -108,5 +119,18 @@ namespace NotificationFlyout.Uwp.UI.Controls
         {
             RequestedThemeChanged?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    internal class NotificationFlyoutMenuItemsChangedEventArgs : EventArgs
+    {
+        public NotificationFlyoutMenuItemsChangedEventArgs(IList<MenuFlyoutItemBase> addedItems, IList<MenuFlyoutItemBase> removedItems)
+        {
+            AddedItems = addedItems;
+            RemovedItems = removedItems;
+        }
+
+        public IList<MenuFlyoutItemBase> AddedItems { get; private set; }
+
+        public IList<MenuFlyoutItemBase> RemovedItems { get; private set; }
     }
 }

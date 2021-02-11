@@ -42,6 +42,7 @@ namespace NotificationFlyout.Uwp.UI.Controls
                 _placement = placement;
             }
 
+            if (string.IsNullOrEmpty(placement)) return;
             VisualStateManager.GoToState(this, placement, true);
         }
 

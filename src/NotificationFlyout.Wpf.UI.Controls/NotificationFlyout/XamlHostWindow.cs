@@ -1,23 +1,24 @@
 ﻿using Microsoft.Toolkit.Wpf.UI.XamlHost;
 using NotificationFlyout.Wpf.UI.Extensions;
+using System;
 using System.Windows;
 using System.Windows.Media;
 
 namespace NotificationFlyout.Wpf.UI.Controls
 {
-    internal class XamlHostWindow<TXamlContent> : Window where TXamlContent : class
+    internal class XamlHostWindow<TXamlContent> : Window where TXamlContent : Windows.UI.Xaml.UIElement
     {
         internal const double WindowSize = 5;
+        protected new bool IsLoaded;
         private WindowsXamlHost _xamlHost;
-
         public XamlHostWindow()
         {
             PrepareDefaultWindow();
             PrepareWindowsXamlHost();
 
             Loaded += OnLoaded;
+            ContentRendered += OnContentRendered;
         }
-
 
         internal TXamlContent GetHostContent()
         {
@@ -25,9 +26,19 @@ namespace NotificationFlyout.Wpf.UI.Controls
             return _xamlHost.GetUwpInternalObject() as TXamlContent;
         }
 
+        protected virtual void OnContentLoaded()
+        {
+        }
+
+        private void OnContentRendered(object sender, EventArgs args)
+        {
+            IsLoaded = true;
+            OnContentLoaded();
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs args)
         {
-            this.Hidden();
+            this.Hidden(); 
         }
 
         private void PrepareDefaultWindow()
@@ -37,7 +48,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             WindowStyle = WindowStyle.None;
             ResizeMode = ResizeMode.NoResize;
             AllowsTransparency = true;
-            Background = new SolidColorBrush(Colors.Red);
+            Background = new SolidColorBrush(Colors.Transparent);
             Height = WindowSize;
             Width = WindowSize;
         }
@@ -46,13 +57,12 @@ namespace NotificationFlyout.Wpf.UI.Controls
         {
             _xamlHost = new WindowsXamlHost
             {
-                InitialTypeName = typeof(TXamlContent).FullName
+                InitialTypeName = typeof(TXamlContent).FullName,
+                Height = 0,
+                Width = 0,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch
             };
-
-            _xamlHost.Height = 0;
-            _xamlHost.Width = 0;
-            _xamlHost.HorizontalAlignment = HorizontalAlignment.Stretch;
-            _xamlHost.VerticalAlignment = VerticalAlignment.Stretch;
 
             Content = _xamlHost;
         }

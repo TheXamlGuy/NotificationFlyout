@@ -8,9 +8,7 @@
                 <ControlTemplate TargetType="controls:ContextMenuFlyoutHost">
                     <Grid x:Name="Root">
                         <FlyoutBase.AttachedFlyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Text="Test" />
-                            </MenuFlyout>
+                            <MenuFlyout x:Name="Flyout" />
                         </FlyoutBase.AttachedFlyout>
                     </Grid>
                 </ControlTemplate>

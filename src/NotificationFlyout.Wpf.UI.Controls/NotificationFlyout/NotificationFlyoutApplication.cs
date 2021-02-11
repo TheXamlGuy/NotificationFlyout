@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Markup;
 
 namespace NotificationFlyout.Wpf.UI.Controls
@@ -11,12 +12,16 @@ namespace NotificationFlyout.Wpf.UI.Controls
                 typeof(Uwp.UI.Controls.NotificationFlyout), typeof(NotificationFlyoutApplication),
                 new PropertyMetadata(null, OnFlyoutPropertyChanged));
 
-        private readonly NotificationFlyoutXamlHostWindow _xamlHost;
-
+        private readonly ContextMenuXamlHost _contextMenuXamlHost;
+        private readonly NotificationFlyoutXamlHost _notificationFlyoutXamlHost;
         public NotificationFlyoutApplication()
         {
-            _xamlHost = new NotificationFlyoutXamlHostWindow();
-            _xamlHost.Show();
+            _notificationFlyoutXamlHost = new NotificationFlyoutXamlHost();
+            _notificationFlyoutXamlHost.ContextMenuRequested += OnContextMenuRequested;
+            _notificationFlyoutXamlHost.Show();
+
+            _contextMenuXamlHost = new ContextMenuXamlHost();
+            _contextMenuXamlHost.Show();
         }
 
         public Uwp.UI.Controls.NotificationFlyout Flyout
@@ -27,12 +32,12 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         public void HideFlyout()
         {
-            _xamlHost.HideFlyout();
+            _notificationFlyoutXamlHost.HideFlyout();
         }
 
         public void ShowFlyout()
         {
-            _xamlHost.ShowFlyout();
+            _notificationFlyoutXamlHost.ShowFlyout();
         }
 
         private static void OnFlyoutPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -41,9 +46,15 @@ namespace NotificationFlyout.Wpf.UI.Controls
             sender?.OnFlyoutPropertyChanged();
         }
 
+        private void OnContextMenuRequested(object sender, EventArgs args)
+        {
+            _contextMenuXamlHost?.ShowContextMenuFlyout();
+        }
+
         private void OnFlyoutPropertyChanged()
         {
-            _xamlHost.SetFlyout(Flyout);
+            _notificationFlyoutXamlHost.SetFlyout(Flyout);
+            _contextMenuXamlHost.SetFlyout(Flyout);
         }
     }
 }

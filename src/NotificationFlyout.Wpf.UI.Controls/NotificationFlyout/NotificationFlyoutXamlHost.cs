@@ -9,23 +9,17 @@ using System.Windows.Input;
 
 namespace NotificationFlyout.Wpf.UI.Controls
 {
-    internal class NotificationFlyoutXamlHostWindow : XamlHostWindow<NotificationFlyoutHost>
+    internal class NotificationFlyoutXamlHost : XamlHostWindow<NotificationFlyoutHost>
     {
         private const string ShellTrayHandleName = "Shell_TrayWnd";
 
-        private ContextMenuXamlHost _contextMenuXamlHost;
         private Uwp.UI.Controls.NotificationFlyout _flyout;
-
-        private bool _isLoaded;
 
         private NotificationIconHelper _notificationIconHelper;
         private SystemPersonalisationHelper _systemPersonalisationHelper;
         private TaskbarHelper _taskbarHelper;
 
-        public NotificationFlyoutXamlHostWindow()
-        {
-            Loaded += OnLoaded;
-        }
+        internal event EventHandler ContextMenuRequested;
 
         public void SetFlyout(Uwp.UI.Controls.NotificationFlyout flyout)
         {
@@ -75,6 +69,13 @@ namespace NotificationFlyout.Wpf.UI.Controls
             }
         }
 
+        protected override void OnContentLoaded()
+        {
+            PrepareNotificationIcon();
+            PrepareTaskbar();
+            UpdateWindow();
+        }
+
         protected override void OnDeactivated(EventArgs args)
         {
             HideFlyout();
@@ -104,18 +105,8 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
             if (args.MouseButton == MouseButton.Right)
             {
-                ShowContextMenuFlyout();
+                ContextMenuRequested?.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            PrepareNotificationIcon();
-            PrepareTaskbar();
-
-            _isLoaded = true;
-
-            UpdateWindow();
         }
 
         private void OnTaskbarChanged(object sender, EventArgs args)
@@ -130,24 +121,19 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void PrepareNotificationIcon()
         {
-            _contextMenuXamlHost = new ContextMenuXamlHost();
-            _contextMenuXamlHost.Show();
-
             _notificationIconHelper = NotificationIconHelper.Create(this);
             _notificationIconHelper.IconInvoked += OnIconInvoked;
 
             _systemPersonalisationHelper = SystemPersonalisationHelper.Create(this);
             _systemPersonalisationHelper.ThemeChanged += OnThemeChanged;
+
+            UpdateIcons();
         }
 
         private void PrepareTaskbar()
         {
             _taskbarHelper = TaskbarHelper.Create(this);
             _taskbarHelper.TaskbarChanged += OnTaskbarChanged;
-        }
-        private void ShowContextMenuFlyout()
-        {
-            _contextMenuXamlHost.ShowContextMenuFlyout();
         }
 
         private void UpdateFlyoutContent()
@@ -166,7 +152,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private async void UpdateIcons()
         {
-            if (!_isLoaded) return;
+            if (!IsLoaded) return;
 
             if (_flyout == null) return;
 
@@ -185,6 +171,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _notificationIconHelper.SetIcon(icon.Handle);
         }
 
+
         private void UpdateRequestedTheme()
         {
             if (_flyout == null) return;
@@ -200,7 +187,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void UpdateWindow()
         {
-            if (!_isLoaded) return;
+            if (!IsLoaded) return;
 
             var flyoutHost = GetHostContent();
             if (flyoutHost == null) return;
