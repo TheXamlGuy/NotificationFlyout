@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace NotificationFlyout.Wpf.UI.Controls
 {
-    internal class ContextMenuXamlHost : XamlHostWindow<ContextMenuFlyoutHost>
+    internal class ContextMenuXamlHost : TransparentXamlHost<ContextMenuFlyoutHost>
     {
         private Uwp.UI.Controls.NotificationFlyout _flyout;
 

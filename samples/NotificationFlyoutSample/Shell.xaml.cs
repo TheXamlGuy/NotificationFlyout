@@ -28,5 +28,11 @@
             var app = GetApplication();
             app.Exit();
         }
+
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var app = GetApplication();
+            app.OpenAsWindow<WindowContent>();
+        }
     }
 }

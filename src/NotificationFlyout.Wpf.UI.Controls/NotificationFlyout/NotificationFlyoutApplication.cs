@@ -48,6 +48,12 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _notificationFlyoutXamlHost.HideFlyout();
         }
 
+        public void OpenAsWindow<TUIElement>() where TUIElement : Windows.UI.Xaml.UIElement
+        {
+            var window = new XamlHost<TUIElement>();
+            window.Show();
+        }
+
         public void ShowFlyout()
         {
             _notificationFlyoutXamlHost.ShowFlyout();

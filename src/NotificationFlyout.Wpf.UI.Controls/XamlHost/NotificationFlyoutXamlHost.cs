@@ -1,15 +1,15 @@
 ﻿using NotificationFlyout.Uwp.UI.Controls;
-using NotificationFlyout.Wpf.UI.Extensions;
 using NotificationFlyout.Uwp.UI.Extensions;
+using NotificationFlyout.Wpf.UI.Extensions;
 using NotificationFlyout.Wpf.UI.Helpers;
 using System;
 using System.Windows;
-using Windows.UI.Xaml.Controls.Primitives;
 using System.Windows.Input;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace NotificationFlyout.Wpf.UI.Controls
 {
-    internal class NotificationFlyoutXamlHost : XamlHostWindow<NotificationFlyoutHost>
+    internal class NotificationFlyoutXamlHost : TransparentXamlHost<NotificationFlyoutHost>
     {
         private const string ShellTrayHandleName = "Shell_TrayWnd";
 
@@ -176,7 +176,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
             _notificationIconHelper.SetIcon(icon.Handle);
         }
 
-
         private void UpdateRequestedTheme()
         {
             if (_flyout == null) return;
@@ -216,24 +215,28 @@ namespace NotificationFlyout.Wpf.UI.Controls
                     height = windowHeight;
                     width = windowWidth;
                     break;
+
                 case TaskbarPosition.Top:
                     top = taskbarRect.Bottom;
                     left = FlowDirection == FlowDirection.RightToLeft ? taskbarRect.Left : taskbarRect.Right - windowWidth;
                     height = windowHeight;
                     width = windowWidth;
                     break;
+
                 case TaskbarPosition.Right:
                     top = taskbarRect.Bottom - windowHeight;
                     left = taskbarRect.Left - windowWidth;
                     height = windowHeight;
                     width = windowWidth;
                     break;
+
                 case TaskbarPosition.Bottom:
                     top = taskbarRect.Top - windowHeight;
                     left = FlowDirection == FlowDirection.RightToLeft ? taskbarRect.Left : taskbarRect.Right - windowWidth;
                     height = windowHeight;
                     width = windowWidth;
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
