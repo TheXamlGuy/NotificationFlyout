@@ -14,31 +14,18 @@ namespace NotificationFlyout.Uwp.UI.Controls
                 typeof(UIElement), typeof(NotificationFlyoutHost),
                 new PropertyMetadata(null));
 
+        public static readonly DependencyProperty FlyoutPresenterStyleProperty =
+            DependencyProperty.Register(nameof(FlyoutPresenterStyle),
+                typeof(Style), typeof(NotificationFlyoutHost),
+                new PropertyMetadata(null));
+
         private bool _isLoaded;
+
         private string _placement;
+
         private Grid _root;
 
         public NotificationFlyoutHost() => DefaultStyleKey = typeof(NotificationFlyoutHost);
-
-        internal void SetOwningFlyout(NotificationFlyout flyout)
-        {
-            BindingOperations.SetBinding(this, ContentProperty,
-                new Binding
-                {
-                    Source = flyout,
-                    Path =
-                    new PropertyPath(nameof(Content)),
-                    Mode = BindingMode.TwoWay
-                });
-
-            BindingOperations.SetBinding(this, RequestedThemeProperty,
-                new Binding
-                {
-                    Source = flyout,
-                    Path = new PropertyPath(nameof(RequestedTheme)),
-                    Mode = BindingMode.TwoWay
-                });
-        }
 
         public UIElement Content
         {
@@ -46,6 +33,11 @@ namespace NotificationFlyout.Uwp.UI.Controls
             set => SetValue(ContentProperty, value);
         }
 
+        public Style FlyoutPresenterStyle
+        {
+            get => (Style)GetValue(FlyoutPresenterStyleProperty);
+            set => SetValue(FlyoutPresenterStyleProperty, value);
+        }
         public void HideFlyout()
         {
             if (_root == null) return;
@@ -75,6 +67,33 @@ namespace NotificationFlyout.Uwp.UI.Controls
             });
         }
 
+        internal void SetOwningFlyout(NotificationFlyout flyout)
+        {
+            BindingOperations.SetBinding(this, ContentProperty,
+                new Binding
+                {
+                    Source = flyout,
+                    Path =
+                    new PropertyPath(nameof(Content)),
+                    Mode = BindingMode.TwoWay
+                });
+
+            BindingOperations.SetBinding(this, RequestedThemeProperty,
+                new Binding
+                {
+                    Source = flyout,
+                    Path = new PropertyPath(nameof(RequestedTheme)),
+                    Mode = BindingMode.TwoWay
+                });
+
+            BindingOperations.SetBinding(this, FlyoutPresenterStyleProperty,
+                new Binding
+                {
+                    Source = flyout,
+                    Path = new PropertyPath(nameof(FlyoutPresenterStyle)),
+                    Mode = BindingMode.TwoWay
+                });
+        }
         protected override void OnApplyTemplate()
         {
             _root = GetTemplateChild("Root") as Grid;
