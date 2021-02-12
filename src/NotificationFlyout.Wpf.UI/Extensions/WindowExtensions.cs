@@ -18,7 +18,7 @@ namespace NotificationFlyout.Wpf.UI.Extensions
             SWP_NOACTIVATE = 0x0010,
             WS_EX_NOACTIVATE = 0x08000000,
             SWP_SHOWWINDOW = 0x0040,
-            WS_EX_APPWINDOW = 0x00040000, 
+            WS_EX_APPWINDOW = 0x00040000,
             WS_EX_TOOLWINDOW = 0x00000080
         }
 

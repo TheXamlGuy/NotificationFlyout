@@ -4,9 +4,6 @@ namespace NotificationFlyout.Uwp.UI.Controls
 {
     public class NotificationFlyoutPresenter : ContentControl
     {
-        public NotificationFlyoutPresenter()
-        {
-            DefaultStyleKey = typeof(NotificationFlyoutPresenter);
-        }
+        public NotificationFlyoutPresenter() => DefaultStyleKey = typeof(NotificationFlyoutPresenter);
     }
 }

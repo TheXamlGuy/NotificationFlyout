@@ -12,7 +12,7 @@ namespace NotificationFlyoutSample.Host
             {
                 var app = new App();
                 new NotificationFlyoutApplication
-                { 
+                {
                     Flyout = new Shell()
                 };
                 app.Run();

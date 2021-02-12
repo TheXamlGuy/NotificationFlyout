@@ -13,6 +13,5 @@ namespace NotificationFlyout.Wpf.UI.Helpers
         public SystemTheme Theme { get; private set; }
 
         public bool IsColorPrevalence { get; private set; }
-
     }
 }

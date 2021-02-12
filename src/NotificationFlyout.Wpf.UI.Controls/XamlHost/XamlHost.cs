@@ -1,5 +1,4 @@
 ﻿using Microsoft.Toolkit.Wpf.UI.XamlHost;
-using NotificationFlyout.Wpf.UI.Extensions;
 using System;
 using System.Windows;
 
@@ -16,7 +15,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             ContentRendered += OnContentRendered;
         }
 
-        protected TXamlContent GetHostContent()
+        internal TXamlContent GetHostContent()
         {
             if (_xamlHost == null) return null;
             return _xamlHost.GetUwpInternalObject() as TXamlContent;

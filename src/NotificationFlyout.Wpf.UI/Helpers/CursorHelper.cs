@@ -6,7 +6,7 @@ namespace NotificationFlyout.Wpf.UI.Helpers
     {
         public static POINT GetPhysicalCursorPos()
         {
-            PInvoke.GetPhysicalCursorPos(out POINT point);
+            PInvoke.GetPhysicalCursorPos(out var point);
             return point;
         }
     }

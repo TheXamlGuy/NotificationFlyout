@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.Windows.Sdk;
+﻿using Microsoft.Windows.Sdk;
+using System;
 
 namespace NotificationFlyout.Wpf.UI.Helpers
 {

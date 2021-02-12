@@ -1,6 +1,5 @@
 ﻿namespace NotificationFlyout.Wpf.UI
 {
-
     public enum TaskbarPosition
     {
         Left = 0,

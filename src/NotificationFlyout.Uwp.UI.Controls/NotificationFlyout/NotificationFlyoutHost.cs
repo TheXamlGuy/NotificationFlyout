@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
 namespace NotificationFlyout.Uwp.UI.Controls
@@ -17,9 +18,26 @@ namespace NotificationFlyout.Uwp.UI.Controls
         private string _placement;
         private Grid _root;
 
-        public NotificationFlyoutHost()
+        public NotificationFlyoutHost() => DefaultStyleKey = typeof(NotificationFlyoutHost);
+
+        internal void SetOwningFlyout(NotificationFlyout flyout)
         {
-            DefaultStyleKey = typeof(NotificationFlyoutHost);
+            BindingOperations.SetBinding(this, ContentProperty,
+                new Binding
+                {
+                    Source = flyout,
+                    Path =
+                    new PropertyPath(nameof(Content)),
+                    Mode = BindingMode.TwoWay
+                });
+
+            BindingOperations.SetBinding(this, RequestedThemeProperty,
+                new Binding
+                {
+                    Source = flyout,
+                    Path = new PropertyPath(nameof(RequestedTheme)),
+                    Mode = BindingMode.TwoWay
+                });
         }
 
         public UIElement Content
@@ -54,7 +72,7 @@ namespace NotificationFlyout.Uwp.UI.Controls
             {
                 Placement = placementMode,
                 ShowMode = FlyoutShowMode.Standard,
-            });       
+            });
         }
 
         protected override void OnApplyTemplate()

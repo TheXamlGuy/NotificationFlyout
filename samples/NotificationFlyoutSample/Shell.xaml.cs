@@ -14,9 +14,11 @@
                 case 0:
                     RequestedTheme = Windows.UI.Xaml.ElementTheme.Default;
                     break;
+
                 case 1:
                     RequestedTheme = Windows.UI.Xaml.ElementTheme.Dark;
                     break;
+
                 case 2:
                     RequestedTheme = Windows.UI.Xaml.ElementTheme.Light;
                     break;

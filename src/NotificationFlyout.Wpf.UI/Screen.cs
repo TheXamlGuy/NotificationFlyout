@@ -32,7 +32,7 @@ namespace NotificationFlyout.Wpf.UI
             {
                 var monitorData = GetMonitorData(monitorHandle);
 
-                Bounds = new Rect(monitorData.MonitorRect.left, monitorData.MonitorRect.top, monitorData.MonitorRect.right - monitorData.MonitorRect.left,  monitorData.MonitorRect.bottom - monitorData.MonitorRect.top);
+                Bounds = new Rect(monitorData.MonitorRect.left, monitorData.MonitorRect.top, monitorData.MonitorRect.right - monitorData.MonitorRect.left, monitorData.MonitorRect.bottom - monitorData.MonitorRect.top);
                 Primary = (monitorData.Flags & (int)MonitorFlag.MONITOR_DEFAULTTOPRIMARY) != 0;
                 DeviceName = monitorData.DeviceName;
             }
@@ -62,14 +62,8 @@ namespace NotificationFlyout.Wpf.UI
 
         public override bool Equals(object obj)
         {
-            if (obj is Screen monitor)
-            {
-                if (_monitorHandle == monitor._monitorHandle)
-                {
-                    return true;
-                }
-            }
-            return false;
+            if (obj is not Screen monitor) return false;
+            return _monitorHandle == monitor._monitorHandle;
         }
 
         public override int GetHashCode()

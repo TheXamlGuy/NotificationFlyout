@@ -2,10 +2,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls">
-    <Style TargetType="controls:ContextMenuFlyoutHost">
+    <Style TargetType="controls:NotificationFlyoutContextMenuFlyoutHost">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:ContextMenuFlyoutHost">
+                <ControlTemplate TargetType="controls:NotificationFlyoutContextMenuFlyoutHost">
                     <Grid x:Name="Root">
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout x:Name="Flyout" />

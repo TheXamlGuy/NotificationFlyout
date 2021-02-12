@@ -2,11 +2,9 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace NotificationFlyout.Uwp.UI.Extensions
 {
@@ -27,8 +25,7 @@ namespace NotificationFlyout.Uwp.UI.Extensions
                 var storageFile = await Windows.Storage.StorageFile.GetFileFromApplicationUriAsync(bitmapImage.UriSource);
                 using var stream = await storageFile.OpenStreamForReadAsync();
                 return new Icon(stream, new Size(PInvoke.GetSystemMetricsForDpi((int)SystemMetricFlag.SM_CXICON, dpi), PInvoke.GetSystemMetricsForDpi((int)SystemMetricFlag.SM_CYICON, dpi)));
-
-            } 
+            }
         }
 
         private enum SystemMetricFlag : int

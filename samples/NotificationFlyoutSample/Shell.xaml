@@ -6,9 +6,11 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     IconSource="/Assets/Icon.ico"
     LightIconSource="/Assets/Icon-Light.ico">
-    <controls:NotificationFlyout.ContextMenuItems>
-        <MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="Close" />
-    </controls:NotificationFlyout.ContextMenuItems>
+    <controls:NotificationFlyout.ContextMenu>
+        <controls:NotificationFlyoutContextMenu>
+            <MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="Close" />
+        </controls:NotificationFlyoutContextMenu>
+    </controls:NotificationFlyout.ContextMenu>
     <StackPanel Margin="24">
         <ComboBox
             x:Name="Theme"
@@ -44,7 +46,10 @@
             IsIndeterminate="True"
             ShowError="False"
             ShowPaused="False" />
-        <Button Margin="0,0,0,8" Content="Open window" Click="Button_Click" />
+        <Button
+            Margin="0,0,0,8"
+            Click="Button_Click"
+            Content="Open window" />
         <Slider Margin="0,0,0,8" />
         <TextBox Margin="0,0,0,8" />
         <CalendarView Margin="0,0,0,8" />

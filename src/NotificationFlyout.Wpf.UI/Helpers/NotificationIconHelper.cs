@@ -27,7 +27,6 @@ namespace NotificationFlyout.Wpf.UI.Helpers
             CreateNotificationIcon();
         }
 
-
         ~NotificationIconHelper()
         {
             Dispose(false);
@@ -147,9 +146,11 @@ namespace NotificationFlyout.Wpf.UI.Helpers
                     case (uint)WndProcMessages.WM_LBUTTONUP:
                         InvokeIconInvoked(MouseButton.Left);
                         break;
+
                     case (uint)WndProcMessages.WM_MBUTTONUP:
                         InvokeIconInvoked(MouseButton.Middle);
                         break;
+
                     case (uint)WndProcMessages.WM_RBUTTONUP:
                         InvokeIconInvoked(MouseButton.Right);
                         break;
