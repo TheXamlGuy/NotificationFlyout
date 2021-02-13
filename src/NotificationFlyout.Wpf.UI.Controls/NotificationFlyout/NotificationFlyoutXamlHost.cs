@@ -128,6 +128,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
             _contextMenuXamlHost.SetOwningFlyout(_flyout);
         }
+
         private void PrepareNotificationIcon()
         {
             _notificationIconHelper = NotificationIconHelper.Create(this);
@@ -150,6 +151,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
             if (_contextMenuXamlHost == null) return;
             _contextMenuXamlHost.ShowContextMenuFlyout();
         }
+
         private async void UpdateIcons()
         {
             if (!IsLoaded) return;

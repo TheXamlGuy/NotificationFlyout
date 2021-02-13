@@ -1,4 +1,6 @@
-﻿namespace NotificationFlyoutSample
+﻿using Windows.UI.Xaml.Controls;
+
+namespace NotificationFlyoutSample
 {
     public sealed partial class Shell
     {

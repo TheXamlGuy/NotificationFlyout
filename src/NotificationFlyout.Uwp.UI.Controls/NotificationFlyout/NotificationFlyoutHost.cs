@@ -19,10 +19,10 @@ namespace NotificationFlyout.Uwp.UI.Controls
                 typeof(Style), typeof(NotificationFlyoutHost),
                 new PropertyMetadata(null));
 
+        private Flyout _flyout;
         private bool _isLoaded;
-
+        private NotificationFlyout _notificationFlyout;
         private string _placement;
-
         private Grid _root;
 
         public NotificationFlyoutHost() => DefaultStyleKey = typeof(NotificationFlyoutHost);
@@ -38,6 +38,7 @@ namespace NotificationFlyout.Uwp.UI.Controls
             get => (Style)GetValue(FlyoutPresenterStyleProperty);
             set => SetValue(FlyoutPresenterStyleProperty, value);
         }
+
         public void HideFlyout()
         {
             if (_root == null) return;
@@ -63,16 +64,18 @@ namespace NotificationFlyout.Uwp.UI.Controls
             flyout.ShowAt(_root, new FlyoutShowOptions
             {
                 Placement = placementMode,
-                ShowMode = FlyoutShowMode.Standard,
+                ShowMode = FlyoutShowMode.Transient,
             });
         }
 
         internal void SetOwningFlyout(NotificationFlyout flyout)
         {
+            _notificationFlyout = flyout;
+
             BindingOperations.SetBinding(this, ContentProperty,
                 new Binding
                 {
-                    Source = flyout,
+                    Source = _notificationFlyout,
                     Path =
                     new PropertyPath(nameof(Content)),
                     Mode = BindingMode.TwoWay
@@ -81,7 +84,7 @@ namespace NotificationFlyout.Uwp.UI.Controls
             BindingOperations.SetBinding(this, RequestedThemeProperty,
                 new Binding
                 {
-                    Source = flyout,
+                    Source = _notificationFlyout,
                     Path = new PropertyPath(nameof(RequestedTheme)),
                     Mode = BindingMode.TwoWay
                 });
@@ -89,13 +92,28 @@ namespace NotificationFlyout.Uwp.UI.Controls
             BindingOperations.SetBinding(this, FlyoutPresenterStyleProperty,
                 new Binding
                 {
-                    Source = flyout,
+                    Source = _notificationFlyout,
                     Path = new PropertyPath(nameof(FlyoutPresenterStyle)),
                     Mode = BindingMode.TwoWay
                 });
         }
+
         protected override void OnApplyTemplate()
         {
+            _flyout = GetTemplateChild("Flyout") as Flyout;
+            if (_flyout != null)
+            {
+                _flyout.Closing -= OnFlyoutClosing;
+                _flyout.Closed -= OnFlyoutClosed;
+                _flyout.Opening -= OnFlyoutOpening;
+                _flyout.Opened -= OnFlyoutOpened;
+
+                _flyout.Closing += OnFlyoutClosing;
+                _flyout.Closed += OnFlyoutClosed;
+                _flyout.Opening += OnFlyoutOpening;
+                _flyout.Opened += OnFlyoutOpened;
+            }
+
             _root = GetTemplateChild("Root") as Grid;
             if (GetTemplateChild("ContentRoot") is Grid contentRoot)
             {
@@ -109,5 +127,13 @@ namespace NotificationFlyout.Uwp.UI.Controls
             _isLoaded = true;
             SetFlyoutPlacement(_placement);
         }
+
+        private void OnFlyoutClosed(object sender, object args) => _notificationFlyout?.InvokeClosedEvent(args);
+
+        private void OnFlyoutClosing(FlyoutBase sender, FlyoutBaseClosingEventArgs args) => _notificationFlyout?.InvokeClosingEvent(new NotificationFlyoutClosingEventArgs());
+
+        private void OnFlyoutOpened(object sender, object args) => _notificationFlyout?.InvokeOpenedEvent(args);
+
+        private void OnFlyoutOpening(object sender, object args) => _notificationFlyout?.InvokeOpeningEvent(args);
     }
 }

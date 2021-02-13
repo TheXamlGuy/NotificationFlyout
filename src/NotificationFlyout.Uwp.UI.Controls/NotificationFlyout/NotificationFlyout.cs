@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
@@ -40,8 +41,12 @@ namespace NotificationFlyout.Uwp.UI.Controls
 
         private static INotificationFlyoutApplication _applicationInstance;
 
-        internal event EventHandler ContextMenuChanged;
+        public event EventHandler<object> Closed;
+        public event TypedEventHandler<NotificationFlyout, NotificationFlyoutClosingEventArgs> Closing;
+        public event EventHandler<object> Opened;
+        public event EventHandler<object> Opening;
 
+        internal event EventHandler ContextMenuChanged;
         internal event EventHandler IconSourceChanged;
 
         public UIElement Content
@@ -84,6 +89,14 @@ namespace NotificationFlyout.Uwp.UI.Controls
 
         internal static void SetApplication(INotificationFlyoutApplication application) => _applicationInstance = application;
 
+        internal void InvokeClosedEvent(object obj) => Closed?.Invoke(this, obj);
+
+        internal void InvokeClosingEvent(NotificationFlyoutClosingEventArgs eventArgs) => Closing?.Invoke(this, eventArgs);
+
+        internal void InvokeOpenedEvent(object obj) => Opened?.Invoke(this, obj);
+
+        internal void InvokeOpeningEvent(object obj) => Opening?.Invoke(this, obj);
+       
         private static void OnContextMenuPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var sender = dependencyObject as NotificationFlyout;
@@ -96,14 +109,8 @@ namespace NotificationFlyout.Uwp.UI.Controls
             sender?.OnIconPropertyChanged();
         }
 
-        private void OnContextMenuPropertyChanged()
-        {
-            ContextMenuChanged?.Invoke(this, EventArgs.Empty);
-        }
+        private void OnContextMenuPropertyChanged() => ContextMenuChanged?.Invoke(this, EventArgs.Empty);
 
-        private void OnIconPropertyChanged()
-        {
-            IconSourceChanged?.Invoke(this, EventArgs.Empty);
-        }
+        private void OnIconPropertyChanged() => IconSourceChanged?.Invoke(this, EventArgs.Empty);
     }
 }
