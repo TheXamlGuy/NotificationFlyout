@@ -10,7 +10,8 @@
     <Company>TheXamlGuy</Company>
     <Authors>TheXamlGuy</Authors>
     <Product>NotificationFlyout</Product>
-    <Version>1.0.0</Version>  </PropertyGroup>
+    <Version>1.0.0</Version>  
+  </PropertyGroup>
   
   <ItemGroup>
     <Page Include="NotificationFlyout\NotificationFlyoutContextMenuFlyoutHost.xaml">
@@ -29,10 +30,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>  
-  
-  <ItemGroup>
-    <ProjectReference Include="..\NotificationFlyout.Uwp.UI\NotificationFlyout.Uwp.UI.csproj" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <ProjectReference Include="..\NotificationFlyout.Shared.UI\NotificationFlyout.Shared.UI.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,14 @@
+﻿Shell_NotifyIcon
+DefWindowProcW
+MonitorFromWindow
+RegisterWindowMessage
+SHAppBarMessage
+GetWindowLong
+GetDpiForWindow
+FindWindow
+GetPhysicalCursorPos
+GetSystemMetricsForDpi
+GetCurrentPackageFullName
+GetSystemMetrics
+SetWindowLong
+SetWindowPos

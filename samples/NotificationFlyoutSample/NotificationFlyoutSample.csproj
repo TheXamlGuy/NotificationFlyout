@@ -173,12 +173,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj">
-      <Project>{95f851e4-87a5-4bb7-953e-c0fe3b306f0e}</Project>
+      <Project>{197a7ac8-6f6b-48d4-a95b-9ae9e2008817}</Project>
       <Name>NotificationFlyout.Uwp.UI.Controls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\NotificationFlyout.Uwp.UI\NotificationFlyout.Uwp.UI.csproj">
-      <Project>{AFCE4980-A641-4BBB-A745-F0D4E54A0D86}</Project>
-      <Name>NotificationFlyout.Uwp.UI</Name>
+    <ProjectReference Include="..\..\src\NotificationFlyout.Shared.UI\NotificationFlyout.Shared.UI.csproj">
+      <Project>{197a7ac8-6f6b-48d4-a95b-9ae9e2008817}</Project>
+      <Name>NotificationFlyout.Shared.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

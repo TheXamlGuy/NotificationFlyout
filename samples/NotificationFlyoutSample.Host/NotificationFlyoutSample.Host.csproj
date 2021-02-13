@@ -17,10 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj" />
-    <ProjectReference Include="..\..\src\NotificationFlyout.Uwp.UI\NotificationFlyout.Uwp.UI.csproj" />
     <ProjectReference Include="..\..\src\NotificationFlyout.Wpf.UI.Controls\NotificationFlyout.Wpf.UI.Controls.csproj" />
-    <ProjectReference Include="..\..\src\NotificationFlyout.Wpf.UI\NotificationFlyout.Wpf.UI.csproj" />
     <ProjectReference Include="..\NotificationFlyoutSample\NotificationFlyoutSample.csproj" />
   </ItemGroup>
   

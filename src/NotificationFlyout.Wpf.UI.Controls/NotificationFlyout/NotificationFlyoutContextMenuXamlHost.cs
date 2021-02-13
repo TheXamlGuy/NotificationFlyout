@@ -1,6 +1,6 @@
 ﻿using NotificationFlyout.Uwp.UI.Controls;
+using NotificationFlyout.Shared.UI.Helpers;
 using NotificationFlyout.Wpf.UI.Extensions;
-using NotificationFlyout.Wpf.UI.Helpers;
 using System;
 
 namespace NotificationFlyout.Wpf.UI.Controls

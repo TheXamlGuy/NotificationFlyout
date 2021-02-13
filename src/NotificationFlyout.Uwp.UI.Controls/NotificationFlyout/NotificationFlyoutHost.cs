@@ -46,6 +46,11 @@ namespace NotificationFlyout.Uwp.UI.Controls
             flyout.Hide();
         }
 
+        internal void UpdateThemeVisualState()
+        {
+
+        }
+
         public void SetFlyoutPlacement(string placement)
         {
             if (!_isLoaded)
@@ -98,8 +103,12 @@ namespace NotificationFlyout.Uwp.UI.Controls
                 });
         }
 
+        private NotificationFlyoutPresenter _flyoutPresenter;
+
         protected override void OnApplyTemplate()
         {
+            _flyoutPresenter = GetTemplateChild("FlyoutPresenter") as NotificationFlyoutPresenter;
+
             _flyout = GetTemplateChild("Flyout") as Flyout;
             if (_flyout != null)
             {

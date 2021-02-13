@@ -1,4 +1,5 @@
-﻿using NotificationFlyout.Uwp.UI;
+﻿using NotificationFlyout.Shared.UI.Helpers;
+using NotificationFlyout.Uwp.UI;
 using System.Windows;
 using System.Windows.Markup;
 
@@ -19,6 +20,8 @@ namespace NotificationFlyout.Wpf.UI.Controls
         {
             _application = this;
             Uwp.UI.Controls.NotificationFlyout.SetApplication(this);
+
+            WndProcListener.Current.Start();
 
             PrepareFlyoutHost();
         }

@@ -18,8 +18,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj" />
-    <ProjectReference Include="..\NotificationFlyout.Uwp.UI\NotificationFlyout.Uwp.UI.csproj" />
     <ProjectReference Include="..\NotificationFlyout.Wpf.UI\NotificationFlyout.Wpf.UI.csproj" />
+    <ProjectReference Include="..\NotificationFlyout.Shared.UI\NotificationFlyout.Shared.UI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

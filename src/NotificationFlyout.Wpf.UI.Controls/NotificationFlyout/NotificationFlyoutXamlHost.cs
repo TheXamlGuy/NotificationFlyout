@@ -1,9 +1,8 @@
-﻿using NotificationFlyout.Uwp.UI.Controls;
-using NotificationFlyout.Uwp.UI.Extensions;
+﻿using NotificationFlyout.Shared.UI.Extensions;
+using NotificationFlyout.Shared.UI.Helpers;
+using NotificationFlyout.Uwp.UI.Controls;
 using NotificationFlyout.Wpf.UI.Extensions;
-using NotificationFlyout.Wpf.UI.Helpers;
 using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -92,12 +91,12 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
         {
-            if (args.MouseButton == MouseButton.Left)
+            if (args.PointerButton == PointerButton.Left)
             {
                 ShowFlyout();
             }
 
-            if (args.MouseButton == MouseButton.Right)
+            if (args.PointerButton == PointerButton.Right)
             {
                 ShowContextMenuFlyout();
             }
@@ -107,7 +106,20 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void OnTaskbarChanged(object sender, EventArgs args) => UpdateWindow();
 
-        private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args) => UpdateIcons();
+        private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
+        {
+            UpdateFlyoutTheme(args.IsColorPrevalence);
+            UpdateIcons();
+        }
+
+        private void UpdateFlyoutTheme(bool isColorPrevalence)
+        {
+            var content = GetHostContent();
+            if (content != null)
+            {
+             //   content.UpdateFlyoutTheme(isColorPrevalence);
+            }
+        }
 
         private void PrepareContextMenu()
         {
@@ -131,10 +143,10 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void PrepareNotificationIcon()
         {
-            _notificationIconHelper = NotificationIconHelper.Create(this);
+            _notificationIconHelper = NotificationIconHelper.Create();
             _notificationIconHelper.IconInvoked += OnIconInvoked;
 
-            _systemPersonalisationHelper = SystemPersonalisationHelper.Create(this);
+            _systemPersonalisationHelper = SystemPersonalisationHelper.Create();
             _systemPersonalisationHelper.ThemeChanged += OnThemeChanged;
 
             UpdateIcons();
@@ -142,7 +154,7 @@ namespace NotificationFlyout.Wpf.UI.Controls
 
         private void PrepareTaskbar()
         {
-            _taskbarHelper = TaskbarHelper.Create(this);
+            _taskbarHelper = TaskbarHelper.Create();
             _taskbarHelper.TaskbarChanged += OnTaskbarChanged;
         }
 
