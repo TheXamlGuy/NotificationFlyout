@@ -22,18 +22,5 @@ namespace NotificationFlyout.Wpf.UI.Extensions
         {
             return GetDpi(visual).M11;
         }
-
-        public static bool TryGetTransformToDevice(this Visual visual, out Matrix value)
-        {
-            var presentationSource = PresentationSource.FromVisual(visual);
-            if (presentationSource != null)
-            {
-                value = presentationSource.CompositionTarget.TransformToDevice;
-                return true;
-            }
-
-            value = default;
-            return false;
-        }
     }
 }
