@@ -16,7 +16,7 @@
             <MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="Close" />
         </controls:NotificationFlyoutContextMenu>
     </controls:NotificationFlyout.ContextMenu>
-    <StackPanel Height="500" Margin="24">
+    <StackPanel Margin="24">
         <ComboBox
             x:Name="Theme"
             Margin="0,0,0,8"

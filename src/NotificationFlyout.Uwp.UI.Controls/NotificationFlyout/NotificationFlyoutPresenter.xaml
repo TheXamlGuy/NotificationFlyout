@@ -33,6 +33,8 @@
         TintOpacity="0.8" />
     <Style TargetType="controls:NotificationFlyoutPresenter">
         <Setter Property="Background" Value="{ThemeResource NotificationFlyoutPresenterBackgroundBrush}" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NotificationFlyoutPresenter">
