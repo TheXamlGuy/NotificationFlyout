@@ -32,8 +32,4 @@
     </Page>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\NotificationFlyout.Shared.UI\NotificationFlyout.Shared.UI.csproj" />
-  </ItemGroup>
-
 </Project>
