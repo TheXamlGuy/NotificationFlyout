@@ -21,15 +21,12 @@
                 TintOpacity="0.8" />
             <StaticResource x:Key="NotificationFlyoutPresenterBackgroundBrush" ResourceKey="AcrylicBackgroundFillColorBrush" />
         </ResourceDictionary>
-        <ResourceDictionary x:Key="HighContrast">
-            <SolidColorBrush x:Key="NotificationFlyoutPresenterBackgroundBrush" Color="Green" />
-        </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
     <AcrylicBrush
         x:Key="NotificationFlyoutPresenterBackgroundAccentBrush"
         BackgroundSource="HostBackdrop"
-        FallbackColor="{StaticResource SystemAccentColorDark1}"
-        TintColor="{StaticResource SystemAccentColorDark1}"
+        FallbackColor="{ThemeResource SystemAccentColorDark1}"
+        TintColor="{ThemeResource SystemAccentColorDark1}"
         TintOpacity="0.8" />
     <Style TargetType="controls:NotificationFlyoutPresenter">
         <Setter Property="Background" Value="{ThemeResource NotificationFlyoutPresenterBackgroundBrush}" />
