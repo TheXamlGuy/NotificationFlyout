@@ -3,9 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:TheXamlGuy.NotificationFlyout.Uwp.UI.Controls"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    IconSource="/Assets/Icon.ico"
-    LightIconSource="/Assets/Icon-Light.ico">
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls">
     <controls:NotificationFlyout.FlyoutPresenterStyle>
         <Style TargetType="controls:NotificationFlyoutPresenter">
             <Setter Property="CornerRadius" Value="8" />

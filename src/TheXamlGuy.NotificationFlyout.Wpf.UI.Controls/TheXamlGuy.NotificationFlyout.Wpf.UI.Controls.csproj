@@ -13,6 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\notification-icon-default.ico" />
+    <None Remove="Assets\notification-icon-light.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Toolkit.Wpf.UI.XamlHost" Version="6.1.2" />
   </ItemGroup>
 
@@ -20,6 +25,11 @@
     <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj" />
     <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls.csproj" />
     <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Wpf.UI\TheXamlGuy.NotificationFlyout.Wpf.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\notification-icon-light.ico" />
+    <Resource Include="Assets\notification-icon-default.ico" />
   </ItemGroup>
 
   <ItemGroup>

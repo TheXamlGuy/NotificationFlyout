@@ -5,6 +5,9 @@ using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 using System;
 using System.Windows;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
@@ -105,20 +108,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
         private void OnTaskbarChanged(object sender, EventArgs args) => UpdateWindow();
 
-        private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
-        {
-            UpdateFlyoutTheme(args.IsColorPrevalence);
-            UpdateIcons();
-        }
-
-        private void UpdateFlyoutTheme(bool isColorPrevalence)
-        {
-            var content = GetHostContent();
-            if (content != null)
-            {
-             //   content.UpdateFlyoutTheme(isColorPrevalence);
-            }
-        }
+        private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args) => UpdateIcons();
 
         private void PrepareContextMenu()
         {
@@ -168,18 +158,23 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             if (!IsLoaded) return;
             if (_flyout == null) return;
 
-            var iconSource = _flyout.IconSource;
-            var lightIconSource = _flyout.LightIconSource;
-
             var shellTrayHandle = WindowHelper.GetHandle(ShellTrayHandleName);
             if (shellTrayHandle == null) return;
 
-            var desiredIconSource = _systemPersonalisationHelper.Theme == SystemTheme.Dark ? iconSource : lightIconSource;
-            if (desiredIconSource == null) return;
-
             var dpi = WindowHelper.GetDpi(shellTrayHandle);
-            using var icon = await desiredIconSource.ConvertToIconAsync(dpi);
-            _notificationIconHelper.SetIcon(icon.Handle);
+
+            var desiredIconSource = _systemPersonalisationHelper.Theme == SystemTheme.Dark ? _flyout.IconSource : _flyout.LightIconSource;
+            if (desiredIconSource == null)
+            {
+                var fallbackIconSource = new BitmapImage(new Uri($"pack://application:,,,/{GetType().Namespace};component/Assets/notification-icon-{(_systemPersonalisationHelper.Theme == SystemTheme.Dark ? "default" : "light")}.ico"));
+                using var icon = fallbackIconSource.ConvertToIcon(dpi);
+                _notificationIconHelper.SetIcon(icon.Handle);
+            }
+            else
+            {
+                using var icon = await desiredIconSource.ConvertToIconAsync(dpi);
+                _notificationIconHelper.SetIcon(icon.Handle);
+            }
         }
 
         private void UpdateWindow()

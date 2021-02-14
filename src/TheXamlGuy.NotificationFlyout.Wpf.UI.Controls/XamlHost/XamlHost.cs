@@ -23,6 +23,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
         protected virtual void OnContentLoaded()
         {
+            
         }
 
         protected virtual WindowsXamlHost OnPreparingXamlHost(WindowsXamlHost xamlHost)
