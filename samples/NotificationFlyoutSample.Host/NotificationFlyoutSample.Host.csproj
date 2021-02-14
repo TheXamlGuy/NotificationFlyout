@@ -1,15 +1,11 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Platforms>x64</Platforms>
-    <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
+    <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>NotificationFlyoutSample.Host.Program</StartupObject>
-    <EnableTypeInfoReflection>false</EnableTypeInfoReflection>
-    <EnableXBindDiagnostics>false</EnableXBindDiagnostics>
-    <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NotificationFlyout.Wpf.UI.Controls\NotificationFlyout.Wpf.UI.Controls.csproj" />
+    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls.csproj" />
     <ProjectReference Include="..\NotificationFlyoutSample\NotificationFlyoutSample.csproj" />
   </ItemGroup>
-  
+
 </Project>

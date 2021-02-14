@@ -2,7 +2,7 @@
     x:Class="NotificationFlyoutSample.Shell"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls"
+    xmlns:controls="using:TheXamlGuy.NotificationFlyout.Uwp.UI.Controls"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     IconSource="/Assets/Icon.ico"
     LightIconSource="/Assets/Icon-Light.ico">

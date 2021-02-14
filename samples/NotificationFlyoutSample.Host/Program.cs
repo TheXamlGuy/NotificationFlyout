@@ -1,5 +1,5 @@
-﻿using NotificationFlyout.Wpf.UI.Controls;
-using System;
+﻿using System;
+using TheXamlGuy.NotificationFlyout.Wpf.UI.Controls;
 
 namespace NotificationFlyoutSample.Host
 {

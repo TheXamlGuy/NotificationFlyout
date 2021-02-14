@@ -172,13 +172,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NotificationFlyout.Uwp.UI.Controls\NotificationFlyout.Uwp.UI.Controls.csproj">
-      <Project>{197a7ac8-6f6b-48d4-a95b-9ae9e2008817}</Project>
-      <Name>NotificationFlyout.Uwp.UI.Controls</Name>
+    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj">
+      <Project>{7d6a151b-c021-4d34-adc1-0171a2f65a00}</Project>
+      <Name>TheXamlGuy.NotificationFlyout.Shared.UI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\NotificationFlyout.Shared.UI\NotificationFlyout.Shared.UI.csproj">
-      <Project>{197a7ac8-6f6b-48d4-a95b-9ae9e2008817}</Project>
-      <Name>NotificationFlyout.Shared.UI</Name>
+    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls.csproj">
+      <Project>{8501316d-f994-4a29-9ec4-dc6c6b93f565}</Project>
+      <Name>TheXamlGuy.NotificationFlyout.Uwp.UI.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
