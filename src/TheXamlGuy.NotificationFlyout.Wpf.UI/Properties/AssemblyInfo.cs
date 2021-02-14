@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("NotificationFlyout.Wpf.UI.Controls")]
+[assembly: InternalsVisibleTo("TheXamlGuy.NotificationFlyout.Wpf.UI.Controls")]

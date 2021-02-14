@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NotificationFlyout.Shared.UI.Extensions
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Extensions
 {
     public static class OperatingSystemExtensions
     {

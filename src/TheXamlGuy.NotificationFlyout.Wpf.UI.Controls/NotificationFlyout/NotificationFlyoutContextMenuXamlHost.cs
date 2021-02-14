@@ -1,9 +1,9 @@
-﻿using NotificationFlyout.Uwp.UI.Controls;
-using NotificationFlyout.Shared.UI.Helpers;
-using NotificationFlyout.Wpf.UI.Extensions;
+﻿using TheXamlGuy.NotificationFlyout.Uwp.UI.Controls;
+using TheXamlGuy.NotificationFlyout.Shared.UI.Helpers;
+using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 using System;
 
-namespace NotificationFlyout.Wpf.UI.Controls
+namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
     internal class NotificationFlyoutContextMenuXamlHost : TransparentXamlHost<NotificationFlyoutContextMenuFlyoutHost>
     {

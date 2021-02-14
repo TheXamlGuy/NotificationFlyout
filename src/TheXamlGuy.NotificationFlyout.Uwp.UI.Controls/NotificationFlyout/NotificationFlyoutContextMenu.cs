@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
-namespace NotificationFlyout.Uwp.UI.Controls
+namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 {
     [ContentProperty(Name = "MenuItems")]
     public class NotificationFlyoutContextMenu : DependencyObject

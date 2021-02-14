@@ -14,15 +14,15 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Page Include="NotificationFlyout\NotificationFlyoutContextMenuFlyoutHost.xaml">
+    <Page Include="NotificationFlyoutContextMenuFlyoutHost\NotificationFlyoutContextMenuFlyoutHost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NotificationFlyout\NotificationFlyoutHost.xaml">
+    <Page Include="NotificationFlyoutHost\NotificationFlyoutHost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NotificationFlyout\NotificationFlyoutPresenter.xaml">
+    <Page Include="NotificationFlyoutPresenter\NotificationFlyoutPresenter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -32,4 +32,8 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj" />
+  </ItemGroup>
+  
 </Project>

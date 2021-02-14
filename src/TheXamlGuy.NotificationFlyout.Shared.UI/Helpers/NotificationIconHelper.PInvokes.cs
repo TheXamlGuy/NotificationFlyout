@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace NotificationFlyout.Shared.UI.Helpers
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
 {
     public partial class NotificationIconHelper
     {

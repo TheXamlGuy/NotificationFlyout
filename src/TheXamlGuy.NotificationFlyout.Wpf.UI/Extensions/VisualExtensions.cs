@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace NotificationFlyout.Wpf.UI.Extensions
+namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions
 {
     public static class VisualExtensions
     {

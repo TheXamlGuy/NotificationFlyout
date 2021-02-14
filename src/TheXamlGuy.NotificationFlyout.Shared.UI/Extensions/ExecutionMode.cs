@@ -1,6 +1,6 @@
 ﻿using Microsoft.Windows.Sdk;
 
-namespace NotificationFlyout.Shared.UI.Extensions
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Extensions
 {
     internal class ExecutionMode
     {

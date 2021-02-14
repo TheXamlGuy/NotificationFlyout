@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NotificationFlyout.Uwp.UI.Controls
+namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 {
     public sealed class NotificationFlyoutClosingEventArgs : EventArgs
     {

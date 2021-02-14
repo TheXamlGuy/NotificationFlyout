@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 
-namespace NotificationFlyout.Uwp.UI
+namespace TheXamlGuy.NotificationFlyout.Shared.UI
 {
     public interface INotificationFlyoutApplication
     {

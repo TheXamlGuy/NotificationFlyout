@@ -1,4 +1,4 @@
-﻿namespace NotificationFlyout.Shared.UI.Extensions
+﻿namespace TheXamlGuy.NotificationFlyout.Shared.UI.Extensions
 {
     public enum OperatingSystemVersion : int
     {

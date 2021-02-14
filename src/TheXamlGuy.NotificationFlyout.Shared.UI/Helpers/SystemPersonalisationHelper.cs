@@ -1,9 +1,9 @@
 ﻿using Microsoft.Win32;
-using NotificationFlyout.Shared.UI.Extensions;
+using TheXamlGuy.NotificationFlyout.Shared.UI.Extensions;
 using System;
 using Windows.UI.ViewManagement;
 
-namespace NotificationFlyout.Shared.UI.Helpers
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
 {
     public class SystemPersonalisationHelper : IWndProcHandler
     {

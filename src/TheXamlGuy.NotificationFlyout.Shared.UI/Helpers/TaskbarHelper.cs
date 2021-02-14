@@ -1,8 +1,8 @@
-﻿using NotificationFlyout.Shared.UI.Extensions;
+﻿using TheXamlGuy.NotificationFlyout.Shared.UI.Extensions;
 using System;
 using System.Runtime.InteropServices;
 
-namespace NotificationFlyout.Shared.UI.Helpers
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
 {
     public partial class TaskbarHelper : IWndProcHandler
     {

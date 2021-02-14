@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 
-namespace NotificationFlyout.Wpf.UI.Controls
+namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
     internal class XamlHost<TXamlContent> : Window where TXamlContent : Windows.UI.Xaml.UIElement
     {

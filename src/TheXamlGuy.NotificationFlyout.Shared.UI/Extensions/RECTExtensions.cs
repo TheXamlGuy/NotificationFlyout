@@ -1,7 +1,7 @@
 ﻿using Microsoft.Windows.Sdk;
 using Windows.Foundation;
 
-namespace NotificationFlyout.Shared.UI.Extensions
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Extensions
 {
     internal static class RECTExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Windows.Sdk;
 
-namespace NotificationFlyout.Shared.UI.Helpers
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
 {
     internal class CursorHelper
     {

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Toolkit.Wpf.UI.XamlHost;
-using NotificationFlyout.Wpf.UI.Extensions;
+using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 using System.Windows;
 using System.Windows.Media;
 
-namespace NotificationFlyout.Wpf.UI.Controls
+namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
     internal class TransparentXamlHost<TXamlContent> : XamlHost<TXamlContent> where TXamlContent : Windows.UI.Xaml.UIElement
     {

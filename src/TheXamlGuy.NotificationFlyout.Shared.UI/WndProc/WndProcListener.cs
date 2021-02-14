@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace NotificationFlyout.Shared.UI.Helpers
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
 {
     public class WndProcListener
     {

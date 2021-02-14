@@ -1,10 +1,11 @@
 ﻿using System;
+using TheXamlGuy.NotificationFlyout.Shared.UI;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
-namespace NotificationFlyout.Uwp.UI.Controls
+namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 {
     [ContentProperty(Name = "Content")]
     public class NotificationFlyout : DependencyObject

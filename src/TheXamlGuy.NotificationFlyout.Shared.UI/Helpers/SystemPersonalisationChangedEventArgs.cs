@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NotificationFlyout.Shared.UI.Helpers
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
 {
     public class SystemPersonalisationChangedEventArgs : EventArgs
     {

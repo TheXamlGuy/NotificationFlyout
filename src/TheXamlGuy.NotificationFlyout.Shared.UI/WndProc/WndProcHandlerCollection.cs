@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NotificationFlyout.Shared.UI.Helpers
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
 {
     internal class WndProcHandlerCollection : List<WndProcHandlerReference>, IWndProcHandlerCollection
     {

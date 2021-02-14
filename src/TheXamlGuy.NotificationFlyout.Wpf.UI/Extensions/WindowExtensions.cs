@@ -3,7 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace NotificationFlyout.Wpf.UI.Extensions
+namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions
 {
     public static class WindowExtensions
     {

@@ -1,13 +1,12 @@
-﻿using NotificationFlyout.Shared.UI.Extensions;
-using NotificationFlyout.Shared.UI.Helpers;
-using NotificationFlyout.Uwp.UI.Controls;
-using NotificationFlyout.Wpf.UI.Extensions;
+﻿using TheXamlGuy.NotificationFlyout.Shared.UI.Extensions;
+using TheXamlGuy.NotificationFlyout.Shared.UI.Helpers;
+using TheXamlGuy.NotificationFlyout.Uwp.UI.Controls;
+using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 using System;
 using System.Windows;
-using System.Windows.Input;
 using Windows.UI.Xaml.Controls.Primitives;
 
-namespace NotificationFlyout.Wpf.UI.Controls
+namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
     internal class NotificationFlyoutXamlHost : TransparentXamlHost<NotificationFlyoutHost>
     {

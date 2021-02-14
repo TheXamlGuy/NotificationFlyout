@@ -1,9 +1,9 @@
-﻿using NotificationFlyout.Shared.UI.Helpers;
-using NotificationFlyout.Uwp.UI;
+﻿using TheXamlGuy.NotificationFlyout.Shared.UI.Helpers;
 using System.Windows;
 using System.Windows.Markup;
+using TheXamlGuy.NotificationFlyout.Shared.UI;
 
-namespace NotificationFlyout.Wpf.UI.Controls
+namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
     [ContentProperty(nameof(Flyout))]
     public class NotificationFlyoutApplication : DependencyObject, INotificationFlyoutApplication
@@ -22,7 +22,6 @@ namespace NotificationFlyout.Wpf.UI.Controls
             Uwp.UI.Controls.NotificationFlyout.SetApplication(this);
 
             WndProcListener.Current.Start();
-
             PrepareFlyoutHost();
         }
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Windows.Sdk;
-using NotificationFlyout.Shared.UI.Extensions;
 using System;
 using System.Drawing;
 using System.IO;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace NotificationFlyout.Shared.UI.Extensions
+namespace TheXamlGuy.NotificationFlyout.Shared.UI.Extensions
 {
     public static class ImageSourceExtensions
     {
