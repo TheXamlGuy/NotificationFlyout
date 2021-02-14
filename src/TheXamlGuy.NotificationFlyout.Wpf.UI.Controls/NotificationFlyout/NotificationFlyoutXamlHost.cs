@@ -145,7 +145,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             _notificationIconHelper = NotificationIconHelper.Create();
             _notificationIconHelper.IconInvoked += OnIconInvoked;
 
-            _systemPersonalisationHelper = SystemPersonalisationHelper.Create();
+            _systemPersonalisationHelper = SystemPersonalisationHelper.Current;
             _systemPersonalisationHelper.ThemeChanged += OnThemeChanged;
 
             UpdateIcons();

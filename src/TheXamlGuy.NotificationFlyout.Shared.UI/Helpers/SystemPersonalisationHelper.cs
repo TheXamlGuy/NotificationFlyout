@@ -7,6 +7,8 @@ namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
 {
     public class SystemPersonalisationHelper : IWndProcHandler
     {
+        private static readonly Lazy<SystemPersonalisationHelper> _current = new(() => new SystemPersonalisationHelper());
+
         private readonly UISettings _settings = new();
         private readonly string PersonalizeKey = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
         private SystemTheme _currentTheme;
@@ -22,10 +24,17 @@ namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
 
         public event EventHandler<SystemPersonalisationChangedEventArgs> ThemeChanged;
 
+        public static SystemPersonalisationHelper Current => _current.Value;
         public bool IsColorPrevalence => GetIsColorPrevalence();
         public SystemTheme Theme => GetTheme();
 
-        public static SystemPersonalisationHelper Create() => new();
+        public void Handle(uint message, IntPtr wParam, IntPtr lParam)
+        {
+            if (message == (int)WndProcMessages.WM_SETTINGCHANGE)
+            {
+                RaiseThemeChangedEvent();
+            }
+        }
 
         private bool GetIsColorPrevalence()
         {
@@ -51,14 +60,6 @@ namespace TheXamlGuy.NotificationFlyout.Shared.UI.Helpers
                 _isColorPrevalence = isColorPrevalence;
 
                 ThemeChanged?.Invoke(this, new SystemPersonalisationChangedEventArgs(theme, isColorPrevalence));
-            }
-        }
-
-        public void Handle(uint message, IntPtr wParam, IntPtr lParam)
-        {
-            if (message == (int)WndProcMessages.WM_SETTINGCHANGE)
-            {
-                RaiseThemeChangedEvent();
             }
         }
     }
