@@ -1,12 +1,10 @@
-﻿using TheXamlGuy.NotificationFlyout.Shared.UI.Extensions;
-using TheXamlGuy.NotificationFlyout.Shared.UI.Helpers;
+﻿using TheXamlGuy.NotificationFlyout.Common.Extensions;
+using TheXamlGuy.NotificationFlyout.Common.Helpers;
 using TheXamlGuy.NotificationFlyout.Uwp.UI.Controls;
 using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 using System;
 using System.Windows;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls

@@ -1,5 +1,5 @@
 ﻿using TheXamlGuy.NotificationFlyout.Uwp.UI.Controls;
-using TheXamlGuy.NotificationFlyout.Shared.UI.Helpers;
+using TheXamlGuy.NotificationFlyout.Common.Helpers;
 using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 using System;
 

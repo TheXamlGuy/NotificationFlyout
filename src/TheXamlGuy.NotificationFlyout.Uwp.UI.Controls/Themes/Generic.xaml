@@ -2,6 +2,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ms-appx:///TheXamlGuy.NotificationFlyout.Uwp.UI.Controls/NotificationFlyoutHost/NotificationFlyoutHost.xaml" />
         <ResourceDictionary Source="ms-appx:///TheXamlGuy.NotificationFlyout.Uwp.UI.Controls/NotificationFlyoutPresenter/NotificationFlyoutPresenter.xaml" />
-        <ResourceDictionary Source="ms-appx:///TheXamlGuy.NotificationFlyout.Uwp.UI.Controls/NotificationFlyoutContextMenuFlyoutHost/NotificationFlyoutContextMenuFlyoutHost.xaml" />
+        <ResourceDictionary Source="ms-appx:///TheXamlGuy.NotificationFlyout.Uwp.UI.Controls/NotificationFlyoutHost/NotificationFlyoutContextMenuFlyoutHost.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

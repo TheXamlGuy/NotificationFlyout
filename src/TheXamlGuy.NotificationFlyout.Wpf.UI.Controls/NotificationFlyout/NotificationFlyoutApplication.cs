@@ -1,4 +1,4 @@
-﻿using TheXamlGuy.NotificationFlyout.Shared.UI.Helpers;
+﻿using TheXamlGuy.NotificationFlyout.Common.Helpers;
 using System.Windows;
 using System.Windows.Markup;
 using TheXamlGuy.NotificationFlyout.Shared.UI;

@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Common\TheXamlGuy.NotificationFlyout.Common.csproj" />
     <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj" />
   </ItemGroup>
 

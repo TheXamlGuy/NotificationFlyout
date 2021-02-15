@@ -14,8 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Common\TheXamlGuy.NotificationFlyout.Common.csproj" />
+    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj" />
     <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls.csproj" />
+    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI\TheXamlGuy.NotificationFlyout.Wpf.UI.csproj" />
     <ProjectReference Include="..\NotificationFlyoutSample\NotificationFlyoutSample.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.VCRTForwarders.140" Version="1.0.7" />
   </ItemGroup>
 
 </Project>
