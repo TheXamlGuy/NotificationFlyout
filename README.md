@@ -40,9 +40,7 @@ namespace MyUWPApp
     x:Class="MyUWPApp.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls"
-    IconSource="/Assets/Icon.ico"
-    LightIconSource="/Assets/Icon-Light.ico">
+    xmlns:controls="using:NotificationFlyout.Uwp.UI.Controls">
     <Grid Width="400" Height="500">
         <Button
             HorizontalAlignment="Center"
@@ -51,9 +49,7 @@ namespace MyUWPApp
     </Grid>
 </controls:NotificationFlyout>
 ```
-5. In the UWP app project, add two icons (.ico) to the Assets folder.
-6. Replace the values of `IconSource` and `LightIconSource` with the paths of the icons that you have added to your Assets folder.
-7. Clean the UWP app project and then build it.
+4. Clean the UWP app project and then build it.
 
 ## Create a WPF project ##
 1. In Solution Explorer, right-click the solution node and select Add -> New Project.
