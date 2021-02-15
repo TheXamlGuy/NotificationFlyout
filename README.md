@@ -34,7 +34,7 @@ namespace MyUWPApp
 }
 ```
 5. In the UWP app project, install the [TheXamlGuy.NotificationFlyout.Uwp.UI.Controls](https://www.nuget.org/packages/TheXamlGuy.NotificationFlyout.Uwp.UI.Controls/) NuGet package (latest stable version).
-3. Open the `MainPage.xaml` file and replace the contents of this file with the following XAML. Replace `MyUWPApp` with the namespace of your UWP app project.
+6. Open the `MainPage.xaml` file and replace the contents of this file with the following XAML. Replace `MyUWPApp` with the namespace of your UWP app project.
 ```xaml
 <controls:NotificationFlyout
     x:Class="MyUWPApp.MainPage"
@@ -49,7 +49,7 @@ namespace MyUWPApp
     </Grid>
 </controls:NotificationFlyout>
 ```
-4. Clean the UWP app project and then build it.
+7. Clean the UWP app project and then build it.
 
 ## Create a WPF project ##
 1. In Solution Explorer, right-click the solution node and select Add -> New Project.
