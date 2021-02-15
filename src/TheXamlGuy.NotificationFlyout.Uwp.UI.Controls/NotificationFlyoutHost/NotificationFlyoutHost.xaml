@@ -64,7 +64,7 @@
                                         </TransitionCollection>
                                     </Grid.Transitions>
                                     <controls:NotificationFlyoutPresenter
-                                        x:Name="FlyoutPresenter"
+                                        x:Name="NotificationFlyoutPresenter"
                                         Content="{TemplateBinding Content}"
                                         Style="{TemplateBinding FlyoutPresenterStyle}" />
                                 </Grid>

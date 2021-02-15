@@ -10,8 +10,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             DefaultStyleKey = typeof(NotificationFlyoutPresenter);
         }
 
-      //  protected override void OnApplyTemplate() => UpdateThemeVisualStates(false);
-
-      //  private void UpdateThemeVisualStates(bool useTransition) => VisualStateManager.GoToState(this, _systemPersonalisationHelper.IsColorPrevalence ? "ColorPrevalenceTheme" : "DefaultTheme", useTransition);
+        internal void UpdateThemeVisualState(bool isColorPrevalence) => VisualStateManager.GoToState(this, isColorPrevalence ? "ColorPrevalenceTheme" : "DefaultTheme", true);
     }
 }

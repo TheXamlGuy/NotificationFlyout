@@ -20,11 +20,12 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 new PropertyMetadata(null));
 
         private Flyout _flyout;
+        private bool _isColorPrevalence;
         private bool _isLoaded;
         private NotificationFlyout _notificationFlyout;
+        private NotificationFlyoutPresenter _notificationFlyoutPresenter;
         private string _placement;
         private Grid _root;
-
         public NotificationFlyoutHost() => DefaultStyleKey = typeof(NotificationFlyoutHost);
 
         public UIElement Content
@@ -48,24 +49,8 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
         public void SetFlyoutPlacement(string placement)
         {
-            if (!_isLoaded)
-            {
-                _placement = placement;
-            }
-
-            if (string.IsNullOrEmpty(placement)) return;
-            VisualStateManager.GoToState(this, placement, true);
-        }
-
-        public void ShowFlyout(FlyoutPlacementMode placementMode)
-        {
-            if (_root == null) return;
-            var flyout = FlyoutBase.GetAttachedFlyout(_root);
-            flyout.ShowAt(_root, new FlyoutShowOptions
-            {
-                Placement = placementMode,
-                ShowMode = FlyoutShowMode.Transient,
-            });
+            _placement = placement;
+            UpdateFlyoutVisualState();
         }
 
         public void SetOwningFlyout(NotificationFlyout flyout)
@@ -98,8 +83,31 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 });
         }
 
+        public void ShowFlyout(FlyoutPlacementMode placementMode)
+        {
+            if (_root == null) return;
+            var flyout = FlyoutBase.GetAttachedFlyout(_root);
+            flyout.ShowAt(_root, new FlyoutShowOptions
+            {
+                Placement = placementMode,
+                ShowMode = FlyoutShowMode.Transient,
+            });
+        }
+
+        public void UpdateTheme(bool isColorPrevalence)
+        {
+            _isColorPrevalence = isColorPrevalence;
+            if (_notificationFlyoutPresenter == null) return;
+            _notificationFlyoutPresenter.UpdateThemeVisualState(isColorPrevalence);
+        }
+
         protected override void OnApplyTemplate()
         {
+            _notificationFlyoutPresenter = GetTemplateChild("NotificationFlyoutPresenter") as NotificationFlyoutPresenter;
+            _notificationFlyoutPresenter.ApplyTemplate();
+
+            _notificationFlyoutPresenter.UpdateThemeVisualState(_isColorPrevalence);
+
             _flyout = GetTemplateChild("Flyout") as Flyout;
             if (_flyout != null)
             {
@@ -125,7 +133,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             }
 
             _isLoaded = true;
-            SetFlyoutPlacement(_placement);
+            UpdateFlyoutVisualState();
         }
 
         private void OnFlyoutClosed(object sender, object args) => _notificationFlyout?.InvokeClosedEvent(args);
@@ -135,5 +143,13 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         private void OnFlyoutOpened(object sender, object args) => _notificationFlyout?.InvokeOpenedEvent(args);
 
         private void OnFlyoutOpening(object sender, object args) => _notificationFlyout?.InvokeOpeningEvent(args);
+
+        private void UpdateFlyoutVisualState()
+        {
+            if (!_isLoaded) return;
+
+            if (string.IsNullOrEmpty(_placement)) return;
+            VisualStateManager.GoToState(this, _placement, true);
+        }
     }
 }

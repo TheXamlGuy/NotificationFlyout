@@ -83,6 +83,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             PrepareNotificationIcon();
             PrepareTaskbar();
             UpdateWindow();
+            UpdateTheme();
         }
 
         protected override void OnDeactivated(EventArgs args) => HideFlyout();
@@ -106,7 +107,11 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
         private void OnTaskbarChanged(object sender, EventArgs args) => UpdateWindow();
 
-        private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args) => UpdateIcons();
+        private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
+        {
+            UpdateTheme();
+            UpdateIcons();
+        }
 
         private void PrepareContextMenu()
         {
@@ -172,6 +177,15 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             {
                 using var icon = await desiredIconSource.ConvertToIconAsync(dpi);
                 _notificationIconHelper.SetIcon(icon.Handle);
+            }
+        }
+
+        private void UpdateTheme()
+        {
+            var content = GetHostContent();
+            if (content != null)
+            {
+                content.UpdateTheme(_systemPersonalisationHelper.IsColorPrevalence);
             }
         }
 
