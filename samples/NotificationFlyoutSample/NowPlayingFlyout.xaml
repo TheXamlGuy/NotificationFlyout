@@ -1,0 +1,24 @@
+﻿<controls:NotificationFlyout
+    x:Class="NotificationFlyoutSample.NowPlayingFlyout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TheXamlGuy.NotificationFlyout.Uwp.UI.Controls"
+    xmlns:mux="using:Microsoft.UI.Xaml.Controls"
+    IconSource="/Assets/Notification-Icon-Playing.png"
+    LightIconSource="/Assets/Notification-Icon-Playing-Light.png">
+    <controls:NotificationFlyout.FlyoutPresenterStyle>
+        <Style TargetType="controls:NotificationFlyoutPresenter">
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Margin" Value="8" />
+        </Style>
+    </controls:NotificationFlyout.FlyoutPresenterStyle>
+    <controls:NotificationFlyout.ContextMenu>
+        <controls:NotificationFlyoutContextMenu>
+            <MenuFlyoutItem Click="OnCloseMenuFlyoutItemClick" Text="Close" />
+        </controls:NotificationFlyoutContextMenu>
+    </controls:NotificationFlyout.ContextMenu>
+    <Frame
+        x:Name="RootFrame"
+        Width="400"
+        Margin="24" />
+</controls:NotificationFlyout>
