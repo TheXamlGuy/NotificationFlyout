@@ -33,7 +33,7 @@ namespace MyUWPApp
     }
 }
 ```
-5. In the UWP app project, install the [NotificationFlyout.Uwp.UI.Controls](https://www.nuget.org/packages/NotificationFlyout.Uwp.UI.Controls/) NuGet package (latest stable version).
+5. In the UWP app project, install the [TheXamlGuy.NotificationFlyout.Uwp.UI.Controls](https://www.nuget.org/packages/TheXamlGuy.NotificationFlyout.Uwp.UI.Controls/) NuGet package (latest stable version).
 3. Open the `MainPage.xaml` file and replace the contents of this file with the following XAML. Replace `MyUWPApp` with the namespace of your UWP app project.
 ```xaml
 <controls:NotificationFlyout
@@ -72,7 +72,7 @@ namespace MyUWPApp
 </Project>
 ```
 5. In Solution Explorer, right-click the Dependencies node under the WPF project and add a reference to your UWP app project.
-6. In the WPF app project, install the [Microsoft.Toolkit.Wpf.UI.XamlHost](https://www.nuget.org/packages/Microsoft.Toolkit.Wpf.UI.XamlHost) and [NotificationFlyout.Wpf.UI.Controls](https://www.nuget.org/packages/NotificationFlyout.Wpf.UI.Controls/) NuGet packages (latest stable version).
+6. In the WPF app project, install the [Microsoft.Toolkit.Wpf.UI.XamlHost](https://www.nuget.org/packages/Microsoft.Toolkit.Wpf.UI.XamlHost) and [TheXamlGuy.NotificationFlyout.Wpf.UI.Controls](https://www.nuget.org/packages/TheXamlGuy.NotificationFlyout.Wpf.UI.Controls/) NuGet packages (latest stable version).
 7. Open the `App.xaml` file and replace the contents of this file with the following XAML. Replace `MyWPFApp` with the namespace of your WPF app project.
 ```xaml
 <Application
