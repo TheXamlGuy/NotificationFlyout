@@ -123,9 +123,6 @@
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WindowContent.xaml.cs">
-      <DependentUpon>WindowContent.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -133,7 +130,10 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\album.jpg" />
     <Content Include="Assets\notification-icon-light.png" />
+    <Content Include="Assets\Notification-Icon-Playing-Light.png" />
+    <Content Include="Assets\Notification-Icon-Playing.png" />
     <Content Include="Assets\notification-icon.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -163,10 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Shell.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WindowContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
