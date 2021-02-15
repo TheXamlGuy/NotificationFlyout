@@ -162,20 +162,20 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls.csproj">
-      <Project>{aca2cc23-a9ae-427f-a900-ed75a96698f4}</Project>
-      <Name>TheXamlGuy.NotificationFlyout.Uwp.UI.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj">
-      <Project>{aca2cc23-a9ae-427f-a900-ed75a96698f4}</Project>
-      <Name>TheXamlGuy.NotificationFlyout.Shared.UI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Shell.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls.csproj">
+      <Project>{a970d11a-ad9f-4a3f-a509-16fa5f9ac779}</Project>
+      <Name>TheXamlGuy.NotificationFlyout.Uwp.UI.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj">
+      <Project>{a970d11a-ad9f-4a3f-a509-16fa5f9ac779}</Project>
+      <Name>TheXamlGuy.NotificationFlyout.Shared.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
