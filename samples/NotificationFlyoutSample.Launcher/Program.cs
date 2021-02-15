@@ -13,7 +13,7 @@ namespace NotificationFlyoutSample.Host
                 var app = new App();
                 new NotificationFlyoutApplication
                 {
-                    Flyout = new NowPlayingFlyout()
+                    Flyout = new SampleFlyout()
                 };
                 app.Run();
             }

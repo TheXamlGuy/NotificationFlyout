@@ -2,17 +2,11 @@
 
 namespace NotificationFlyoutSample
 {
-    public sealed partial class NowPlayingFlyout
+    public sealed partial class SampleFlyout
     {
-        public NowPlayingFlyout()
+        public SampleFlyout()
         {
             InitializeComponent();
-            Opened += OnOpened;
-        }
-
-        private void OnOpened(object sender, object args)
-        {
-            RootFrame.Navigate(typeof(NowPlayingPage));
         }
 
         private void OnCloseMenuFlyoutItemClick(object sender, RoutedEventArgs args)

@@ -1,0 +1,12 @@
+﻿<controls:NotificationFlyout
+    x:Class="NotificationFlyoutSample.SampleFlyout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TheXamlGuy.NotificationFlyout.Uwp.UI.Controls">
+    <Grid Width="400" Height="600">
+        <Button
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Content="Hello World!" />
+    </Grid>
+</controls:NotificationFlyout>
