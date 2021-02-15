@@ -54,20 +54,10 @@
                                 AreOpenCloseAnimationsEnabled="False"
                                 FlyoutPresenterStyle="{StaticResource BottomFlyoutPresenterStyle}"
                                 ShouldConstrainToRootBounds="False">
-                                <Grid x:Name="ContentRoot">
-                                    <Grid.Transitions>
-                                        <TransitionCollection>
-                                            <EntranceThemeTransition
-                                                x:Name="EntranceThemeTransition"
-                                                FromHorizontalOffset="0"
-                                                FromVerticalOffset="0" />
-                                        </TransitionCollection>
-                                    </Grid.Transitions>
-                                    <controls:NotificationFlyoutPresenter
-                                        x:Name="NotificationFlyoutPresenter"
-                                        Content="{TemplateBinding Content}"
-                                        Style="{TemplateBinding FlyoutPresenterStyle}" />
-                                </Grid>
+                                <controls:NotificationFlyoutPresenter
+                                    x:Name="NotificationFlyoutPresenter"
+                                    Content="{TemplateBinding Content}"
+                                    Style="{TemplateBinding FlyoutPresenterStyle}" />
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
                         <VisualStateManager.VisualStateGroups>
@@ -75,29 +65,29 @@
                                 <VisualState x:Name="Bottom">
                                     <VisualState.Setters>
                                         <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource BottomFlyoutPresenterStyle}" />
-                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="80" />
+                                        <!--<Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="80" />-->
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Top">
                                     <VisualState.Setters>
                                         <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource TopFlyoutPresenterStyle}" />
-                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="-80" />
+                                        <!--<Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="-80" />-->
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Left">
                                     <VisualState.Setters>
                                         <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource LeftFlyoutPresenterStyle}" />
-                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="-80" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />
+                                        <!--<Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="-80" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />-->
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Right">
                                     <VisualState.Setters>
                                         <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource RightFlyoutPresenterStyle}" />
-                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="80" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />
+                                        <!--<Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="80" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />-->
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>

@@ -20,11 +20,8 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 new PropertyMetadata(null));
 
         private Flyout _flyout;
-        private bool _isColorPrevalence;
-        private bool _isLoaded;
         private NotificationFlyout _notificationFlyout;
         private NotificationFlyoutPresenter _notificationFlyoutPresenter;
-        private string _placement;
         private Grid _root;
         public NotificationFlyoutHost() => DefaultStyleKey = typeof(NotificationFlyoutHost);
 
@@ -49,8 +46,8 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
         public void SetFlyoutPlacement(string placement)
         {
-            _placement = placement;
-            UpdateFlyoutVisualState();
+            if (_notificationFlyoutPresenter == null) return;
+            _notificationFlyoutPresenter.UpdatePlacementVisualState(placement);
         }
 
         public void SetOwningFlyout(NotificationFlyout flyout)
@@ -96,7 +93,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
         public void UpdateTheme(bool isColorPrevalence)
         {
-            _isColorPrevalence = isColorPrevalence;
             if (_notificationFlyoutPresenter == null) return;
             _notificationFlyoutPresenter.UpdateThemeVisualState(isColorPrevalence);
         }
@@ -104,9 +100,11 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         protected override void OnApplyTemplate()
         {
             _notificationFlyoutPresenter = GetTemplateChild("NotificationFlyoutPresenter") as NotificationFlyoutPresenter;
-            _notificationFlyoutPresenter.ApplyTemplate();
 
-            _notificationFlyoutPresenter.UpdateThemeVisualState(_isColorPrevalence);
+            if (_notificationFlyoutPresenter != null)
+            {
+                _notificationFlyoutPresenter.ApplyTemplate();
+            }
 
             _flyout = GetTemplateChild("Flyout") as Flyout;
             if (_flyout != null)
@@ -123,17 +121,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             }
 
             _root = GetTemplateChild("Root") as Grid;
-            if (GetTemplateChild("ContentRoot") is Grid contentRoot)
-            {
-                contentRoot.Shadow = new ThemeShadow();
-
-                var currentTranslation = contentRoot.Translation;
-                var translation = new Vector3(currentTranslation.X, currentTranslation.Y, 16.0f);
-                contentRoot.Translation = translation;
-            }
-
-            _isLoaded = true;
-            UpdateFlyoutVisualState();
         }
 
         private void OnFlyoutClosed(object sender, object args) => _notificationFlyout?.InvokeClosedEvent(args);
@@ -143,13 +130,5 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         private void OnFlyoutOpened(object sender, object args) => _notificationFlyout?.InvokeOpenedEvent(args);
 
         private void OnFlyoutOpening(object sender, object args) => _notificationFlyout?.InvokeOpeningEvent(args);
-
-        private void UpdateFlyoutVisualState()
-        {
-            if (!_isLoaded) return;
-
-            if (string.IsNullOrEmpty(_placement)) return;
-            VisualStateManager.GoToState(this, _placement, true);
-        }
     }
 }

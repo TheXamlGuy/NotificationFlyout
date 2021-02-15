@@ -8,6 +8,7 @@
     <controls:NotificationFlyout.FlyoutPresenterStyle>
         <Style TargetType="controls:NotificationFlyoutPresenter">
             <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Margin" Value="8" />
         </Style>
     </controls:NotificationFlyout.FlyoutPresenterStyle>
     <controls:NotificationFlyout.ContextMenu>
