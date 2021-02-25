@@ -10,6 +10,8 @@
                         <Grid.Resources>
                             <Style x:Key="DefaultFlyoutPresenterStyle" TargetType="FlyoutPresenter">
                                 <Setter Property="IsDefaultShadowEnabled" Value="False" />
+                                <Setter Property="MaxWidth" Value="Auto" />
+                                <Setter Property="MaxHeight" Value="Auto" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="FlyoutPresenter">
