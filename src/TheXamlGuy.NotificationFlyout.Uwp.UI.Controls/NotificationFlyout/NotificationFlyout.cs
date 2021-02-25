@@ -40,6 +40,11 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                  typeof(NotificationFlyoutContextMenu), typeof(NotificationFlyout),
                  new PropertyMetadata(null, OnContextMenuPropertyChanged));
 
+        public static DependencyProperty PlacementProperty =
+            DependencyProperty.Register(nameof(Placement),
+                typeof(NotificationFlyoutContextMenu), typeof(NotificationFlyout),
+                new PropertyMetadata(NotificationFlyoutPlacement.Auto));
+
         private static INotificationFlyoutApplication _applicationInstance;
 
         public event EventHandler<object> Closed;
@@ -80,6 +85,11 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             set => SetValue(LightIconSourceProperty, value);
         }
 
+        public NotificationFlyoutPlacement Placement
+        {
+            get => (NotificationFlyoutPlacement)GetValue(PlacementProperty);
+            set => SetValue(PlacementProperty, value);
+        }
         public ElementTheme RequestedTheme
         {
             get => (ElementTheme)GetValue(RequestedThemeProperty);
