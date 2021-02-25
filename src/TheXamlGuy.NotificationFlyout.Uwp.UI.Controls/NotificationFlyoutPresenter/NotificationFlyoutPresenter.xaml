@@ -94,6 +94,12 @@
                                         <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />
                                     </VisualState.Setters>
                                 </VisualState>
+                                <VisualState x:Name="FullRight">
+                                    <VisualState.Setters>
+                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="180" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />
+                                    </VisualState.Setters>
+                                </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="ThemeStates">
                                 <VisualState x:Name="DefaultTheme" />

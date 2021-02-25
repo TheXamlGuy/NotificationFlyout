@@ -2,10 +2,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:TheXamlGuy.NotificationFlyout.Uwp.UI.Controls">
-    <Style TargetType="controls:NotificationFlyoutHost">
+    <Style TargetType="controls:NotificationFlyoutPresenterHost">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="controls:NotificationFlyoutHost">
+                <ControlTemplate TargetType="controls:NotificationFlyoutPresenterHost">
                     <Grid x:Name="Root">
                         <Grid.Resources>
                             <Style x:Key="DefaultFlyoutPresenterStyle" TargetType="FlyoutPresenter">
@@ -67,29 +67,26 @@
                                 <VisualState x:Name="Bottom">
                                     <VisualState.Setters>
                                         <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource BottomFlyoutPresenterStyle}" />
-                                        <!--<Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="80" />-->
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Top">
                                     <VisualState.Setters>
                                         <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource TopFlyoutPresenterStyle}" />
-                                        <!--<Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="-80" />-->
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Left">
                                     <VisualState.Setters>
                                         <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource LeftFlyoutPresenterStyle}" />
-                                        <!--<Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="-80" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />-->
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Right">
                                     <VisualState.Setters>
                                         <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource RightFlyoutPresenterStyle}" />
-                                        <!--<Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="80" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />-->
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="FullRight">
+                                    <VisualState.Setters>
+                                        <Setter Target="Flyout.FlyoutPresenterStyle" Value="{StaticResource BottomFlyoutPresenterStyle}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>

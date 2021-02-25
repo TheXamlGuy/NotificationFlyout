@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 
 namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
-    internal class NotificationFlyoutXamlHost : TransparentXamlHost<NotificationFlyoutHost>
+    internal class NotificationFlyoutXamlHost : TransparentXamlHost<NotificationFlyoutPresenterHost>
     {
         private const string ShellTrayHandleName = "Shell_TrayWnd";
 
@@ -34,11 +34,13 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             {
                 _flyout.IconSourceChanged -= OnIconSourceChanged;
                 _flyout.ContextMenuChanged -= OnContextMenuChanged;
+                _flyout.PlacementChanged -= OnPlacementChanged;
             }
 
             _flyout = flyout;
             _flyout.IconSourceChanged += OnIconSourceChanged;
             _flyout.ContextMenuChanged += OnContextMenuChanged;
+            _flyout.PlacementChanged += OnPlacementChanged;
 
             var content = GetHostContent();
             if (content != null)
@@ -47,7 +49,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             }
 
             UpdateIcons();
-            PrepareContextMenu();
+            UpdateContextMenu();
         }
 
         internal void ShowFlyout()
@@ -56,14 +58,21 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             if (content != null)
             {
                 var taskbarState = _taskbarHelper.GetCurrentState();
-                var flyoutPlacement = taskbarState.Position switch
+                var flyoutPlacement = FlyoutPlacementMode.Top;
+
+                switch (_flyout.Placement)
                 {
-                    TaskbarPosition.Left => FlyoutPlacementMode.Right,
-                    TaskbarPosition.Top => FlyoutPlacementMode.Bottom,
-                    TaskbarPosition.Right => FlyoutPlacementMode.Left,
-                    TaskbarPosition.Bottom => FlyoutPlacementMode.Top,
-                    _ => throw new ArgumentOutOfRangeException(),
-                };
+                    case NotificationFlyoutPlacement.Auto:
+                        flyoutPlacement = taskbarState.Placement switch
+                        {
+                            TaskbarPlacement.Left => FlyoutPlacementMode.Right,
+                            TaskbarPlacement.Top => FlyoutPlacementMode.Bottom,
+                            TaskbarPlacement.Right => FlyoutPlacementMode.Left,
+                            TaskbarPlacement.Bottom => FlyoutPlacementMode.Top,
+                            _ => throw new ArgumentOutOfRangeException(),
+                        };
+                        break;
+                }
 
                 Activate();
                 content.ShowFlyout(flyoutPlacement);
@@ -82,13 +91,13 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         {
             PrepareNotificationIcon();
             PrepareTaskbar();
-            UpdateWindow();
+            UpdatePlacement();
             UpdateTheme();
         }
 
         protected override void OnDeactivated(EventArgs args) => HideFlyout();
 
-        private void OnContextMenuChanged(object sender, EventArgs args) => PrepareContextMenu();
+        private void OnContextMenuChanged(object sender, EventArgs args) => UpdateContextMenu();
 
         private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
         {
@@ -105,7 +114,9 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
         private void OnIconSourceChanged(object sender, EventArgs args) => UpdateIcons();
 
-        private void OnTaskbarChanged(object sender, EventArgs args) => UpdateWindow();
+        private void OnPlacementChanged(object sender, EventArgs args) => UpdatePlacement();
+
+        private void OnTaskbarChanged(object sender, EventArgs args) => UpdatePlacement();
 
         private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
         {
@@ -113,7 +124,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             UpdateIcons();
         }
 
-        private void PrepareContextMenu()
+        private void UpdateContextMenu()
         {
             if (_contextMenuXamlHost != null)
             {
@@ -189,7 +200,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             }
         }
 
-        private void UpdateWindow()
+        private void UpdatePlacement()
         {
             if (!IsLoaded) return;
 
@@ -197,52 +208,75 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             if (flyoutHost == null) return;
 
             var taskbarState = _taskbarHelper.GetCurrentState();
-
             Left = taskbarState.Screen.WorkingArea.Left;
             Top = taskbarState.Screen.WorkingArea.Top;
 
-            var windowWidth = WindowSize * this.DpiX();
-            var windowHeight = WindowSize * this.DpiY();
+            var width = WindowSize * this.DpiX();
+            var height = WindowSize * this.DpiY();
 
-            double top, left, height, width;
+            double top = 0, left = 0;
 
             var taskbarRect = taskbarState.Rect;
-            switch (taskbarState.Position)
+            var taskBarPlacement = taskbarState.Placement;
+            var presenterPlacement = NotificationFlyoutPresenterPlacement.Bottom;
+
+            switch (_flyout.Placement)
             {
-                case TaskbarPosition.Left:
-                    top = taskbarRect.Bottom - windowHeight;
-                    left = taskbarRect.Right;
-                    height = windowHeight;
-                    width = windowWidth;
-                    break;
+                case NotificationFlyoutPlacement.Auto:
+                    switch (taskBarPlacement)
+                    {
+                        case TaskbarPlacement.Left:
+                            presenterPlacement = NotificationFlyoutPresenterPlacement.Left;
+                            top = taskbarRect.Bottom - height;
+                            left = taskbarRect.Right;
+                            break;
 
-                case TaskbarPosition.Top:
-                    top = taskbarRect.Bottom;
-                    left = FlowDirection == FlowDirection.RightToLeft ? taskbarRect.Left : taskbarRect.Right - windowWidth;
-                    height = windowHeight;
-                    width = windowWidth;
-                    break;
+                        case TaskbarPlacement.Top:
+                            presenterPlacement = NotificationFlyoutPresenterPlacement.Top;
+                            top = taskbarRect.Bottom;
+                            left = FlowDirection == FlowDirection.RightToLeft ? taskbarRect.Left : taskbarRect.Right - width;
+                            break;
 
-                case TaskbarPosition.Right:
-                    top = taskbarRect.Bottom - windowHeight;
-                    left = taskbarRect.Left - windowWidth;
-                    height = windowHeight;
-                    width = windowWidth;
-                    break;
+                        case TaskbarPlacement.Right:
+                            presenterPlacement = NotificationFlyoutPresenterPlacement.Right;
+                            top = taskbarRect.Bottom - height;
+                            left = taskbarRect.Left - width;
+                            break;
 
-                case TaskbarPosition.Bottom:
-                    top = taskbarRect.Top - windowHeight;
-                    left = FlowDirection == FlowDirection.RightToLeft ? taskbarRect.Left : taskbarRect.Right - windowWidth;
-                    height = windowHeight;
-                    width = windowWidth;
-                    break;
+                        case TaskbarPlacement.Bottom:
+                            presenterPlacement = NotificationFlyoutPresenterPlacement.Bottom;
+                            top = taskbarRect.Top - height;
+                            left = FlowDirection == FlowDirection.RightToLeft ? taskbarRect.Left : taskbarRect.Right - width;
+                            break;
 
-                default:
-                    throw new ArgumentOutOfRangeException();
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    break;
+                case NotificationFlyoutPlacement.Right:
+                    presenterPlacement = NotificationFlyoutPresenterPlacement.FullRight;
+                    switch (taskBarPlacement)
+                    {
+                        case TaskbarPlacement.Left:
+                        case TaskbarPlacement.Top:
+                        case TaskbarPlacement.Right:
+                            left = taskbarState.Screen.Bounds.Width - width;
+                            top = taskbarState.Screen.Bounds.Height - height;
+                            break;
+
+                        case TaskbarPlacement.Bottom:
+                            top = taskbarRect.Top - height;
+                            left = FlowDirection == FlowDirection.RightToLeft ? taskbarRect.Left : taskbarRect.Right - width;
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    break;
             }
 
             this.SetWindowPosition(top, left, height, width);
-            flyoutHost.SetFlyoutPlacement(taskbarState.Position.ToString());
+            flyoutHost.UpdatePlacement(presenterPlacement);
         }
     }
 }

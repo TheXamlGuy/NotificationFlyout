@@ -14,11 +14,11 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Page Include="NotificationFlyoutHost\NotificationFlyoutContextMenuFlyoutHost.xaml">
+    <Page Include="NotificationFlyoutPresenter\NotificationFlyoutContextMenuFlyoutHost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NotificationFlyoutHost\NotificationFlyoutHost.xaml">
+    <Page Include="NotificationFlyoutPresenter\NotificationFlyoutPresenterHost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

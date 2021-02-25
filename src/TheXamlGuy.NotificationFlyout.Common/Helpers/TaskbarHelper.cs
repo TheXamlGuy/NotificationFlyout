@@ -24,7 +24,7 @@ namespace TheXamlGuy.NotificationFlyout.Common.Helpers
             GetAppBarPosition(ref appBarData);
 
             state.Rect = appBarData.rect.ToRect();
-            state.Position = (TaskbarPosition)appBarData.uEdge;
+            state.Placement = (TaskbarPlacement)appBarData.uEdge;
 
             return state;
         }

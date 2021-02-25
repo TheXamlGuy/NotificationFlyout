@@ -1,29 +1,28 @@
-﻿using System.Numerics;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Media;
 
 namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 {
-    internal class NotificationFlyoutHost : Control
+    internal class NotificationFlyoutPresenterHost : Control
     {
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register(nameof(Content),
-                typeof(UIElement), typeof(NotificationFlyoutHost),
+                typeof(UIElement), typeof(NotificationFlyoutPresenterHost),
                 new PropertyMetadata(null));
 
         public static readonly DependencyProperty FlyoutPresenterStyleProperty =
             DependencyProperty.Register(nameof(FlyoutPresenterStyle),
-                typeof(Style), typeof(NotificationFlyoutHost),
+                typeof(Style), typeof(NotificationFlyoutPresenterHost),
                 new PropertyMetadata(null));
 
         private Flyout _flyout;
         private NotificationFlyout _notificationFlyout;
         private NotificationFlyoutPresenter _notificationFlyoutPresenter;
         private Grid _root;
-        public NotificationFlyoutHost() => DefaultStyleKey = typeof(NotificationFlyoutHost);
+
+        public NotificationFlyoutPresenterHost() => DefaultStyleKey = typeof(NotificationFlyoutPresenterHost);
 
         public UIElement Content
         {
@@ -44,10 +43,12 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             flyout.Hide();
         }
 
-        public void SetFlyoutPlacement(string placement)
+        public void UpdatePlacement(NotificationFlyoutPresenterPlacement placement)
         {
-            if (_notificationFlyoutPresenter == null) return;
-            _notificationFlyoutPresenter.UpdatePlacementVisualState(placement);
+            var state = placement.ToString();
+
+            VisualStateManager.GoToState(this, state, true);
+            VisualStateManager.GoToState(_notificationFlyoutPresenter, state, true);
         }
 
         public void SetOwningFlyout(NotificationFlyout flyout)

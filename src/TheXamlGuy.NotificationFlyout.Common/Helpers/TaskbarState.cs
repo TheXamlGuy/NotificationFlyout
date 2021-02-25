@@ -4,7 +4,7 @@ namespace TheXamlGuy.NotificationFlyout.Common.Helpers
 {
     public struct TaskbarState
     {
-        public TaskbarPosition Position;
+        public TaskbarPlacement Placement;
         public Rect Rect;
         public Screen Screen;
     }

@@ -1,7 +1,7 @@
 ﻿
 namespace TheXamlGuy.NotificationFlyout.Common.Helpers
 {
-    public enum TaskbarPosition
+    public enum TaskbarPlacement
     {
         Left = 0,
         Top = 1,

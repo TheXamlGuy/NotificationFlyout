@@ -43,17 +43,23 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         public static DependencyProperty PlacementProperty =
             DependencyProperty.Register(nameof(Placement),
                 typeof(NotificationFlyoutContextMenu), typeof(NotificationFlyout),
-                new PropertyMetadata(NotificationFlyoutPlacement.Auto));
+                new PropertyMetadata(NotificationFlyoutPlacement.Auto, OnPlacementPropertyChanged));
 
         private static INotificationFlyoutApplication _applicationInstance;
 
         public event EventHandler<object> Closed;
+
         public event TypedEventHandler<NotificationFlyout, NotificationFlyoutClosingEventArgs> Closing;
+
         public event EventHandler<object> Opened;
+
         public event EventHandler<object> Opening;
 
         internal event EventHandler ContextMenuChanged;
+
         internal event EventHandler IconSourceChanged;
+
+        internal event EventHandler PlacementChanged;
 
         public UIElement Content
         {
@@ -90,6 +96,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             get => (NotificationFlyoutPlacement)GetValue(PlacementProperty);
             set => SetValue(PlacementProperty, value);
         }
+
         public ElementTheme RequestedTheme
         {
             get => (ElementTheme)GetValue(RequestedThemeProperty);
@@ -107,7 +114,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         internal void InvokeOpenedEvent(object obj) => Opened?.Invoke(this, obj);
 
         internal void InvokeOpeningEvent(object obj) => Opening?.Invoke(this, obj);
-       
+
         private static void OnContextMenuPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
             var sender = dependencyObject as NotificationFlyout;
@@ -120,8 +127,16 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             sender?.OnIconPropertyChanged();
         }
 
+        private static void OnPlacementPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var sender = dependencyObject as NotificationFlyout;
+            sender?.OnPlacementPropertyChanged();
+        }
+
         private void OnContextMenuPropertyChanged() => ContextMenuChanged?.Invoke(this, EventArgs.Empty);
 
         private void OnIconPropertyChanged() => IconSourceChanged?.Invoke(this, EventArgs.Empty);
+
+        private void OnPlacementPropertyChanged() => PlacementChanged?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -21,8 +21,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             }
         }
 
-        internal void UpdatePlacementVisualState(string placement) => VisualStateManager.GoToState(this, placement, true);
-
         internal void UpdateThemeVisualState(bool isColorPrevalence) => VisualStateManager.GoToState(this, isColorPrevalence ? "ColorPrevalenceTheme" : "DefaultTheme", true);
     }
 }
