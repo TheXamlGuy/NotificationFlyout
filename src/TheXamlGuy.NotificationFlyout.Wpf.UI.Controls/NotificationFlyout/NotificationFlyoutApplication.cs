@@ -7,11 +7,13 @@ using TheXamlGuy.NotificationFlyout.Uwp.UI.Controls;
 using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 using System.Windows.Media.Imaging;
 using TheXamlGuy.NotificationFlyout.Common.Extensions;
+using Microsoft.Windows.Sdk;
+using TheXamlGuy.NotificationFlyout.Shared.UI;
 
 namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
     [ContentProperty(nameof(Flyout))]
-    public class NotificationFlyoutApplication : DependencyObject
+    public class NotificationFlyoutApplication : DependencyObject, INotificationFlyoutApplication
     {
         public static DependencyProperty FlyoutProperty =
             DependencyProperty.Register(nameof(Flyout),
@@ -20,12 +22,14 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
         private const string ShellTrayHandleName = "Shell_TrayWnd";
         private TransparentXamlHost<ContentControl> _notificationFlyoutXamlHost;
-        private NotificationIconHelper _notificationIconHelper;
-        private SystemPersonalisationHelper _systemPersonalisationHelper;
-        private TaskbarHelper _taskbarHelper;
+        private readonly NotificationIconHelper _notificationIconHelper;
+        private readonly SystemPersonalisationHelper _systemPersonalisationHelper;
+        private readonly TaskbarHelper _taskbarHelper;
 
         public NotificationFlyoutApplication()
         {
+            Uwp.UI.Controls.NotificationFlyout.SetApplication(this);
+            
             _notificationIconHelper = NotificationIconHelper.Create();
             _notificationIconHelper.IconInvoked += OnIconInvoked;
 
@@ -36,7 +40,6 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             _systemPersonalisationHelper.ThemeChanged += OnThemeChanged;
 
             PrepareFlyoutHost();
-
             WndProcListener.Current.Start();
         }
 
@@ -46,6 +49,14 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             set => SetValue(FlyoutProperty, value);
         }
 
+        public void Exit() => _notificationFlyoutXamlHost.Close();
+
+        public void OpenAsWindow<TUIElement>() where TUIElement : Windows.UI.Xaml.UIElement
+        {
+            var window = new XamlHost<TUIElement>();
+            window.Show();
+        }
+
         private static void OnFlyoutPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var sender = dependencyObject as NotificationFlyoutApplication;
@@ -53,6 +64,35 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         }
 
         private void OnFlyoutPropertyChanged() => PrepareFlyout();
+
+        private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
+        {
+            if (args.PointerButton == PointerButton.Left)
+            {
+                ShowFlyout();
+            }
+
+            if (args.PointerButton == PointerButton.Right)
+            {
+                var dpiX = _notificationFlyoutXamlHost.DpiX();
+                var dpiY = _notificationFlyoutXamlHost.DpiY();
+
+                PInvoke.GetPhysicalCursorPos(out POINT point);
+                Flyout.ShowContextMenuAt(point.x / dpiX, point.y / dpiY);
+            }
+        }
+
+        private void OnIconSourceChanged(object sender, EventArgs args) => UpdateIcons();
+
+        private void OnNotificationFlyoutXamlHostClosed(object sender, EventArgs args) => _notificationIconHelper?.Dispose();
+
+        private void OnTaskbarChanged(object sender, EventArgs args) => UpdateFlyoutPlacement();
+
+        private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
+        {
+            UpdateIcons();
+            UpdateTheme();
+        }
 
         private void PrepareFlyout()
         {
@@ -65,38 +105,8 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
                 content.Content = Flyout;
             }
 
-            SetIcons();
-            SetFlyoutPlacement();
+            UpdateIcons();
         }
-
-        private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
-        {
-            if (args.PointerButton == PointerButton.Left)
-            {
-                _notificationFlyoutXamlHost.Activate();
-                Flyout.Show();
-            }
-
-            if (args.PointerButton == PointerButton.Right)
-            {
-            }
-        }
-
-
-        private void OnIconSourceChanged(object sender, EventArgs args) => SetIcons();
-
-        private void OnNotificationFlyoutXamlHostClosed(object sender, EventArgs args)
-        {
-            _notificationIconHelper?.Dispose();
-        }
-
-        private void OnTaskbarChanged(object sender, EventArgs args) => SetFlyoutPlacement();
-
-        private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
-        {
-
-        }
-
         private void PrepareFlyoutHost()
         {
             _notificationFlyoutXamlHost = new TransparentXamlHost<ContentControl>();
@@ -109,7 +119,14 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             _notificationFlyoutXamlHost.Show();
         }
 
-        private void SetFlyoutPlacement()
+        private void ShowFlyout()
+        {
+            UpdateFlyoutPlacement();
+
+            _notificationFlyoutXamlHost.Activate();
+            Flyout.Show();
+        }
+        private void UpdateFlyoutPlacement()
         {
             var taskbarState = _taskbarHelper.GetCurrentState();
 
@@ -156,7 +173,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             Flyout.SetPlacement(left, top, flyoutTaskBarPlacement);
         }
 
-        private async void SetIcons()
+        private async void UpdateIcons()
         {
             if (Flyout == null) return;
 
@@ -181,11 +198,8 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
         private void UpdateTheme()
         {
-            //var content = GetHostContent();
-            //if (content != null)
-            //{
-            //    content.UpdateTheme(_systemPersonalisationHelper.IsColorPrevalence);
-            //}
+            if (Flyout == null) return;
+            Flyout.UpdateTheme(_systemPersonalisationHelper.IsColorPrevalence);
         }
     }
 }

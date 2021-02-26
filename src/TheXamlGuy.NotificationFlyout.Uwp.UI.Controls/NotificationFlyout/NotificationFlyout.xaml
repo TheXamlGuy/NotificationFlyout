@@ -36,8 +36,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NotificationFlyout">
                     <Border x:Name="Container">
-                        <Grid>
+                        <Grid x:Name="LayoutRoot">
                             <Border
+                                x:Name="BackgroundElement"
                                 Padding="{TemplateBinding Padding}"
                                 Background="{TemplateBinding Background}"
                                 BackgroundSizing="OuterBorderEdge"
@@ -105,7 +106,7 @@
                                 <VisualState x:Name="DefaultTheme" />
                                 <VisualState x:Name="ColorPrevalenceTheme">
                                     <VisualState.Setters>
-                                        <Setter Target="Root.Background" Value="{ThemeResource NotificationFlyoutPresenterBackgroundAccentBrush}" />
+                                        <Setter Target="BackgroundElement.Background" Value="{ThemeResource NotificationFlyoutPresenterBackgroundAccentBrush}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>

@@ -3,7 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:TheXamlGuy.NotificationFlyout.Uwp.UI.Controls"
-    Placement="Right">
+    CornerRadius="6">
+    <controls:NotificationFlyout.ContextFlyout>
+        <MenuFlyout>
+            <MenuFlyoutItem Text="Close" Click="OnCloseMenuFlyoutItemClick" />
+        </MenuFlyout>
+    </controls:NotificationFlyout.ContextFlyout>
     <Grid Width="500" Height="500">
         <Button
             HorizontalAlignment="Right"

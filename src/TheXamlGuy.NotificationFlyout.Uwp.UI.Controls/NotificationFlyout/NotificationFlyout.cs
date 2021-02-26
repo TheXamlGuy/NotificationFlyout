@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Numerics;
 using TheXamlGuy.NotificationFlyout.Shared.UI;
 using Windows.Foundation;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,41 +21,20 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
               typeof(ImageSource), typeof(NotificationFlyout),
                 new PropertyMetadata(null));
 
-        public static DependencyProperty ContextMenuProperty =
-            DependencyProperty.Register(nameof(ContextMenu),
-                 typeof(NotificationFlyoutContextMenu), typeof(NotificationFlyout),
-                 new PropertyMetadata(null, OnContextMenuPropertyChanged));
-
-        public static DependencyProperty PlacementProperty =
-            DependencyProperty.Register(nameof(Placement),
-                typeof(NotificationFlyoutContextMenu), typeof(NotificationFlyout),
-                new PropertyMetadata(NotificationFlyoutPlacement.Auto, OnPlacementPropertyChanged));
-
         private static INotificationFlyoutApplication _applicationInstance;
 
         private UIElement _child;
+        private Border _container;
         private Popup _popup;
+
         public NotificationFlyout() => DefaultStyleKey = typeof(NotificationFlyout);
 
         public event EventHandler<object> Closed;
-
         public event TypedEventHandler<NotificationFlyout, NotificationFlyoutClosingEventArgs> Closing;
-
         public event EventHandler<object> Opened;
-
         public event EventHandler<object> Opening;
 
-        internal event EventHandler ContextMenuChanged;
-
         internal event EventHandler IconSourceChanged;
-
-        internal event EventHandler PlacementChanged;
-
-        public NotificationFlyoutContextMenu ContextMenu
-        {
-            get => (NotificationFlyoutContextMenu)GetValue(ContextMenuProperty);
-            set => SetValue(ContextMenuProperty, value);
-        }
 
         public ImageSource IconSource
         {
@@ -69,23 +48,9 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             set => SetValue(LightIconSourceProperty, value);
         }
 
-        public NotificationFlyoutPlacement Placement
-        {
-            get => (NotificationFlyoutPlacement)GetValue(PlacementProperty);
-            set => SetValue(PlacementProperty, value);
-        }
-
         public static INotificationFlyoutApplication GetApplication() => _applicationInstance;
 
         internal static void SetApplication(INotificationFlyoutApplication application) => _applicationInstance = application;
-
-        internal void InvokeClosedEvent(object obj) => Closed?.Invoke(this, obj);
-
-        internal void InvokeClosingEvent(NotificationFlyoutClosingEventArgs eventArgs) => Closing?.Invoke(this, eventArgs);
-
-        internal void InvokeOpenedEvent(object obj) => Opened?.Invoke(this, obj);
-
-        internal void InvokeOpeningEvent(object obj) => Opening?.Invoke(this, obj);
 
         internal void SetPlacement(double horizontalOffset, double verticalOffset, NotificationFlyoutTaskbarPlacement flyoutTaskbarPlacement)
         {
@@ -137,19 +102,35 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             _popup.IsOpen = true;
         }
 
-        protected override void OnApplyTemplate()
+        internal void ShowContextMenuAt(double x, double y)
         {
-            if (GetTemplateChild("Container") is Border container)
-            {
-                _child = container.Child;
-                container.Child = null;
-            }
+            if (ContextFlyout == null) return;
+            ContextFlyout.ShouldConstrainToRootBounds = false;
+            ContextFlyout.XamlRoot = XamlRoot;
+
+            ContextFlyout.ShowAt(_container);
+            ContextFlyout.ShowAt(_container, new FlyoutShowOptions { Position = new Point(x, y), ShowMode = FlyoutShowMode.Standard });
         }
 
-        private static void OnContextMenuPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        internal void UpdateTheme(bool isColorPrevalence) => VisualStateManager.GoToState(this, isColorPrevalence ? "ColorPrevalenceTheme" : "DefaultTheme", true);
+
+        protected override void OnApplyTemplate()
         {
-            var sender = dependencyObject as NotificationFlyout;
-            sender?.OnContextMenuPropertyChanged();
+            _container = GetTemplateChild("Container") as Border;
+            if (_container != null)
+            {
+                _child = _container.Child;
+                _container.Child = null;
+            }
+
+            if (GetTemplateChild("BackgroundElement") is Border backgroundElement)
+            {
+                backgroundElement.Shadow = new ThemeShadow();
+
+                var currentTranslation = backgroundElement.Translation;
+                var translation = new Vector3(currentTranslation.X, currentTranslation.Y, 16.0f);
+                backgroundElement.Translation = translation;
+            }
         }
 
         private static void OnIconPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
@@ -158,17 +139,15 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             sender?.OnIconPropertyChanged();
         }
 
-        private static void OnPlacementPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
-        {
-            var sender = dependencyObject as NotificationFlyout;
-            sender?.OnPlacementPropertyChanged();
-        }
+        private void InvokeClosedEvent(object obj) => Closed?.Invoke(this, obj);
 
-        private void OnContextMenuPropertyChanged() => ContextMenuChanged?.Invoke(this, EventArgs.Empty);
+        private void InvokeClosingEvent(NotificationFlyoutClosingEventArgs eventArgs) => Closing?.Invoke(this, eventArgs);
+
+        private void InvokeOpenedEvent(object obj) => Opened?.Invoke(this, obj);
+
+        private void InvokeOpeningEvent(object obj) => Opening?.Invoke(this, obj);
 
         private void OnIconPropertyChanged() => IconSourceChanged?.Invoke(this, EventArgs.Empty);
-
-        private void OnPlacementPropertyChanged() => PlacementChanged?.Invoke(this, EventArgs.Empty);
 
         private void PreparePopup()
         {
