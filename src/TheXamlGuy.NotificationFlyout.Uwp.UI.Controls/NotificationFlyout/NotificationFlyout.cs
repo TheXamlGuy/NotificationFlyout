@@ -5,7 +5,6 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 
 namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
@@ -34,7 +33,9 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
         private static INotificationFlyoutApplication _applicationInstance;
 
+        private UIElement _child;
         private Popup _popup;
+        public NotificationFlyout() => DefaultStyleKey = typeof(NotificationFlyout);
 
         public event EventHandler<object> Closed;
 
@@ -93,8 +94,10 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 PreparePopup();
             }
 
-            var width = 100;
-            var height = 100;
+            _child.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+
+            var width = _child.DesiredSize.Width;
+            var height = _child.DesiredSize.Height;
 
             var desiredHorizontalOffset = horizontalOffset;
             var desiredVerticalOffset = verticalOffset;
@@ -102,7 +105,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             switch (flyoutTaskbarPlacement)
             {
                 case NotificationFlyoutTaskbarPlacement.Left:
-                    desiredVerticalOffset = 0;
+                    desiredVerticalOffset -= height;
                     break;
                 case NotificationFlyoutTaskbarPlacement.Top:
                     desiredHorizontalOffset -= width;
@@ -119,6 +122,8 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
             _popup.HorizontalOffset = desiredHorizontalOffset;
             _popup.VerticalOffset = desiredVerticalOffset;
+
+            VisualStateManager.GoToState(this, flyoutTaskbarPlacement.ToString(), true);
         }
 
         internal void Show()
@@ -128,7 +133,17 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 PreparePopup();
             }
 
+            _popup.Child = _child;
             _popup.IsOpen = true;
+        }
+
+        protected override void OnApplyTemplate()
+        {
+            if (GetTemplateChild("Container") is Border container)
+            {
+                _child = container.Child;
+                container.Child = null;
+            }
         }
 
         private static void OnContextMenuPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
@@ -157,16 +172,13 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
         private void PreparePopup()
         {
-            var f = new Grid { Background = new SolidColorBrush(Colors.Blue), Height = 100, Width = 100 };
-            f.Children.Add(new Button { Content = "hefrefsef2" });
-
             _popup = new Popup
             {
                 XamlRoot = XamlRoot,
                 ShouldConstrainToRootBounds = false,
+                IsLightDismissEnabled = true,
                 HorizontalOffset = -1,
-                VerticalOffset = -1,
-                Child = f
+                VerticalOffset = -1
             };
         }
     }

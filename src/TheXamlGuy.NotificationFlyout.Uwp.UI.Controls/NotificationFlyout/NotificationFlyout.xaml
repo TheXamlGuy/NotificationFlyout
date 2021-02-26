@@ -35,39 +35,39 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NotificationFlyout">
-                    <Grid
-                        x:Name="Root"
-                        Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        BackgroundSizing="OuterBorderEdge"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}">
-                        <Grid.Transitions>
-                            <TransitionCollection>
-                                <EntranceThemeTransition
-                                    x:Name="EntranceThemeTransition"
-                                    FromHorizontalOffset="0"
-                                    FromVerticalOffset="0" />
-                            </TransitionCollection>
-                        </Grid.Transitions>
-                        <ScrollViewer
-                            x:Name="ScrollViewer"
-                            AutomationProperties.AccessibilityView="Raw"
-                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                            HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
-                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                            VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
-                            ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
-                            <ContentControl
-                                x:Name="ContentPresenter"
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Content="{TemplateBinding Content}"
-                                ContentTemplate="{TemplateBinding ContentTemplate}"
-                                ContentTransitions="{TemplateBinding ContentTransitions}" />
-                        </ScrollViewer>
+                    <Border x:Name="Container">
+                        <Grid>
+                            <Border
+                                Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BackgroundSizing="OuterBorderEdge"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}">
+                                <Border.Transitions>
+                                    <TransitionCollection>
+                                        <EntranceThemeTransition x:Name="EntranceThemeTransition" />
+                                    </TransitionCollection>
+                                </Border.Transitions>
+                                <ScrollViewer
+                                    x:Name="ScrollViewer"
+                                    AutomationProperties.AccessibilityView="Raw"
+                                    HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                    HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                    VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                    VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                    ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                                    <ContentControl
+                                        x:Name="ContentPresenter"
+                                        Margin="{TemplateBinding Padding}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        ContentTransitions="{TemplateBinding ContentTransitions}" />
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="PlacementStates">
                                 <VisualState x:Name="Bottom">
@@ -110,7 +110,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                    </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

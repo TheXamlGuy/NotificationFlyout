@@ -36,6 +36,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             _systemPersonalisationHelper.ThemeChanged += OnThemeChanged;
 
             PrepareFlyoutHost();
+
             WndProcListener.Current.Start();
         }
 
@@ -64,13 +65,15 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
                 content.Content = Flyout;
             }
 
-            UpdateIcons();
+            SetIcons();
+            SetFlyoutPlacement();
         }
 
         private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
         {
             if (args.PointerButton == PointerButton.Left)
             {
+                _notificationFlyoutXamlHost.Activate();
                 Flyout.Show();
             }
 
@@ -80,7 +83,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         }
 
 
-        private void OnIconSourceChanged(object sender, EventArgs args) => UpdateIcons();
+        private void OnIconSourceChanged(object sender, EventArgs args) => SetIcons();
 
         private void OnNotificationFlyoutXamlHostClosed(object sender, EventArgs args)
         {
@@ -153,7 +156,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             Flyout.SetPlacement(left, top, flyoutTaskBarPlacement);
         }
 
-        private async void UpdateIcons()
+        private async void SetIcons()
         {
             if (Flyout == null) return;
 
