@@ -10,7 +10,7 @@ namespace NotificationFlyoutSample
         }
 
         private void OnCloseMenuFlyoutItemClick(object sender, RoutedEventArgs args)
-        {
+        { 
             var app = GetApplication();
             app.Exit();
         }

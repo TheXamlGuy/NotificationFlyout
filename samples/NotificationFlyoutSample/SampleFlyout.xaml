@@ -4,9 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:TheXamlGuy.NotificationFlyout.Uwp.UI.Controls"
     Placement="Right">
-    <Grid Width="800" Height="800">
+    <Grid
+        Width="1000"
+        Height="1000"
+        Background="Red">
         <Button
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Right"
             VerticalAlignment="Center"
             Content="Hello World!" />
     </Grid>

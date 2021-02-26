@@ -18,11 +18,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NotificationFlyoutPresenter\NotificationFlyoutPresenterHost.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NotificationFlyoutPresenter\NotificationFlyoutPresenter.xaml">
+    <Page Include="NotificationFlyout\NotificationFlyout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

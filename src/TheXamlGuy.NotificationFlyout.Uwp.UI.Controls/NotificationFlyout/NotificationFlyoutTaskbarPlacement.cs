@@ -1,11 +1,10 @@
 ﻿namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 {
-    internal enum NotificationFlyoutPresenterPlacement
+    internal enum NotificationFlyoutTaskbarPlacement
     {
         Left,
         Top,
         Right,
         Bottom,
-        FullRight
     }
 }

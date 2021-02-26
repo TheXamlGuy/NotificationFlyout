@@ -7,7 +7,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
     internal class TransparentXamlHost<TXamlContent> : XamlHost<TXamlContent> where TXamlContent : Windows.UI.Xaml.UIElement
     {
-        internal const double WindowSize = 5;
+        internal const double WindowSize = 0;
 
         public TransparentXamlHost()
         {
