@@ -30,7 +30,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         public static readonly DependencyProperty PlacementProperty =
             DependencyProperty.Register(nameof(Placement),
                 typeof(NotificationFlyoutPlacement), typeof(NotificationFlyout),
-                new PropertyMetadata(NotificationFlyoutPlacement.Auto));
+                new PropertyMetadata(NotificationFlyoutPlacement.Auto, OnPlacementPropertyChanged));
 
         public static readonly DependencyProperty TemplateSettingsProperty =
             DependencyProperty.Register(nameof(TemplateSettings),
@@ -59,9 +59,12 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
         public event EventHandler<object> Opened;
 
-        internal event EventHandler IconSourceChanged;
+        internal event EventHandler IconSourcePropertyChanged;
 
         internal event EventHandler InteractedWith;
+
+        internal event EventHandler PlacementPropertyChanged;
+
 
         public ImageSource IconSource
         {
@@ -120,6 +123,14 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         }
 
         internal static void SetApplication(INotificationFlyoutApplication application) => _applicationInstance = application;
+
+        internal void Close(bool shouldRespectIsLightDismissEnbabled)
+        {
+            if (!shouldRespectIsLightDismissEnbabled || IsLightDismissEnabled)
+            {
+                Close();
+            }
+        }
 
         internal void SetPlacement(double horizontalOffset, double verticalOffset, double workingAreaHeight, double workingAreaWidth, NotificationFlyoutTaskbarPlacement flyoutTaskbarPlacement)
         {
@@ -213,15 +224,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 ShowMode = FlyoutShowMode.Standard 
             });
         }
-
-        internal void Close(bool shouldRespectIsLightDismissEnbabled)
-        {
-            if (!shouldRespectIsLightDismissEnbabled || IsLightDismissEnabled)
-            {
-                Close();
-            }
-        }
-
         internal void UpdateTheme(bool isColorPrevalence) => VisualStateManager.GoToState(this, isColorPrevalence ? "ColorPrevalenceTheme" : "DefaultTheme", true);
 
         protected override void OnApplyTemplate()
@@ -259,9 +261,17 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             sender?.OnIconPropertyChanged();
         }
 
+        private static void OnPlacementPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
+        {
+            var sender = dependencyObject as NotificationFlyout;
+            sender?.OnPlacementPropertyChanged();
+        }
+
         private void OnGotFocus(object sender, RoutedEventArgs args) => InteractedWith?.Invoke(this, EventArgs.Empty);
 
-        private void OnIconPropertyChanged() => IconSourceChanged?.Invoke(this, EventArgs.Empty);
+        private void OnIconPropertyChanged() => IconSourcePropertyChanged?.Invoke(this, EventArgs.Empty);
+
+        private void OnPlacementPropertyChanged() => PlacementPropertyChanged?.Invoke(this, EventArgs.Empty);
 
         private void OnPointerPressed(object sender, PointerRoutedEventArgs args) => InteractedWith?.Invoke(this, EventArgs.Empty);
 

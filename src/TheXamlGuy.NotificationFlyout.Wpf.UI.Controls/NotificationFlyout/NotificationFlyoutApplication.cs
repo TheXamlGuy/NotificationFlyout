@@ -49,8 +49,6 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             set => SetValue(FlyoutProperty, value);
         }
 
-        public void Exit() => _notificationFlyoutXamlHost.Close();
-
         public void CloseFlyout(bool shouldRespectIsLightDismissEnbabled)
         {
             if (Flyout == null) return;
@@ -59,6 +57,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
         public void CloseFlyout() => CloseFlyout(false);
 
+        public void Exit() => _notificationFlyoutXamlHost.Close();
         public void OpenAsWindow<TUIElement>() where TUIElement : Windows.UI.Xaml.UIElement
         {
             var window = new XamlHost<TUIElement>();
@@ -80,6 +79,12 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             sender?.OnFlyoutPropertyChanged();
         }
 
+        private void OnFlyoutIconSourcePropertyChanged(object sender, EventArgs args) => UpdateIcons();
+
+        private void OnFlyoutInteractedWith(object sender, EventArgs args) => _notificationFlyoutXamlHost.Activate();
+
+        private void OnFlyoutPlacementPropertyChanged(object sender, EventArgs args) => UpdateFlyoutPlacement();
+
         private void OnFlyoutPropertyChanged() => PrepareFlyout();
 
         private void OnIconInvoked(object sender, NotificationIconInvokedEventArgs args)
@@ -94,10 +99,6 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
                 ShowContextMenu();
             }
         }
-
-        private void OnFlyoutIconSourceChanged(object sender, EventArgs args) => UpdateIcons();
-
-        private void OnFlyoutInteractedWith(object sender, EventArgs args) => _notificationFlyoutXamlHost.Activate();
 
         private void OnNotificationFlyoutXamlHostClosed(object sender, EventArgs args) => _notificationIconHelper?.Dispose();
 
@@ -114,7 +115,8 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         private void PrepareFlyout()
         {
             if (Flyout == null) return;
-            Flyout.IconSourceChanged += OnFlyoutIconSourceChanged;
+            Flyout.IconSourcePropertyChanged += OnFlyoutIconSourcePropertyChanged;
+            Flyout.PlacementPropertyChanged += OnFlyoutPlacementPropertyChanged;
             Flyout.InteractedWith += OnFlyoutInteractedWith;
 
             var content = _notificationFlyoutXamlHost.GetHostContent();
@@ -131,6 +133,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             _notificationFlyoutXamlHost = new TransparentXamlHost<ContentControl>();
             _notificationFlyoutXamlHost.Closed += OnNotificationFlyoutXamlHostClosed;
             _notificationFlyoutXamlHost.Deactivated += OnNotificationFlyoutXamlHostDeactivated;
+
             var taskbarState = _taskbarHelper.GetCurrentState();
             _notificationFlyoutXamlHost.Left = taskbarState.Screen.WorkingArea.Left;
             _notificationFlyoutXamlHost.Top = taskbarState.Screen.WorkingArea.Top;
