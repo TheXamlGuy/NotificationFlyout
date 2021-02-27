@@ -3,6 +3,6 @@
     public enum NotificationFlyoutPlacement
     {
         Auto,
-        Right
+        FullRight
     }
 }

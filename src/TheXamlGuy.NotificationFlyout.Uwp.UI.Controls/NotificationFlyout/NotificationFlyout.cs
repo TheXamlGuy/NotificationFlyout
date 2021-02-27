@@ -27,19 +27,30 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
               typeof(ImageSource), typeof(NotificationFlyout),
                 new PropertyMetadata(null));
 
+        public static readonly DependencyProperty PlacementProperty =
+            DependencyProperty.Register(nameof(Placement),
+                typeof(NotificationFlyoutPlacement), typeof(NotificationFlyout),
+                new PropertyMetadata(NotificationFlyoutPlacement.Auto));
+
         private const double OffsetValue = 1;
+
         private static INotificationFlyoutApplication _applicationInstance;
 
+        private Border _backgroundElement;
         private UIElement _child;
+
         private Border _container;
+
         private Popup _popup;
 
         public NotificationFlyout() => DefaultStyleKey = typeof(NotificationFlyout);
 
         public event EventHandler<object> Closed;
+
         public event EventHandler<object> Opened;
 
         internal event EventHandler IconSourceChanged;
+
         internal event EventHandler InteractedWith;
 
         public ImageSource IconSource
@@ -60,6 +71,12 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             set => SetValue(LightIconSourceProperty, value);
         }
 
+        public NotificationFlyoutPlacement Placement
+        {
+            get => (NotificationFlyoutPlacement)GetValue(PlacementProperty);
+            set => SetValue(PlacementProperty, value);
+        }
+
         public static INotificationFlyoutApplication GetApplication() => _applicationInstance;
 
         public void Hide()
@@ -70,14 +87,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             }
 
             _popup.IsOpen = false;
-        }
-
-        internal void TryHide()
-        {
-            if (IsLightDismissEnabled)
-            {
-                Hide();
-            }
         }
 
         public void Show()
@@ -103,39 +112,54 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 PreparePopup();
             }
 
-            _child.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            _backgroundElement.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
 
-            var width = _child.DesiredSize.Width;
-            var height = _child.DesiredSize.Height;
+            var width = _backgroundElement.DesiredSize.Width;
+            var height = _backgroundElement.DesiredSize.Height;
 
             var desiredHorizontalOffset = horizontalOffset;
             var desiredVerticalOffset = verticalOffset;
 
-            switch (flyoutTaskbarPlacement)
+            var visualState = "";
+            switch (Placement)
             {
-                case NotificationFlyoutTaskbarPlacement.Left:
-                    desiredHorizontalOffset -= OffsetValue;
-                    desiredVerticalOffset -= height;
+                case NotificationFlyoutPlacement.Auto:
+                    visualState = flyoutTaskbarPlacement.ToString();
+
+                    switch (flyoutTaskbarPlacement)
+                    {
+                        case NotificationFlyoutTaskbarPlacement.Left:
+                            desiredHorizontalOffset -= OffsetValue;
+                            desiredVerticalOffset -= height;
+                            break;
+                        case NotificationFlyoutTaskbarPlacement.Top:
+                            desiredHorizontalOffset -= width;
+                            desiredVerticalOffset -= OffsetValue;
+                            break;
+                        case NotificationFlyoutTaskbarPlacement.Right:
+                            desiredHorizontalOffset -= width;
+                            desiredVerticalOffset -= height;
+                            break;
+                        case NotificationFlyoutTaskbarPlacement.Bottom:
+                            desiredHorizontalOffset -= width;
+                            desiredVerticalOffset -= height;
+                            break;
+                    }
+
                     break;
-                case NotificationFlyoutTaskbarPlacement.Top:
-                    desiredHorizontalOffset -= width;
-                    desiredVerticalOffset -= OffsetValue;
-                    break;
-                case NotificationFlyoutTaskbarPlacement.Right:
-                    desiredHorizontalOffset -= width;
-                    desiredVerticalOffset -= height;
-                    break;
-                case NotificationFlyoutTaskbarPlacement.Bottom:
+                case NotificationFlyoutPlacement.FullRight:
+                    visualState = flyoutTaskbarPlacement.ToString();
                     desiredHorizontalOffset -= width;
                     desiredVerticalOffset -= height;
                     break;
             }
 
-            _popup.HorizontalOffset = desiredHorizontalOffset;
-            _popup.VerticalOffset = desiredVerticalOffset;
+            _popup.SetValue(Popup.HorizontalOffsetProperty, desiredHorizontalOffset);
+            _popup.SetValue(Popup.VerticalOffsetProperty, desiredVerticalOffset);
 
-            VisualStateManager.GoToState(this, flyoutTaskbarPlacement.ToString(), true);
+            VisualStateManager.GoToState(this, visualState, true);
         }
+
         internal void ShowContextMenuAt(double x, double y)
         {
             if (ContextFlyout == null) return;
@@ -146,11 +170,20 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             ContextFlyout.ShowAt(_container, new FlyoutShowOptions { Position = new Point(x, y), ShowMode = FlyoutShowMode.Standard });
         }
 
+        internal void TryHide()
+        {
+            if (IsLightDismissEnabled)
+            {
+                Hide();
+            }
+        }
+
         internal void UpdateTheme(bool isColorPrevalence) => VisualStateManager.GoToState(this, isColorPrevalence ? "ColorPrevalenceTheme" : "DefaultTheme", true);
 
         protected override void OnApplyTemplate()
         {
             _container = GetTemplateChild("Container") as Border;
+
             if (_container != null)
             {
                 if (_child != null)
@@ -166,13 +199,14 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 _container.Child = null;
             }
 
-            if (GetTemplateChild("BackgroundElement") is Border backgroundElement)
+            _backgroundElement = GetTemplateChild("BackgroundElement") as Border;
+            if (_backgroundElement != null)
             {
-                backgroundElement.Shadow = new ThemeShadow();
+                _backgroundElement.Shadow = new ThemeShadow();
 
-                var currentTranslation = backgroundElement.Translation;
+                var currentTranslation = _backgroundElement.Translation;
                 var translation = new Vector3(currentTranslation.X, currentTranslation.Y, 16.0f);
-                backgroundElement.Translation = translation;
+                _backgroundElement.Translation = translation;
             }
         }
 

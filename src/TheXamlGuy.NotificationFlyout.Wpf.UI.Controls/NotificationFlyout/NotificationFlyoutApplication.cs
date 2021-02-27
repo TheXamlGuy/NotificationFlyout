@@ -126,17 +126,16 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         private void OnNotificationFlyoutXamlHostDeactivated(object sender, EventArgs args)
         {
             if (Flyout == null) return;
-            Flyout.TryHide();
+            Flyout.Hide();
         }
 
         private void ShowFlyout()
         {
             if (Flyout == null) return;
-
-            UpdateFlyoutPlacement();
             _notificationFlyoutXamlHost.Activate();
 
             Flyout.Show();
+            UpdateFlyoutPlacement();
         }
 
         private void UpdateFlyoutPlacement()
