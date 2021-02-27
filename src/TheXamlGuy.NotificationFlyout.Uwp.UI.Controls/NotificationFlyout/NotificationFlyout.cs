@@ -30,9 +30,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         public NotificationFlyout() => DefaultStyleKey = typeof(NotificationFlyout);
 
         public event EventHandler<object> Closed;
-        public event TypedEventHandler<NotificationFlyout, NotificationFlyoutClosingEventArgs> Closing;
         public event EventHandler<object> Opened;
-        public event EventHandler<object> Opening;
 
         internal event EventHandler IconSourceChanged;
 
@@ -139,15 +137,11 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             sender?.OnIconPropertyChanged();
         }
 
-        private void InvokeClosedEvent(object obj) => Closed?.Invoke(this, obj);
-
-        private void InvokeClosingEvent(NotificationFlyoutClosingEventArgs eventArgs) => Closing?.Invoke(this, eventArgs);
-
-        private void InvokeOpenedEvent(object obj) => Opened?.Invoke(this, obj);
-
-        private void InvokeOpeningEvent(object obj) => Opening?.Invoke(this, obj);
-
         private void OnIconPropertyChanged() => IconSourceChanged?.Invoke(this, EventArgs.Empty);
+
+        private void OnPopupClosed(object sender, object args) => Opened?.Invoke(this, args);
+
+        private void OnPopupOpened(object sender, object args) => Closed?.Invoke(this, args);
 
         private void PreparePopup()
         {
@@ -159,6 +153,9 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 HorizontalOffset = -1,
                 VerticalOffset = -1
             };
+
+            _popup.Opened += OnPopupOpened;
+            _popup.Closed += OnPopupClosed;
         }
     }
 }
