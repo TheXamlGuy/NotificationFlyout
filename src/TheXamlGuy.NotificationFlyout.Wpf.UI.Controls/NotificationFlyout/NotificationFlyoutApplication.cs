@@ -51,10 +51,27 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
         public void Exit() => _notificationFlyoutXamlHost.Close();
 
+        public void CloseFlyout(bool shouldRespectIsLightDismissEnbabled)
+        {
+            if (Flyout == null) return;
+            Flyout.Close(shouldRespectIsLightDismissEnbabled);
+        }
+
+        public void CloseFlyout() => CloseFlyout(false);
+
         public void OpenAsWindow<TUIElement>() where TUIElement : Windows.UI.Xaml.UIElement
         {
             var window = new XamlHost<TUIElement>();
             window.Show();
+        }
+
+        public void OpenFlyout()
+        {
+            if (Flyout == null) return;
+            _notificationFlyoutXamlHost.Activate();
+
+            Flyout.Open();
+            UpdateFlyoutPlacement();
         }
 
         private static void OnFlyoutPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -69,24 +86,22 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         {
             if (args.PointerButton == PointerButton.Left)
             {
-                ShowFlyout();
+                OpenFlyout();
             }
 
             if (args.PointerButton == PointerButton.Right)
             {
-                var dpiX = _notificationFlyoutXamlHost.DpiX();
-                var dpiY = _notificationFlyoutXamlHost.DpiY();
-
-                PInvoke.GetPhysicalCursorPos(out POINT point);
-                Flyout.ShowContextMenuAt(point.x / dpiX, point.y / dpiY);
+                ShowContextMenu();
             }
         }
 
-        private void OnIconSourceChanged(object sender, EventArgs args) => UpdateIcons();
+        private void OnFlyoutIconSourceChanged(object sender, EventArgs args) => UpdateIcons();
 
-        private void OnInteractedWith(object sender, EventArgs args) => _notificationFlyoutXamlHost.Activate();
+        private void OnFlyoutInteractedWith(object sender, EventArgs args) => _notificationFlyoutXamlHost.Activate();
 
         private void OnNotificationFlyoutXamlHostClosed(object sender, EventArgs args) => _notificationIconHelper?.Dispose();
+
+        private void OnNotificationFlyoutXamlHostDeactivated(object sender, EventArgs args) => CloseFlyout(true);
 
         private void OnTaskbarChanged(object sender, EventArgs args) => UpdateFlyoutPlacement();
 
@@ -99,8 +114,8 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         private void PrepareFlyout()
         {
             if (Flyout == null) return;
-            Flyout.IconSourceChanged += OnIconSourceChanged;
-            Flyout.InteractedWith += OnInteractedWith;
+            Flyout.IconSourceChanged += OnFlyoutIconSourceChanged;
+            Flyout.InteractedWith += OnFlyoutInteractedWith;
 
             var content = _notificationFlyoutXamlHost.GetHostContent();
             if (content != null)
@@ -123,68 +138,65 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             _notificationFlyoutXamlHost.Show();
         }
 
-        private void OnNotificationFlyoutXamlHostDeactivated(object sender, EventArgs args)
+        private void ShowContextMenu()
         {
-            if (Flyout == null) return;
-            Flyout.Hide();
-        }
+            var dpiX = _notificationFlyoutXamlHost.DpiX();
+            var dpiY = _notificationFlyoutXamlHost.DpiY();
 
-        private void ShowFlyout()
-        {
-            if (Flyout == null) return;
-            _notificationFlyoutXamlHost.Activate();
-
-            Flyout.Show();
-            UpdateFlyoutPlacement();
+            PInvoke.GetPhysicalCursorPos(out POINT point);
+            Flyout.ShowContextMenuAt(point.x / dpiX, point.y / dpiY);
         }
 
         private void UpdateFlyoutPlacement()
         {
             if (Flyout == null) return;
 
-            var taskbarState = _taskbarHelper.GetCurrentState();
-
             _notificationFlyoutXamlHost.Left = 0;
             _notificationFlyoutXamlHost.Top = 0;
 
-            double left;
-            double top;
+            double horizontalOffset;
+            double verticalOffset;
 
             var dpiX = _notificationFlyoutXamlHost.DpiX();
             var dpiY = _notificationFlyoutXamlHost.DpiY();
 
             NotificationFlyoutTaskbarPlacement flyoutTaskBarPlacement;
+
+            var taskbarState = _taskbarHelper.GetCurrentState();
+            var workingAreaHeight = taskbarState.Screen.WorkingArea.Height / dpiX;
+            var workingAreaWidth = taskbarState.Screen.WorkingArea.Width / dpiY;
+
             switch (taskbarState.Placement)
             {
                 case TaskbarPlacement.Left:
                     flyoutTaskBarPlacement = NotificationFlyoutTaskbarPlacement.Left;
-                    top = taskbarState.Rect.Bottom / dpiX;
-                    left = taskbarState.Rect.Right / dpiY;
+                    verticalOffset = taskbarState.Rect.Bottom / dpiX;
+                    horizontalOffset = taskbarState.Rect.Right / dpiY;
                     break;
 
                 case TaskbarPlacement.Top:
                     flyoutTaskBarPlacement = NotificationFlyoutTaskbarPlacement.Top;
-                    top = taskbarState.Rect.Bottom / dpiX;
-                    left = (_notificationFlyoutXamlHost.FlowDirection == FlowDirection.RightToLeft ? taskbarState.Rect.Left : taskbarState.Rect.Right) / dpiY;
+                    verticalOffset = taskbarState.Rect.Bottom / dpiX;
+                    horizontalOffset = (_notificationFlyoutXamlHost.FlowDirection == FlowDirection.RightToLeft ? taskbarState.Rect.Left : taskbarState.Rect.Right) / dpiY;
                     break;
 
                 case TaskbarPlacement.Right:
                     flyoutTaskBarPlacement = NotificationFlyoutTaskbarPlacement.Right;
-                    top = taskbarState.Rect.Bottom / dpiX;
-                    left = taskbarState.Rect.Left / dpiY;
+                    verticalOffset = taskbarState.Rect.Bottom / dpiX;
+                    horizontalOffset = taskbarState.Rect.Left / dpiY;
                     break;
 
                 case TaskbarPlacement.Bottom:
                     flyoutTaskBarPlacement = NotificationFlyoutTaskbarPlacement.Bottom;
-                    top = taskbarState.Rect.Top / dpiX;
-                    left = (_notificationFlyoutXamlHost.FlowDirection == FlowDirection.RightToLeft ? taskbarState.Rect.Left : taskbarState.Rect.Right) / dpiY;
+                    verticalOffset = taskbarState.Rect.Top / dpiX;
+                    horizontalOffset = (_notificationFlyoutXamlHost.FlowDirection == FlowDirection.RightToLeft ? taskbarState.Rect.Left : taskbarState.Rect.Right) / dpiY;
                     break;
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            Flyout.SetPlacement(left, top, flyoutTaskBarPlacement);
+            Flyout.SetPlacement(horizontalOffset, verticalOffset, workingAreaHeight, workingAreaWidth, flyoutTaskBarPlacement);
         }
 
         private async void UpdateIcons()

@@ -32,18 +32,28 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 typeof(NotificationFlyoutPlacement), typeof(NotificationFlyout),
                 new PropertyMetadata(NotificationFlyoutPlacement.Auto));
 
+        public static readonly DependencyProperty TemplateSettingsProperty =
+            DependencyProperty.Register(nameof(TemplateSettings),
+                typeof(NotificationFlyoutTemplateSettings), typeof(NotificationFlyout),
+                new PropertyMetadata(null));
+
         private const double OffsetValue = 1;
 
         private static INotificationFlyoutApplication _applicationInstance;
 
         private Border _backgroundElement;
+
         private UIElement _child;
 
         private Border _container;
 
         private Popup _popup;
 
-        public NotificationFlyout() => DefaultStyleKey = typeof(NotificationFlyout);
+        public NotificationFlyout()
+        {
+            DefaultStyleKey = typeof(NotificationFlyout);
+            TemplateSettings = new NotificationFlyoutTemplateSettings();
+        }
 
         public event EventHandler<object> Closed;
 
@@ -77,9 +87,15 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             set => SetValue(PlacementProperty, value);
         }
 
+        public NotificationFlyoutTemplateSettings TemplateSettings
+        {
+            get => (NotificationFlyoutTemplateSettings)GetValue(TemplateSettingsProperty);
+            set => SetValue(TemplateSettingsProperty, value);
+        }
+
         public static INotificationFlyoutApplication GetApplication() => _applicationInstance;
 
-        public void Hide()
+        public void Close()
         {
             if (_popup == null)
             {
@@ -89,7 +105,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             _popup.IsOpen = false;
         }
 
-        public void Show()
+        public void Open()
         {
             if (_popup == null)
             {
@@ -105,17 +121,19 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
         internal static void SetApplication(INotificationFlyoutApplication application) => _applicationInstance = application;
 
-        internal void SetPlacement(double horizontalOffset, double verticalOffset, NotificationFlyoutTaskbarPlacement flyoutTaskbarPlacement)
+        internal void SetPlacement(double horizontalOffset, double verticalOffset, double workingAreaHeight, double workingAreaWidth, NotificationFlyoutTaskbarPlacement flyoutTaskbarPlacement)
         {
             if (_popup == null)
             {
                 PreparePopup();
             }
 
-            _backgroundElement.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            VisualStateManager.GoToState(this, "DefaultPlacement", true);
 
-            var width = _backgroundElement.DesiredSize.Width;
-            var height = _backgroundElement.DesiredSize.Height;
+            _child.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+
+            var width = _child.DesiredSize.Width;
+            var height = Placement == NotificationFlyoutPlacement.Auto ? _child.DesiredSize.Height : workingAreaHeight;
 
             var desiredHorizontalOffset = horizontalOffset;
             var desiredVerticalOffset = verticalOffset;
@@ -124,8 +142,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             switch (Placement)
             {
                 case NotificationFlyoutPlacement.Auto:
-                    visualState = flyoutTaskbarPlacement.ToString();
-
+                    visualState = $"{flyoutTaskbarPlacement}";
                     switch (flyoutTaskbarPlacement)
                     {
                         case NotificationFlyoutTaskbarPlacement.Left:
@@ -148,16 +165,39 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
                     break;
                 case NotificationFlyoutPlacement.FullRight:
-                    visualState = flyoutTaskbarPlacement.ToString();
-                    desiredHorizontalOffset -= width;
-                    desiredVerticalOffset -= height;
+                    visualState = $"{Placement}";
+                    switch (flyoutTaskbarPlacement)
+                    {
+                        case NotificationFlyoutTaskbarPlacement.Left:
+                            desiredHorizontalOffset += workingAreaWidth - width;
+                            desiredVerticalOffset = 0;
+                            break;
+                        case NotificationFlyoutTaskbarPlacement.Top:
+                            desiredHorizontalOffset = workingAreaWidth - width;
+                            break;
+                        case NotificationFlyoutTaskbarPlacement.Right:
+                            desiredHorizontalOffset -= width;
+                            desiredVerticalOffset = 0;
+                            break;
+                        case NotificationFlyoutTaskbarPlacement.Bottom:
+                            desiredHorizontalOffset = workingAreaWidth - width;
+                            desiredVerticalOffset = 0;
+                            break;
+                    }
                     break;
             }
+
+
+            TemplateSettings.SetValue(NotificationFlyoutTemplateSettings.HeightProperty, height);
+            TemplateSettings.SetValue(NotificationFlyoutTemplateSettings.WidthProperty, width);
+
+            TemplateSettings.SetValue(NotificationFlyoutTemplateSettings.NegativeHeightProperty, -height);
+            TemplateSettings.SetValue(NotificationFlyoutTemplateSettings.NegativeWidthProperty, -width);
 
             _popup.SetValue(Popup.HorizontalOffsetProperty, desiredHorizontalOffset);
             _popup.SetValue(Popup.VerticalOffsetProperty, desiredVerticalOffset);
 
-            VisualStateManager.GoToState(this, visualState, true);
+            VisualStateManager.GoToState(this, $"{visualState}Placement", true);
         }
 
         internal void ShowContextMenuAt(double x, double y)
@@ -167,14 +207,18 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             ContextFlyout.XamlRoot = XamlRoot;
 
             ContextFlyout.ShowAt(_container);
-            ContextFlyout.ShowAt(_container, new FlyoutShowOptions { Position = new Point(x, y), ShowMode = FlyoutShowMode.Standard });
+            ContextFlyout.ShowAt(_container, new FlyoutShowOptions
+            {
+                Position = new Point(x, y),
+                ShowMode = FlyoutShowMode.Standard 
+            });
         }
 
-        internal void TryHide()
+        internal void Close(bool shouldRespectIsLightDismissEnbabled)
         {
-            if (IsLightDismissEnabled)
+            if (!shouldRespectIsLightDismissEnbabled || IsLightDismissEnabled)
             {
-                Hide();
+                Close();
             }
         }
 
@@ -183,7 +227,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         protected override void OnApplyTemplate()
         {
             _container = GetTemplateChild("Container") as Border;
-
             if (_container != null)
             {
                 if (_child != null)
@@ -221,9 +264,10 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         private void OnIconPropertyChanged() => IconSourceChanged?.Invoke(this, EventArgs.Empty);
 
         private void OnPointerPressed(object sender, PointerRoutedEventArgs args) => InteractedWith?.Invoke(this, EventArgs.Empty);
-        private void OnPopupClosed(object sender, object args) => Opened?.Invoke(this, args);
 
-        private void OnPopupOpened(object sender, object args) => Closed?.Invoke(this, args);
+        private void OnPopupClosed(object sender, object args) => Closed?.Invoke(this, args);
+
+        private void OnPopupOpened(object sender, object args) => Opened?.Invoke(this, args);
 
         private void PreparePopup()
         {

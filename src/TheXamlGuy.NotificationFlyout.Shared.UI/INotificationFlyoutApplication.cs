@@ -6,6 +6,10 @@ namespace TheXamlGuy.NotificationFlyout.Shared.UI
     {
         void Exit();
 
+        void OpenFlyout();
+
+        void CloseFlyout();
+
         void OpenAsWindow<TUIElement>() where TUIElement : UIElement;
     }
 }

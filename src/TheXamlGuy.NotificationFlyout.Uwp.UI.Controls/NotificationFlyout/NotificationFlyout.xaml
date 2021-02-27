@@ -71,34 +71,36 @@
                         </Grid>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="PlacementStates">
-                                <VisualState x:Name="Bottom">
+                                <VisualState x:Name="DefaultPlacement" />
+                                <VisualState x:Name="BottomPlacement">
                                     <VisualState.Setters>
                                         <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="80" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.Height}" />
                                     </VisualState.Setters>
                                 </VisualState>
-                                <VisualState x:Name="Top">
+                                <VisualState x:Name="TopPlacement">
                                     <VisualState.Setters>
                                         <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="0" />
-                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="-80" />
+                                        <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.NegativeHeight}" />
                                     </VisualState.Setters>
                                 </VisualState>
-                                <VisualState x:Name="Left">
+                                <VisualState x:Name="LeftPlacement">
                                     <VisualState.Setters>
-                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="-80" />
+                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.NegativeWidth}" />
                                         <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />
                                     </VisualState.Setters>
                                 </VisualState>
-                                <VisualState x:Name="Right">
+                                <VisualState x:Name="RightPlacement">
                                     <VisualState.Setters>
-                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="80" />
+                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.Width}" />
                                         <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />
                                     </VisualState.Setters>
                                 </VisualState>
-                                <VisualState x:Name="FullRight">
+                                <VisualState x:Name="FullRightPlacement">
                                     <VisualState.Setters>
-                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="180" />
+                                        <Setter Target="EntranceThemeTransition.FromHorizontalOffset" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.Width}" />
                                         <Setter Target="EntranceThemeTransition.FromVerticalOffset" Value="0" />
+                                        <Setter Target="BackgroundElement.Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.Height, Mode=TwoWay}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
