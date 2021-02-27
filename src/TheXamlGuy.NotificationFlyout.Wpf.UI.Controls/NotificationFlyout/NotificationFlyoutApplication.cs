@@ -107,6 +107,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
             UpdateIcons();
         }
+
         private void PrepareFlyoutHost()
         {
             _notificationFlyoutXamlHost = new TransparentXamlHost<ContentControl>();
@@ -126,6 +127,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             _notificationFlyoutXamlHost.Activate();
             Flyout.Show();
         }
+
         private void UpdateFlyoutPlacement()
         {
             var taskbarState = _taskbarHelper.GetCurrentState();

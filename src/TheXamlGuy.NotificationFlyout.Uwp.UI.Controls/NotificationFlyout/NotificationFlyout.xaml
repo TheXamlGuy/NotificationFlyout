@@ -36,7 +36,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:NotificationFlyout">
                     <Border x:Name="Container">
-                        <Grid x:Name="LayoutRoot">
+                        <Grid x:Name="LayoutRoot" Margin="{TemplateBinding Margin}">
                             <Border
                                 x:Name="BackgroundElement"
                                 Padding="{TemplateBinding Padding}"
