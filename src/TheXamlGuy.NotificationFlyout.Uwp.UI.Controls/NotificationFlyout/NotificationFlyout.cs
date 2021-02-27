@@ -5,6 +5,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 
 namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
@@ -21,6 +22,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
               typeof(ImageSource), typeof(NotificationFlyout),
                 new PropertyMetadata(null));
 
+        private const double OffsetValue = 1;
         private static INotificationFlyoutApplication _applicationInstance;
 
         private UIElement _child;
@@ -33,6 +35,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         public event EventHandler<object> Opened;
 
         internal event EventHandler IconSourceChanged;
+        internal event EventHandler InteractedWith;
 
         public ImageSource IconSource
         {
@@ -68,10 +71,12 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             switch (flyoutTaskbarPlacement)
             {
                 case NotificationFlyoutTaskbarPlacement.Left:
+                    desiredHorizontalOffset -= OffsetValue;
                     desiredVerticalOffset -= height;
                     break;
                 case NotificationFlyoutTaskbarPlacement.Top:
                     desiredHorizontalOffset -= width;
+                    desiredVerticalOffset -= OffsetValue;
                     break;
                 case NotificationFlyoutTaskbarPlacement.Right:
                     desiredHorizontalOffset -= width;
@@ -117,7 +122,16 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             _container = GetTemplateChild("Container") as Border;
             if (_container != null)
             {
+                if (_child != null)
+                {
+                    _child.PointerPressed += OnPointerPressed;
+                    _child.GotFocus -= OnGotFocus;
+                }
+
                 _child = _container.Child;
+                _child.PointerPressed += OnPointerPressed;
+                _child.GotFocus += OnGotFocus;
+
                 _container.Child = null;
             }
 
@@ -137,8 +151,11 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             sender?.OnIconPropertyChanged();
         }
 
+        private void OnGotFocus(object sender, RoutedEventArgs args) => InteractedWith?.Invoke(this, EventArgs.Empty);
+
         private void OnIconPropertyChanged() => IconSourceChanged?.Invoke(this, EventArgs.Empty);
 
+        private void OnPointerPressed(object sender, PointerRoutedEventArgs args) => InteractedWith?.Invoke(this, EventArgs.Empty);
         private void OnPopupClosed(object sender, object args) => Opened?.Invoke(this, args);
 
         private void OnPopupOpened(object sender, object args) => Closed?.Invoke(this, args);
@@ -149,9 +166,8 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             {
                 XamlRoot = XamlRoot,
                 ShouldConstrainToRootBounds = false,
-                IsLightDismissEnabled = true,
-                HorizontalOffset = -1,
-                VerticalOffset = -1
+                HorizontalOffset = -OffsetValue,
+                VerticalOffset = -OffsetValue
             };
 
             _popup.Opened += OnPopupOpened;

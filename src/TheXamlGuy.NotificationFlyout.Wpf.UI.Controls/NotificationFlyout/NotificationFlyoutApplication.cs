@@ -98,6 +98,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         {
             if (Flyout == null) return;
             Flyout.IconSourceChanged += OnIconSourceChanged;
+            Flyout.InteractedWith += Flyout_Focused; ;
 
             var content = _notificationFlyoutXamlHost.GetHostContent();
             if (content != null)
@@ -106,6 +107,11 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             }
 
             UpdateIcons();
+        }
+
+        private void Flyout_Focused(object sender, EventArgs e)
+        {
+            _notificationFlyoutXamlHost.Activate();
         }
 
         private void PrepareFlyoutHost()
