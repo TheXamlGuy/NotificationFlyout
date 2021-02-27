@@ -17,8 +17,13 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 typeof(ImageSource), typeof(NotificationFlyout),
                 new PropertyMetadata(null, OnIconPropertyChanged));
 
+        public static readonly DependencyProperty IsLightDismissEnabledProperty =
+            DependencyProperty.Register(nameof(IsLightDismissEnabled),
+                typeof(bool), typeof(NotificationFlyout),
+                new PropertyMetadata(true));
+
         public static readonly DependencyProperty LightIconSourceProperty =
-          DependencyProperty.Register(nameof(LightIconSource),
+            DependencyProperty.Register(nameof(LightIconSource),
               typeof(ImageSource), typeof(NotificationFlyout),
                 new PropertyMetadata(null));
 
@@ -43,6 +48,12 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
             set => SetValue(IconSourceProperty, value);
         }
 
+        public bool IsLightDismissEnabled
+        {
+            get => (bool)GetValue(IsLightDismissEnabledProperty);
+            set => SetValue(IsLightDismissEnabledProperty, value);
+        }
+
         public ImageSource LightIconSource
         {
             get => (ImageSource)GetValue(LightIconSourceProperty);
@@ -50,6 +61,33 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
         }
 
         public static INotificationFlyoutApplication GetApplication() => _applicationInstance;
+
+        public void Hide()
+        {
+            if (_popup == null)
+            {
+                PreparePopup();
+            }
+
+            if (IsLightDismissEnabled)
+            {
+                _popup.IsOpen = false;
+            }
+        }
+
+        public void Show()
+        {
+            if (_popup == null)
+            {
+                PreparePopup();
+            }
+
+            if (!_popup.IsOpen)
+            {
+                _popup.Child = _child;
+                _popup.IsOpen = true;
+            }
+        }
 
         internal static void SetApplication(INotificationFlyoutApplication application) => _applicationInstance = application;
 
@@ -93,18 +131,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
             VisualStateManager.GoToState(this, flyoutTaskbarPlacement.ToString(), true);
         }
-
-        internal void Show()
-        {
-            if (_popup == null)
-            {
-                PreparePopup();
-            }
-
-            _popup.Child = _child;
-            _popup.IsOpen = true;
-        }
-
         internal void ShowContextMenuAt(double x, double y)
         {
             if (ContextFlyout == null) return;
@@ -162,6 +188,12 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
         private void PreparePopup()
         {
+            if (_popup != null)
+            {
+                _popup.Opened -= OnPopupOpened;
+                _popup.Closed -= OnPopupClosed;
+            }
+
             _popup = new Popup
             {
                 XamlRoot = XamlRoot,
