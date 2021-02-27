@@ -126,7 +126,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         private void OnNotificationFlyoutXamlHostDeactivated(object sender, EventArgs args)
         {
             if (Flyout == null) return;
-            Flyout.Hide();
+            Flyout.TryHide();
         }
 
         private void ShowFlyout()

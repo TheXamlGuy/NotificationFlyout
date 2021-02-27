@@ -69,9 +69,14 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 PreparePopup();
             }
 
+            _popup.IsOpen = false;
+        }
+
+        internal void TryHide()
+        {
             if (IsLightDismissEnabled)
             {
-                _popup.IsOpen = false;
+                Hide();
             }
         }
 
