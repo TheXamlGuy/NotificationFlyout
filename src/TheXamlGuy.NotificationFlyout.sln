@@ -14,9 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheXamlGuy.NotificationFlyo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheXamlGuy.NotificationFlyout.Wpf.UI.Controls", "TheXamlGuy.NotificationFlyout.Wpf.UI.Controls\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls.csproj", "{3205F101-E5F3-4B57-B0BB-33693F906B77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheXamlGuy.NotificationFlyout.Shared.UI", "TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj", "{341F9830-BB2F-4A2F-A81A-3DBAF307B4EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheXamlGuy.NotificationFlyout.Shared.UI", "TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj", "{341F9830-BB2F-4A2F-A81A-3DBAF307B4EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheXamlGuy.NotificationFlyout.Common", "TheXamlGuy.NotificationFlyout.Common\TheXamlGuy.NotificationFlyout.Common.csproj", "{4F05A3D6-DBBC-4921-97BA-6843925CD74B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheXamlGuy.NotificationFlyout.Common", "TheXamlGuy.NotificationFlyout.Common\TheXamlGuy.NotificationFlyout.Common.csproj", "{4F05A3D6-DBBC-4921-97BA-6843925CD74B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

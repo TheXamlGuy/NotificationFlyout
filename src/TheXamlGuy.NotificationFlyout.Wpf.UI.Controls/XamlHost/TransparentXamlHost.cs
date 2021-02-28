@@ -1,8 +1,8 @@
 ﻿using Microsoft.Toolkit.Wpf.UI.XamlHost;
-using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 using System.Windows;
 using System.Windows.Media;
 using System;
+using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 
 namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
