@@ -43,5 +43,11 @@ namespace NotificationFlyoutSample
                 this.Placement = NotificationFlyoutPlacement.FullRight;
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var app = GetApplication();
+            app.OpenAsWindow<Test>();
+        }
     }
 }

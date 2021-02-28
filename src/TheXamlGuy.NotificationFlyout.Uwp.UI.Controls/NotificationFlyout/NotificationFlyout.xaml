@@ -50,23 +50,32 @@
                                         <EntranceThemeTransition x:Name="EntranceThemeTransition" />
                                     </TransitionCollection>
                                 </Border.Transitions>
-                                <ScrollViewer
-                                    x:Name="ScrollViewer"
-                                    AutomationProperties.AccessibilityView="Raw"
-                                    HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                    HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
-                                    VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                    VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
-                                    ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
-                                    <ContentControl
-                                        x:Name="ContentPresenter"
-                                        Margin="{TemplateBinding Padding}"
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        Content="{TemplateBinding Content}"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                        ContentTransitions="{TemplateBinding ContentTransitions}" />
-                                </ScrollViewer>
+                                <Grid>
+                                
+
+                                    <ScrollViewer
+                                        x:Name="ScrollViewer"
+                                        AutomationProperties.AccessibilityView="Raw"
+                                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                        HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
+                                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                        VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}"
+                                        ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                                        <ContentControl
+                                            x:Name="ContentPresenter"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            ContentTransitions="{TemplateBinding ContentTransitions}" />
+                                    </ScrollViewer>
+                                    <Rectangle
+                                        x:Name="TopThumb"
+                                        Height="10"
+                                        VerticalAlignment="Top"
+                                        Fill="Red" />
+                                </Grid>
                             </Border>
                         </Grid>
                         <VisualStateManager.VisualStateGroups>

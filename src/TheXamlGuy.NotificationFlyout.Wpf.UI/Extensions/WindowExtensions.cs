@@ -31,7 +31,11 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions
         public static void Hidden(this Window window)
         {
             var handle = window.GetHandle();
-            PInvoke.SetWindowLong((HWND)handle, GWL_EX_STYLE, (PInvoke.GetWindowLong((HWND)handle, GWL_EX_STYLE) | (int)WindowFlag.WS_EX_TOOLWINDOW) & ~(int)WindowFlag.WS_EX_APPWINDOW);
+
+            int exStyle = (int)PInvoke.GetWindowLong((HWND)handle, (int)GWL_EX_STYLE);
+
+            exStyle |= (int)WindowFlag.WS_EX_APPWINDOW;
+            PInvoke.SetWindowLong((HWND)handle, (int)GWL_EX_STYLE, exStyle);
         }
 
         public static void SetTopAll(this Window window)

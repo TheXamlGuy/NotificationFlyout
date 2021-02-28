@@ -15,6 +15,7 @@ namespace NotificationFlyoutSample.Host
                 {
                     Flyout = new SampleFlyout()
                 };
+
                 app.Run();
             }
         }

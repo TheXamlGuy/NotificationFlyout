@@ -2,6 +2,7 @@
 using TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions;
 using System.Windows;
 using System.Windows.Media;
+using System;
 
 namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
@@ -9,11 +10,9 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
     {
         internal const double WindowSize = 0;
 
-        public TransparentXamlHost()
-        {
-            Loaded += OnLoaded;
-            PrepareDefaultWindow();
-        }
+        public TransparentXamlHost() => PrepareDefaultWindow();
+
+        protected override void OnContentRendered(EventArgs args) => Visibility = Visibility.Hidden;
 
         protected override WindowsXamlHost OnPreparingXamlHost(WindowsXamlHost xamlHost)
         {
@@ -22,16 +21,9 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
             return base.OnPreparingXamlHost(xamlHost);
         }
-
-        private void OnLoaded(object sender, RoutedEventArgs args)
-        {
-            this.Hidden();
-        }
-
         private void PrepareDefaultWindow()
         {
             ShowInTaskbar = false;
-            ShowActivated = false;
             WindowStyle = WindowStyle.None;
             ResizeMode = ResizeMode.NoResize;
             AllowsTransparency = true;

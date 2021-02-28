@@ -4,21 +4,37 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <Platforms>AnyCPU;x64</Platforms>
     <StartupObject>NotificationFlyoutSample.Host.Program</StartupObject>
     <AssetTargetFallback>uap10.0.19041</AssetTargetFallback>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Toolkit.Wpf.UI.XamlHost" Version="6.1.2" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="6.0.0-preview.1.21102.12" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0-preview.1.21102.12" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Common\TheXamlGuy.NotificationFlyout.Common.csproj" />
-    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj" />
-    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls.csproj" />
-    <ProjectReference Include="..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI\TheXamlGuy.NotificationFlyout.Wpf.UI.csproj" />
     <ProjectReference Include="..\NotificationFlyoutSample\NotificationFlyoutSample.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TheXamlGuy.NotificationFlyout.Common">
+      <HintPath>..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls\bin\x64\Release\netcoreapp3.1\TheXamlGuy.NotificationFlyout.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="TheXamlGuy.NotificationFlyout.Shared.UI">
+      <HintPath>..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls\bin\x64\Release\netcoreapp3.1\TheXamlGuy.NotificationFlyout.Shared.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="TheXamlGuy.NotificationFlyout.Uwp.UI.Controls">
+      <HintPath>..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls\bin\x64\Release\netcoreapp3.1\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="TheXamlGuy.NotificationFlyout.Wpf.UI">
+      <HintPath>..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls\bin\x64\Release\netcoreapp3.1\TheXamlGuy.NotificationFlyout.Wpf.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="TheXamlGuy.NotificationFlyout.Wpf.UI.Controls">
+      <HintPath>..\..\src\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls\bin\x64\Release\netcoreapp3.1\TheXamlGuy.NotificationFlyout.Wpf.UI.Controls.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

@@ -9,8 +9,7 @@
         </MenuFlyout>
     </controls:NotificationFlyout.ContextFlyout>
     <StackPanel
-        Width="400"
-        Height="500"
+   
         Margin="24"
         VerticalAlignment="Top">
         <ToggleSwitch
@@ -23,5 +22,11 @@
             <ComboBoxItem Content="Auto" />
             <ComboBoxItem Content="FullRight" />
         </ComboBox>
+        <Slider />
+        <TextBox />
+        <CalendarDatePicker />
+        <CalendarView />
+        <Button Content="hello" Click="Button_Click" />
+        <TimePicker />
     </StackPanel>
 </controls:NotificationFlyout>

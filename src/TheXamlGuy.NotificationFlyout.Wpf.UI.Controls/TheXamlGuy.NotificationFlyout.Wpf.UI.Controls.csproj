@@ -22,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Common\TheXamlGuy.NotificationFlyout.Common.csproj" />
+    <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Shared.UI\TheXamlGuy.NotificationFlyout.Shared.UI.csproj" />
     <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls\TheXamlGuy.NotificationFlyout.Uwp.UI.Controls.csproj" />
     <ProjectReference Include="..\TheXamlGuy.NotificationFlyout.Wpf.UI\TheXamlGuy.NotificationFlyout.Wpf.UI.csproj" />
   </ItemGroup>
