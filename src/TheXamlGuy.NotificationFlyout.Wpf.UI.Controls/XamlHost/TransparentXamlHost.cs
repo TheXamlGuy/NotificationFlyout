@@ -8,7 +8,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
     internal class TransparentXamlHost<TXamlContent> : XamlHost<TXamlContent> where TXamlContent : Windows.UI.Xaml.UIElement
     {
-        internal const double WindowSize = 1;
+        internal const double WindowSize = 10;
 
         public TransparentXamlHost() => PrepareDefaultWindow();
 
@@ -31,7 +31,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             WindowStyle = WindowStyle.None;
             ResizeMode = ResizeMode.NoResize;
             AllowsTransparency = true;
-            Background = new SolidColorBrush(Colors.Transparent);
+            Background = new SolidColorBrush(Colors.Red);
             Height = WindowSize;
             Width = WindowSize;
         }

@@ -71,7 +71,6 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             window.Show();
         }
 
-
         public void OpenFlyout()
         {
             if (Flyout == null) return;
@@ -119,12 +118,15 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
             _isDpiChanging = true;
 
-            UpdateIcons();
             _notificationFlyoutXamlHost.Visibility = Visibility.Visible;
 
             await Dispatcher.BeginInvoke(new Action(() =>
             {
                 VisualTreeHelper.SetRootDpi(_notificationFlyoutXamlHost, args.OldDpi);
+            }), DispatcherPriority.ContextIdle, null);
+
+            await Dispatcher.BeginInvoke(new Action(() =>
+            {
                 VisualTreeHelper.SetRootDpi(_notificationFlyoutXamlHost, args.NewDpi);
             }), DispatcherPriority.ContextIdle, null);
 
@@ -133,6 +135,8 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
                 _notificationFlyoutXamlHost.Visibility = Visibility.Hidden;
                 _isDpiChanging = false;
             }), DispatcherPriority.ContextIdle, null);
+
+            UpdateIcons();
         }
 
         private void OnTaskbarChanged(object sender, EventArgs args) => UpdateFlyoutPlacement();
@@ -187,8 +191,9 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         {
             if (Flyout == null) return;
 
-            _notificationFlyoutXamlHost.Left = 0;
-            _notificationFlyoutXamlHost.Top = 0;
+            var taskbarState = _taskbarHelper.GetCurrentState();
+            _notificationFlyoutXamlHost.Left = taskbarState.Screen.Bounds.Left;
+            _notificationFlyoutXamlHost.Top = taskbarState.Screen.Bounds.Top;
 
             double horizontalOffset;
             double verticalOffset;
@@ -196,12 +201,10 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             var dpiX = _notificationFlyoutXamlHost.DpiX();
             var dpiY = _notificationFlyoutXamlHost.DpiY();
 
-            NotificationFlyoutTaskbarPlacement flyoutTaskBarPlacement;
-
-            var taskbarState = _taskbarHelper.GetCurrentState();
             var workingAreaHeight = taskbarState.Screen.WorkingArea.Height / dpiX;
             var workingAreaWidth = taskbarState.Screen.WorkingArea.Width / dpiY;
 
+            NotificationFlyoutTaskbarPlacement flyoutTaskBarPlacement;
             switch (taskbarState.Placement)
             {
                 case TaskbarPlacement.Left:

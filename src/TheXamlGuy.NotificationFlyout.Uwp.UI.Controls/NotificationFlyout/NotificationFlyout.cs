@@ -38,7 +38,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 typeof(NotificationFlyoutTemplateSettings), typeof(NotificationFlyout),
                 new PropertyMetadata(null));
 
-        private const double OffsetValue = 1;
+        private const double OffsetValue = 6;
 
         private static INotificationFlyoutApplication _applicationInstance;
 
@@ -143,8 +143,8 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
             _child.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
 
-            var width = _child.DesiredSize.Width;
-            var height = Placement == NotificationFlyoutPlacement.Auto ? _child.DesiredSize.Height : workingAreaHeight;
+            var width = _child.DesiredSize.Width - 1;
+            var height = Placement == NotificationFlyoutPlacement.Auto ? _child.DesiredSize.Height : workingAreaHeight + 1;
 
             var desiredHorizontalOffset = horizontalOffset;
             var desiredVerticalOffset = verticalOffset;
@@ -161,15 +161,15 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                             desiredVerticalOffset -= height;
                             break;
                         case NotificationFlyoutTaskbarPlacement.Top:
-                            desiredHorizontalOffset -= width;
+                            desiredHorizontalOffset -= width + OffsetValue;
                             desiredVerticalOffset -= OffsetValue;
                             break;
                         case NotificationFlyoutTaskbarPlacement.Right:
-                            desiredHorizontalOffset -= width;
+                            desiredHorizontalOffset -= width + OffsetValue;
                             desiredVerticalOffset -= height;
                             break;
                         case NotificationFlyoutTaskbarPlacement.Bottom:
-                            desiredHorizontalOffset -= width;
+                            desiredHorizontalOffset -= width + OffsetValue;
                             desiredVerticalOffset -= height;
                             break;
                     }
@@ -180,19 +180,20 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                     switch (flyoutTaskbarPlacement)
                     {
                         case NotificationFlyoutTaskbarPlacement.Left:
-                            desiredHorizontalOffset += workingAreaWidth - width;
-                            desiredVerticalOffset = 0;
+                            desiredHorizontalOffset += workingAreaWidth - width - OffsetValue;
+                            desiredVerticalOffset = -OffsetValue;
                             break;
                         case NotificationFlyoutTaskbarPlacement.Top:
-                            desiredHorizontalOffset = workingAreaWidth - width;
+                            desiredHorizontalOffset = workingAreaWidth - width - OffsetValue;
+                            desiredVerticalOffset += -OffsetValue;
                             break;
                         case NotificationFlyoutTaskbarPlacement.Right:
-                            desiredHorizontalOffset -= width;
-                            desiredVerticalOffset = 0;
+                            desiredHorizontalOffset -= width + OffsetValue;
+                            desiredVerticalOffset = -OffsetValue;
                             break;
                         case NotificationFlyoutTaskbarPlacement.Bottom:
-                            desiredHorizontalOffset = workingAreaWidth - width;
-                            desiredVerticalOffset = 0;
+                            desiredHorizontalOffset -= width + OffsetValue;
+                            desiredVerticalOffset = -OffsetValue;
                             break;
                     }
                     break;

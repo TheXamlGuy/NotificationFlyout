@@ -2,31 +2,32 @@
     x:Class="NotificationFlyoutSample.SampleFlyout"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:TheXamlGuy.NotificationFlyout.Uwp.UI.Controls">
+    xmlns:controls="using:TheXamlGuy.NotificationFlyout.Uwp.UI.Controls"
+    VerticalContentAlignment="Top">
     <controls:NotificationFlyout.ContextFlyout>
         <MenuFlyout>
             <MenuFlyoutItem Click="OnCloseMenuFlyoutItemClick" Text="Close" />
         </MenuFlyout>
     </controls:NotificationFlyout.ContextFlyout>
-    <StackPanel
-   
-        Margin="24"
-        VerticalAlignment="Top">
-        <ToggleSwitch
-            Header="Is light dimissed enabled"
-            IsOn="True"
-            OffContent="False"
-            OnContent="True"
-            Toggled="ToggleSwitch_Toggled" />
-        <ComboBox Header="Placement" SelectionChanged="ComboBox_SelectionChanged">
-            <ComboBoxItem Content="Auto" />
-            <ComboBoxItem Content="FullRight" />
-        </ComboBox>
-        <Slider />
-        <TextBox />
-        <CalendarDatePicker />
-        <CalendarView />
-        <Button Content="hello" Click="Button_Click" />
-        <TimePicker />
-    </StackPanel>
+    <Grid Margin="24" VerticalAlignment="Top">
+        <StackPanel Background="Red">
+            <ToggleSwitch
+                Header="Is light dimissed enabled"
+                IsOn="True"
+                OffContent="False"
+                OnContent="True"
+                Toggled="ToggleSwitch_Toggled" />
+            <ComboBox Header="Placement" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBoxItem Content="Auto" />
+                <ComboBoxItem Content="FullRight" />
+            </ComboBox>
+            <Slider />
+            <TextBox />
+            <CalendarDatePicker />
+            <CalendarView />
+            <Button Click="Button_Click" Content="hello" />
+            <TimePicker />
+        </StackPanel>
+    </Grid>
+
 </controls:NotificationFlyout>
