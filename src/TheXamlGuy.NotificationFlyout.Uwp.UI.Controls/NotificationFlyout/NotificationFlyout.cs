@@ -66,7 +66,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
 
         internal event EventHandler PlacementPropertyChanged;
 
-
         public ImageSource IconSource
         {
             get => (ImageSource)GetValue(IconSourceProperty);
@@ -199,7 +198,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                     break;
             }
 
-
             TemplateSettings.SetValue(NotificationFlyoutTemplateSettings.HeightProperty, height);
             TemplateSettings.SetValue(NotificationFlyoutTemplateSettings.WidthProperty, width);
 
@@ -225,28 +223,11 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 ShowMode = FlyoutShowMode.Standard 
             });
         }
+
         internal void UpdateTheme(bool isColorPrevalence) => VisualStateManager.GoToState(this, isColorPrevalence ? "ColorPrevalenceTheme" : "DefaultTheme", true);
 
-        private Rectangle _topThumb;
-        private Grid _layoutRoot;
-
-        protected override void OnManipulationDelta(ManipulationDeltaRoutedEventArgs e)
-        {
-            base.OnManipulationDelta(e);
-        }
         protected override void OnApplyTemplate()
         {
-            _layoutRoot = GetTemplateChild("LayoutRoot") as Grid;
-            _layoutRoot.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-
-            _topThumb = GetTemplateChild("TopThumb") as Rectangle;
-            _topThumb.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY;
-
-            _topThumb.ManipulationDelta += _topThumb_ManipulationDelta;
-            _topThumb.PointerPressed += _topThumb_PointerPressed;
-            _topThumb.PointerReleased += _topThumb_PointerReleased;
-
-
             _container = GetTemplateChild("Container") as Border;
             if (_container != null)
             {
@@ -272,33 +253,6 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 var translation = new Vector3(currentTranslation.X, currentTranslation.Y, 16.0f);
                 _backgroundElement.Translation = translation;
             }
-        }
-
-        private void _topThumb_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            _layoutRoot.Height = _layoutRoot.ActualHeight;
-            _layoutRoot.Height -= e.Delta.Translation.Y ;
-
-            _popup.SetValue(Popup.VerticalOffsetProperty, _popup.VerticalOffset += e.Delta.Translation.Y);
-        }
-
-        private void _topThumb_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-           // XamlRoot.Content.ReleasePointerCapture(e.Pointer);
-        }
-
-        private void _topThumb_PointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            //XamlRoot.Content.CapturePointer(e.Pointer);
-        }
-
-        private void _topThumb_DragDelta(object sender, DragDeltaEventArgs e)
-        {
-            
-            _layoutRoot.Height = _layoutRoot.ActualHeight;
-            _layoutRoot.Height -= e.VerticalChange;
-
-            _popup.SetValue(Popup.VerticalOffsetProperty, _popup.VerticalOffset += e.VerticalChange);
         }
 
         private static void OnIconPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)

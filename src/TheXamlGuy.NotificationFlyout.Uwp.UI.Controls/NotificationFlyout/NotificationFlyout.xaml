@@ -51,8 +51,6 @@
                                     </TransitionCollection>
                                 </Border.Transitions>
                                 <Grid>
-
-
                                     <ScrollViewer
                                         x:Name="ScrollViewer"
                                         AutomationProperties.AccessibilityView="Raw"
@@ -70,11 +68,6 @@
                                             ContentTemplate="{TemplateBinding ContentTemplate}"
                                             ContentTransitions="{TemplateBinding ContentTransitions}" />
                                     </ScrollViewer>
-                                    <Rectangle
-                                        x:Name="TopThumb"
-                                        Height="10"
-                                        VerticalAlignment="Top"
-                                        Fill="Red" />
                                 </Grid>
                             </Border>
                         </Grid>
