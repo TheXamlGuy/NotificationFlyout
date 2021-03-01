@@ -6,24 +6,17 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
     internal class XamlHost<TXamlContent> : Window where TXamlContent : Windows.UI.Xaml.UIElement
     {
-        protected new bool IsLoaded;
         private WindowsXamlHost _xamlHost;
 
         public XamlHost()
         {
             PrepareWindowsXamlHost();
-            ContentRendered += OnContentRendered;
         }
 
         internal TXamlContent GetHostContent()
         {
             if (_xamlHost == null) return null;
             return _xamlHost.GetUwpInternalObject() as TXamlContent;
-        }
-
-        protected virtual void OnContentLoaded()
-        {
-            
         }
 
         protected virtual WindowsXamlHost OnPreparingXamlHost(WindowsXamlHost xamlHost)
@@ -33,12 +26,6 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             xamlHost.VerticalAlignment = VerticalAlignment.Stretch;
 
             return xamlHost;
-        }
-
-        private void OnContentRendered(object sender, EventArgs args)
-        {
-            IsLoaded = true;
-            OnContentLoaded();
         }
 
         private void PrepareWindowsXamlHost()

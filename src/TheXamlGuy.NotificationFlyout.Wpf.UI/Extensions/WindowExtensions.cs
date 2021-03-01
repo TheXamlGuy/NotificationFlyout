@@ -7,6 +7,8 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions
 {
     public static class WindowExtensions
     {
+        private const int GWL_EX_STYLE = -20;
+
         [Flags]
         private enum WindowFlag : uint
         {
@@ -24,6 +26,12 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Extensions
         {
             var helper = new WindowInteropHelper(window);
             return helper.Handle;
+        }
+
+        public static void Hidden(this Window window)
+        {
+            var handle = window.GetHandle();
+            PInvoke.SetWindowLong((HWND)handle, GWL_EX_STYLE, (PInvoke.GetWindowLong((HWND)handle, GWL_EX_STYLE) | (int)WindowFlag.WS_EX_TOOLWINDOW) & ~(int)WindowFlag.WS_EX_APPWINDOW);
         }
 
         public static void SetTopAll(this Window window)

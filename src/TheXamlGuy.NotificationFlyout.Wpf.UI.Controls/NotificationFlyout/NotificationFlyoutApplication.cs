@@ -9,6 +9,10 @@ using System.Windows.Media.Imaging;
 using TheXamlGuy.NotificationFlyout.Common.Extensions;
 using Microsoft.Windows.Sdk;
 using TheXamlGuy.NotificationFlyout.Shared.UI;
+using System.Windows.Media;
+using System.Threading.Tasks;
+using Microsoft.Win32;
+using System.Windows.Threading;
 
 namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
@@ -24,6 +28,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         private readonly NotificationIconHelper _notificationIconHelper;
         private readonly SystemPersonalisationHelper _systemPersonalisationHelper;
         private readonly TaskbarHelper _taskbarHelper;
+        private bool _isDpiChanging;
         private TransparentXamlHost<ContentControl> _notificationFlyoutXamlHost;
 
         public NotificationFlyoutApplication()
@@ -58,11 +63,14 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         public void CloseFlyout() => CloseFlyout(false);
 
         public void Exit() => _notificationFlyoutXamlHost.Close();
+
         public void OpenAsWindow<TUIElement>() where TUIElement : Windows.UI.Xaml.UIElement
         {
             var window = new XamlHost<TUIElement>();
+            window.Hidden();
             window.Show();
         }
+
 
         public void OpenFlyout()
         {
@@ -104,6 +112,29 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
         private void OnNotificationFlyoutXamlHostDeactivated(object sender, EventArgs args) => CloseFlyout(true);
 
+        private async void OnNotificationFlyoutXamlHostDpiChanged(object sender, DpiChangedEventArgs args)
+        {
+            if (_isDpiChanging)
+                return;
+
+            _isDpiChanging = true;
+
+            UpdateIcons();
+            _notificationFlyoutXamlHost.Visibility = Visibility.Visible;
+
+            await Dispatcher.BeginInvoke(new Action(() =>
+            {
+                VisualTreeHelper.SetRootDpi(_notificationFlyoutXamlHost, args.OldDpi);
+                VisualTreeHelper.SetRootDpi(_notificationFlyoutXamlHost, args.NewDpi);
+            }), DispatcherPriority.ContextIdle, null);
+
+            await Dispatcher.BeginInvoke(new Action(() =>
+            {
+                _notificationFlyoutXamlHost.Visibility = Visibility.Hidden;
+                _isDpiChanging = false;
+            }), DispatcherPriority.ContextIdle, null);
+        }
+
         private void OnTaskbarChanged(object sender, EventArgs args) => UpdateFlyoutPlacement();
 
         private void OnThemeChanged(object sender, SystemPersonalisationChangedEventArgs args)
@@ -115,6 +146,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         private void PrepareFlyout()
         {
             if (Flyout == null) return;
+
             Flyout.IconSourcePropertyChanged += OnFlyoutIconSourcePropertyChanged;
             Flyout.PlacementPropertyChanged += OnFlyoutPlacementPropertyChanged;
             Flyout.InteractedWith += OnFlyoutInteractedWith;
@@ -131,6 +163,8 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         private void PrepareFlyoutHost()
         {
             _notificationFlyoutXamlHost = new TransparentXamlHost<ContentControl>();
+
+            _notificationFlyoutXamlHost.DpiChanged += OnNotificationFlyoutXamlHostDpiChanged;
             _notificationFlyoutXamlHost.Closed += OnNotificationFlyoutXamlHostClosed;
             _notificationFlyoutXamlHost.Deactivated += OnNotificationFlyoutXamlHostDeactivated;
 
@@ -140,7 +174,6 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
             _notificationFlyoutXamlHost.Show();
         }
-
         private void ShowContextMenu()
         {
             var dpiX = _notificationFlyoutXamlHost.DpiX();
