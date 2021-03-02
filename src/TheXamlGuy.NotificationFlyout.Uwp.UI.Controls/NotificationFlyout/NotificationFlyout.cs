@@ -251,7 +251,7 @@ namespace TheXamlGuy.NotificationFlyout.Uwp.UI.Controls
                 _backgroundElement.Shadow = new ThemeShadow();
 
                 var currentTranslation = _backgroundElement.Translation;
-                var translation = new Vector3(currentTranslation.X, currentTranslation.Y, 16.0f);
+                var translation = new Vector3(currentTranslation.X, currentTranslation.Y, 32.0f);
                 _backgroundElement.Translation = translation;
             }
         }

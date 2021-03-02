@@ -31,7 +31,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             WindowStyle = WindowStyle.None;
             ResizeMode = ResizeMode.NoResize;
             AllowsTransparency = true;
-            Background = new SolidColorBrush(Colors.Red);
+            Background = new SolidColorBrush(Colors.Transparent);
             Height = WindowSize;
             Width = WindowSize;
         }

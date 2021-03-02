@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 {
@@ -118,23 +119,25 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
             _isDpiChanging = true;
 
-            _notificationFlyoutXamlHost.Visibility = Visibility.Visible;
-
-            await Dispatcher.BeginInvoke(new Action(() =>
+            await Application.Current.Dispatcher.Invoke(async () =>
             {
-                VisualTreeHelper.SetRootDpi(_notificationFlyoutXamlHost, args.OldDpi);
-            }), DispatcherPriority.ContextIdle, null);
+                _notificationFlyoutXamlHost.Visibility = Visibility.Visible;
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    VisualTreeHelper.SetRootDpi(_notificationFlyoutXamlHost, args.OldDpi);
+                }), DispatcherPriority.ContextIdle, null);
 
-            await Dispatcher.BeginInvoke(new Action(() =>
-            {
-                VisualTreeHelper.SetRootDpi(_notificationFlyoutXamlHost, args.NewDpi);
-            }), DispatcherPriority.ContextIdle, null);
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    VisualTreeHelper.SetRootDpi(_notificationFlyoutXamlHost, args.NewDpi);
+                }), DispatcherPriority.ContextIdle, null);
 
-            await Dispatcher.BeginInvoke(new Action(() =>
-            {
-                _notificationFlyoutXamlHost.Visibility = Visibility.Hidden;
-                _isDpiChanging = false;
-            }), DispatcherPriority.ContextIdle, null);
+                await Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    _notificationFlyoutXamlHost.Visibility = Visibility.Hidden;
+                    _isDpiChanging = false;
+                }), DispatcherPriority.ContextIdle, null);
+            });
 
             UpdateIcons();
         }
@@ -178,6 +181,7 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
 
             _notificationFlyoutXamlHost.Show();
         }
+
         private void ShowContextMenu()
         {
             var dpiX = _notificationFlyoutXamlHost.DpiX();
@@ -191,15 +195,15 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
         {
             if (Flyout == null) return;
 
+            var dpiX = _notificationFlyoutXamlHost.DpiX();
+            var dpiY = _notificationFlyoutXamlHost.DpiY();
+
             var taskbarState = _taskbarHelper.GetCurrentState();
-            _notificationFlyoutXamlHost.Left = taskbarState.Screen.Bounds.Left;
-            _notificationFlyoutXamlHost.Top = taskbarState.Screen.Bounds.Top;
+            _notificationFlyoutXamlHost.Left = taskbarState.Screen.Bounds.Left / dpiX; ;
+            _notificationFlyoutXamlHost.Top = 0;
 
             double horizontalOffset;
             double verticalOffset;
-
-            var dpiX = _notificationFlyoutXamlHost.DpiX();
-            var dpiY = _notificationFlyoutXamlHost.DpiY();
 
             var workingAreaHeight = taskbarState.Screen.WorkingArea.Height / dpiX;
             var workingAreaWidth = taskbarState.Screen.WorkingArea.Width / dpiY;
@@ -209,26 +213,26 @@ namespace TheXamlGuy.NotificationFlyout.Wpf.UI.Controls
             {
                 case TaskbarPlacement.Left:
                     flyoutTaskBarPlacement = NotificationFlyoutTaskbarPlacement.Left;
-                    verticalOffset = taskbarState.Rect.Bottom / dpiX;
-                    horizontalOffset = taskbarState.Rect.Right / dpiY;
+                    verticalOffset = taskbarState.Screen.WorkingArea.Height / dpiX;
+                    horizontalOffset = taskbarState.Rect.Width / dpiY;
                     break;
 
                 case TaskbarPlacement.Top:
                     flyoutTaskBarPlacement = NotificationFlyoutTaskbarPlacement.Top;
-                    verticalOffset = taskbarState.Rect.Bottom / dpiX;
-                    horizontalOffset = (_notificationFlyoutXamlHost.FlowDirection == FlowDirection.RightToLeft ? taskbarState.Rect.Left : taskbarState.Rect.Right) / dpiY;
+                    verticalOffset = taskbarState.Rect.Height / dpiX;
+                    horizontalOffset = (_notificationFlyoutXamlHost.FlowDirection == FlowDirection.RightToLeft ? 0 : taskbarState.Screen.WorkingArea.Width) / dpiY;
                     break;
 
                 case TaskbarPlacement.Right:
                     flyoutTaskBarPlacement = NotificationFlyoutTaskbarPlacement.Right;
-                    verticalOffset = taskbarState.Rect.Bottom / dpiX;
-                    horizontalOffset = taskbarState.Rect.Left / dpiY;
+                    verticalOffset = taskbarState.Screen.WorkingArea.Height / dpiX;
+                    horizontalOffset = taskbarState.Screen.WorkingArea.Width / dpiY;
                     break;
 
                 case TaskbarPlacement.Bottom:
                     flyoutTaskBarPlacement = NotificationFlyoutTaskbarPlacement.Bottom;
-                    verticalOffset = taskbarState.Rect.Top / dpiX;
-                    horizontalOffset = (_notificationFlyoutXamlHost.FlowDirection == FlowDirection.RightToLeft ? taskbarState.Rect.Left : taskbarState.Rect.Right) / dpiY;
+                    verticalOffset = taskbarState.Screen.WorkingArea.Height / dpiX;
+                    horizontalOffset = (_notificationFlyoutXamlHost.FlowDirection == FlowDirection.RightToLeft ? 0 : taskbarState.Screen.WorkingArea.Width) / dpiY;
                     break;
 
                 default:
